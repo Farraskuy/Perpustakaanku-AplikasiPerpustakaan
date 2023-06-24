@@ -14,10 +14,17 @@ class Home extends BaseController
     public function index()
     {
 
+        return $this->home();
+
+    }
+    public function home()
+    {
+
         $buku = $this->bukuModel->ambilBuku();
         $data = [
+            'scrollSpy' => true,
             'title' => 'Home',
-            'buku' => $buku
+            'buku' => $buku,
         ];
         return view('/pages/home', $data);
     }
