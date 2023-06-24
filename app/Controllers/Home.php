@@ -14,10 +14,10 @@ class Home extends BaseController
     public function index()
     {
 
+        $buku = $this->bukuModel->ambilBuku();
         $data = [
             'title' => 'Home',
-            // 'buku' => $buku
-            'buku' => []
+            'buku' => $buku
         ];
         return view('/pages/home', $data);
     }
