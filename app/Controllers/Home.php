@@ -14,6 +14,12 @@ class Home extends BaseController
     public function index()
     {
 
+        return $this->home();
+
+    }
+    public function home()
+    {
+
         $buku = $this->bukuModel->ambilBuku();
         $data = [
             'title' => 'Home',

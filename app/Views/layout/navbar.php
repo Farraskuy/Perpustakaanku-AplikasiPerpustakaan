@@ -12,19 +12,19 @@
            
                 <ul class="nav nav-pills flex-column flex-lg-row">
                     <li class="nav-item my-1 my-lg-0 ">
-                        <a class="nav-link" href="/home#header">Home</a>
+                        <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?> " href="/home#header">Home</a>
                     </li>
                     <li class="nav-item my-1 my-lg-0 ">
-                        <a class="nav-link" href="/home#layanan">Layanan</a>
+                        <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?> " href="/home#layanan">Layanan</a>
                     </li>
                     <li class="nav-item my-1 my-lg-0 ">
-                        <a class="nav-link" href="/home#buku">Buku</a>
+                        <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?> " href="/home#buku">Buku</a>
                     </li>
                     <li class="nav-item my-1 my-lg-0  pe-2">
-                        <a class="nav-link" href="/home#kontak">Kontak</a>
+                        <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?> " href="/home#kontak">Kontak</a>
                     </li>
                     <li class="nav-item border-start border-4 ps-2 my-1 my-lg-0 ">
-                        <a class="nav-link " href="/pinjam">Pinjam Buku</a>
+                        <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?>" href="/pinjam">Pinjam Buku</a>
                     </li>
                 </ul>
        
