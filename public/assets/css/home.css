@@ -1,0 +1,98 @@
+:root {
+  --color-purple: #9A3DB6;
+  --color-purple-dark: #882AA3;
+  --color-green: #98C900;
+  --color-green-dark: #81AB00;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 5px solid white;
+  background: #888;
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.header {
+  height: 500px;
+}
+.layanan .item {
+  box-shadow: none;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+.layanan .item:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+.nav-pills .nav-link {
+  color: #000000a6;
+  background-color: transparent;
+}
+.nav-link.active {
+  background-color: #000000a6 !important;
+}
+.wrap-text {
+  max-width: 100%;
+  max-height: 100%;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.judul {
+  -webkit-line-clamp: 2;
+}
+.text-purple {
+  color: var(--color-purple);
+}
+.border-purple {
+  border-color: var(--color-purple) !important;
+}
+.btn-purple {
+  background-color: var(--color-purple);
+  color: white;
+}
+.btn-purple:hover,
+.btn-purple:active {
+  background-color: var(--color-purple-dark) !important;
+  color: white;
+}
+
+.text-green {
+  color: var(--color-green);
+}
+.text-green:hover {
+  color: var(--color-green-dark);
+}
+.border-green {
+  border-color: var(--color-green) !important;
+}
+.border-green:hover {
+  border-color: var(--color-green-dark) !important;
+}
+.btn-green {
+  background-color: var(--color-green);
+  color: white;
+}
+.btn-green:hover,
+.btn-green:active {
+  background-color: var(--color-green-dark);
+  color: white;
+}
+.bookmark{
+  max-width: 43px;
+  max-height: 43px;
+}
