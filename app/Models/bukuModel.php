@@ -40,7 +40,10 @@ class BukuModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function ambilBuku($slug) {
-        return $this->where('slug', $slug)->first();
+    public function ambilBuku($slug = '') {
+        if ($slug) {
+            return $this->where('slug', $slug)->first();
+        }
+        return $this->findAll();
     }
 }
