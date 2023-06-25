@@ -9,7 +9,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse " id="navbarNav">
-           
+            <?php if (!in_groups('admin')) : ?>
                 <ul class="nav nav-pills flex-column flex-lg-row">
                     <li class="nav-item my-1 my-lg-0 ">
                         <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?> " href="/home#header">Home</a>
@@ -27,9 +27,12 @@
                         <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?>" href="/pinjam">Pinjam Buku</a>
                     </li>
                 </ul>
-       
-                <a class="btn btn-primary ms-auto my-2 my-lg-0" href="/logout">Login</a>
-        
+            <?php endif ?>
+            <?php if (logged_in()) : ?>
+                <a class="btn btn-primary ms-auto my-2 my-lg-0" href="/logout">Logout</a>
+            <?php else : ?>
+                <a class="btn btn-primary ms-auto my-2 my-lg-0" href="/login">Login</a>
+            <?php endif ?>
         </div>
     </div>
 </nav>
