@@ -6,7 +6,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 ::-webkit-scrollbar-track {
@@ -70,7 +70,6 @@
   background-color: var(--color-purple-dark) !important;
   color: white;
 }
-
 .text-green {
   color: var(--color-green);
 }
@@ -95,4 +94,12 @@
 .bookmark{
   max-width: 43px;
   max-height: 43px;
+}
+.nav-link.side-item{
+  display: flex;
+  align-items: center;
+  height: 51px;
+}
+.nav-link.side-item.active{
+  background-color: var(--color-purple) !important;
 }

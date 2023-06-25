@@ -8,8 +8,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse " id="navbarNav">
-            <?php if (!in_groups('admin')) : ?>
+        <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-pills flex-column flex-lg-row">
                     <li class="nav-item my-1 my-lg-0 ">
                         <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?> " href="/home#header">Home</a>
@@ -27,7 +26,6 @@
                         <a class="nav-link <?= $scrollSpy ? '' : 'text-dark' ?>" href="/pinjam">Pinjam Buku</a>
                     </li>
                 </ul>
-            <?php endif ?>
             <?php if (logged_in()) : ?>
                 <a class="btn btn-primary ms-auto my-2 my-lg-0" href="/logout">Logout</a>
             <?php else : ?>

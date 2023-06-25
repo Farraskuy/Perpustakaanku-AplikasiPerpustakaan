@@ -1,5 +1,5 @@
-<?= $this->extend('template') ;?>
-
+<?= $this->extend('admin/template') ;?>
+<admin></admin>
 <?= $this->section('content') ;?>
 
 <h1>admin cuy</h1>
