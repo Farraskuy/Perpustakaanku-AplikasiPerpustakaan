@@ -6,4 +6,11 @@
 <script>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+    <?php if (in_groups('admin')  && validation_errors()) : ?>
+        const myModal = new bootstrap.Modal('#tambahPetugasModal', {
+            keyboard: false
+        });
+        myModal.show();
+    <?php endif ?>
 </script>

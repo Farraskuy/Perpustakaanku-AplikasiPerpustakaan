@@ -18,7 +18,6 @@ class Home extends BaseController
             return redirect()->to(base_url('/admin'));
         }
         return $this->home();
-
     }
     public function home()
     {

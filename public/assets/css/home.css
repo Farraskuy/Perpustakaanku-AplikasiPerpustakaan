@@ -1,12 +1,12 @@
 :root {
-  --color-purple: #9A3DB6;
-  --color-purple-dark: #882AA3;
-  --color-green: #98C900;
-  --color-green-dark: #81AB00;
+  --color-purple: #9a3db6;
+  --color-purple-dark: #882aa3;
+  --color-green: #98c900;
+  --color-green-dark: #81ab00;
 }
 
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 ::-webkit-scrollbar-track {
@@ -55,6 +55,9 @@
 .judul {
   -webkit-line-clamp: 2;
 }
+.text-gray {
+  color: var(--color-purple);
+}
 .text-purple {
   color: var(--color-purple);
 }
@@ -92,7 +95,18 @@
   background-color: var(--color-green-dark);
   color: white;
 }
-.bookmark{
+.bookmark {
   max-width: 43px;
   max-height: 43px;
+}
+.nav-link.side-item {
+  display: flex;
+  align-items: center;
+  height: 51px;
+}
+.nav-link.side-item i{
+  width: 20px;
+}
+.nav-link.side-item.active {
+  background-color: var(--color-purple) !important;
 }

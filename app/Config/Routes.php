@@ -33,7 +33,18 @@ $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::home');
 
 // routes admin
-$routes->get('/admin', 'Admin::index', ['filter' => 'role:admin']);
+$routes->group('/admin', ['filter' => 'role:admin,superadmin'], function ($routes) {
+    // dashboard
+    $routes->get('/', 'Admin::index');
+
+    // menu petugas
+    $routes->get('petugas', 'Admin::dataPetugas');
+    $routes->post('petugas', 'Petugas::simpan');
+    $routes->put('petugas/(:any)', 'Petugas::edit/$1');
+    $routes->delete('petugas/(:any)', 'Petugas::hapus/$1');
+    $routes->get('petugas/(:any)', 'Petugas::detail/$1');
+
+});
 
 
 // routes buku
