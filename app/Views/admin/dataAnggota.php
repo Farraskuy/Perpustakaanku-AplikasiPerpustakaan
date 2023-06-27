@@ -2,7 +2,7 @@
 
 <?= $this->section('content'); ?>
 
-<section class="p-5">
+<section class="p-5 position-relative">
     <div class="bg-white rounded-3 p-3 px-4 mb-3">
         <div class="row align-items-center">
             <div class="col-md-6">
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded p-3 px-4 table-responsive">
+    <div class="bg-white rounded p-3 px-4 table-responsive ">
         <table class="table align-middle">
             <thead>
                 <tr>

@@ -46,7 +46,7 @@
 
 
     <div class="d-flex">
-        <div class="position-fixed bg-white pt-3 vh-100 shadow p-2 overflow-auto" style="width: 15rem; ">
+        <div class="position-fixed bg-white pt-3 vh-100 shadow p-2 overflow-auto" style="z-index: 10; width: 15rem; ">
 
             <div class="" style="padding-top: 61px;">
                 <div class="side-content px-4 nav-pills">
@@ -93,7 +93,7 @@
 
         </div>
         <div class="col-10 w-100 bg-light min-vh-100" style="padding-left: 15rem; padding-top: 61px;">
-
+            <div class="position-absolute h-25 bg-purple" style="right: 0; left: 0;"></div>
             <?= $this->renderSection('content'); ?>
 
         </div>
