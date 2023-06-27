@@ -3,12 +3,12 @@
 <?= $this->section('content'); ?>
 
 <section class="p-5">
-
+    
     <div class="bg-white rounded p-3 px-4 mb-3">
         <div class="row align-items-center">
             <div class="col-md-6 d-flex align-items-center gap-3">
-                <a href="/admin/petugas" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i></a>
-                <h4 class="m-0">Detail Petugas</h4>
+                <a href="/admin/anggota" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i> </a>
+                <h4 class="m-0">Detail Anggota</h4>
             </div>
             <div class="col-md-6 d-flex justify-content-end align-items-center gap-3">
 
@@ -21,19 +21,18 @@
             </div>
         </div>
     </div>
-
     <div class="bg-white rounded p-3 px-4">
         <div class="row g-0">
             <div class="col-md-4 col-xl-3 row flex-column align-items-center justify-content-center">
                 <div class="p-3 w-100 col-4" style="height: 400px;">
-                    <img src="/upload/petugas/<?= $data['foto'] ?>" class="w-100 h-100" style="object-fit: contain;">
+                    <img src="/upload/anggota/<?= $data['foto'] ?>" class="w-100 h-100" style="object-fit: contain;">
                 </div>
             </div>
             <div class="col-md-8 col-xl-9 d-flex justify-content-center">
                 <div class="container-fluid py-4 ">
                     <div class="row">
                         <div class="col-12">
-                            <h4 class="m-0"><?= $data['nama'] ?></h4>
+                            <h4 class="m-0"><?= $data['username'] ?></h4>
                         </div>
                     </div>
                     <hr>
@@ -41,6 +40,14 @@
                         <div class="col">
                             <table class=" table-borderless">
                                 <tbody>
+                                    <tr>
+                                        <th class="ps-2 pe-3 py-1 ">Username</th>
+                                        <td>: <?= $data['username'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="ps-2 pe-3 py-1 ">Email</th>
+                                        <td>: <?= $data['email'] ?></td>
+                                    </tr>
                                     <tr>
                                         <th class="ps-2 pe-3 py-1 ">Nama</th>
                                         <td>: <?= $data['nama'] ?></td>
@@ -54,8 +61,8 @@
                                         <td>: <?= $data['jenis_kelamin'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th class="ps-2 pe-3 py-1 ">Jabatan</th>
-                                        <td>: <?= $data['jabatan'] ?></td>
+                                        <th class="ps-2 pe-3 py-1 ">Status</th>
+                                        <td> <?= $data['active'] == 1 ? '<span class="btn btn-success">Aktif</span>' : '<span class="btn btn-danger">Tidak aktif</span>' ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -75,6 +82,7 @@
 
 
 <!-- modal -->
+<!-- hapus -->
 <div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form class="modal-content" method="post">
@@ -84,7 +92,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Hapus</h1>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin menghapus petugas ini?</p>
+                <p>Apakah anda yakin ingin menghapus anggota ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -94,21 +102,78 @@
     </div>
 </div>
 
+<!-- reset password -->
+<div class="modal fade form-modal-reset" id="reset" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" action="/admin/anggota/reset/<?= $data['id'] ?>" method="post">
 
+            <?= csrf_field() ?>
+        
+            <input type="hidden" name="_method" value="PUT">
+        
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Reset Password</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 mt-1 row">
+                    <label for="password" class="col-sm-3 form-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control <?= isset($validation['password']) ? 'is-invalid' : '' ?>" value="<?= old('password') ?>" name="password" id="password" autofocus>
+                        <div class="invalid-feedback"><?= isset($validation['password']) ? $validation['password'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 mt-1 row">
+                    <label for="password_confirm" class="col-sm-3 form-label">Konfirmasi Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control <?= isset($validation['password_confirm']) ? 'is-invalid' : '' ?>" value="<?= old('password_confirm') ?>" name="password_confirm" id="password_confirm">
+                        <div class="invalid-feedback"><?= isset($validation['password_confirm']) ? $validation['password_confirm'] : '' ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary text-white" data-bs-toggle="modal" data-bs-target="#edit">Batal</button>
+                <button type="submit" class="btn btn-warning text-white">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- edit data -->
 <div class="modal fade form-modal" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" method="post" enctype="multipart/form-data">
-
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="fotolama" value="<?= $data['foto'] ?>">
             <?= csrf_field() ?>
 
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Edit Petugas</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Edit Anggota</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <p class="modal-devider">Data Login</p>
+                <div class="mb-3 mt-1 row">
+                    <label for="username" class="col-sm-3 form-label">Username</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control <?= isset($validation['username']) ? 'is-invalid' : '' ?>" value="<?= old('username', $data['username']) ?>" name="username" id="username" autofocus>
+                        <div class="invalid-feedback"><?= isset($validation['username']) ? $validation['username'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-3 form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control <?= isset($validation['email']) ? 'is-invalid' : '' ?>" value="<?= old('email', $data['email']) ?>" name="email" id="email" autofocus>
+                        <div class="invalid-feedback"><?= isset($validation['email']) ? $validation['email'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col d-flex justify-content-end">
+                        <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#reset">Reset Password</button>
+                    </div>
+                </div>
 
+                <p class="modal-devider">Data Anggota</p>
                 <div class="mb-3 row">
                     <label for="nama" class="col-sm-3 form-label">Nama</label>
                     <div class="col-sm-9">
@@ -144,19 +209,6 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="jabatan" class="col-sm-3 form-label">Jabatan</label>
-                    <div class="col-sm-9">
-                        <select class="form-select <?= isset($validation['jabatan']) ? 'is-invalid' : '' ?>" id="jabatan" name="jabatan" aria-label="Default select example">
-                            <option value="" <?= old('jabatan', $data['jabatan']) == '' ? 'selected' : '' ?>>Pilih jabatan</option>
-                            <option value="Pustakawan" <?= old('jabatan', $data['jabatan']) == 'Pustakawan' ? 'selected' : '' ?>>Pustakawan</option>
-                            <option value="Juru Arsip" <?= old('jabatan', $data['jabatan']) == 'Juru Arsip' ? 'selected' : '' ?>>Juru Arsip</option>
-                            <option value="Petugas Keamanan" <?= old('jabatan', $data['jabatan']) == 'Petugas Keamanan' ? 'selected' : '' ?>>Petugas Keamanan</option>
-                            <option value="Petugas Kebersihan" <?= old('jabatan', $data['jabatan']) == 'Petugas Kebersihan' ? 'selected' : '' ?>>Petugas Kebersihan</option>
-                        </select>
-                        <div class="invalid-feedback"><?= isset($validation['jabatan']) ? $validation['jabatan'] : '' ?></div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
                     <label for="foto" class="col-sm-3 form-label">Foto</label>
                     <div class="col-sm-9">
                         <input class="form-control <?= isset($validation['foto']) ? 'is-invalid' : '' ?>" name="foto" type="file" id="foto" onchange="ubahPreview(this)">
@@ -179,6 +231,8 @@
                         <div class="invalid-feedback"><?= isset($validation['alamat']) ? $validation['alamat'] : '' ?></div>
                     </div>
                 </div>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

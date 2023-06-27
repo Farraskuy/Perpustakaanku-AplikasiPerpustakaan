@@ -44,6 +44,14 @@ $routes->group('/admin', ['filter' => 'role:admin,superadmin'], function ($route
     $routes->delete('petugas/(:any)', 'Petugas::hapus/$1');
     $routes->get('petugas/(:any)', 'Petugas::detail/$1');
 
+    // menu petugas
+    $routes->get('anggota', 'Admin::dataAnggota');
+    $routes->post('anggota', 'Anggota::simpan');
+    $routes->put('anggota/reset/(:any)', 'Anggota::reset/$1');
+    $routes->put('anggota/(:any)', 'Anggota::edit/$1');
+    $routes->delete('anggota/(:any)', 'Anggota::hapus/$1');
+    $routes->get('anggota/(:any)', 'Anggota::detail/$1');
+
 });
 
 

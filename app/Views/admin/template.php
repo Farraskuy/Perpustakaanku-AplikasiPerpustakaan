@@ -13,13 +13,12 @@
             </a>
 
             <div class="nav navbar-nav">
-
                 <div class="ms-auto dropdown">
                     <a class="text-decoration-none" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="true">
                         <div style="height: 45px; width: 170px;" class="row g-0">
                             <div class="text-dark text-nowrap wrap-text col-9 d-flex flex-column">
-                                <small class="p-0 m-0">nama</small>
-                                <small class="p-0 m-0">jabatan</small>
+                                <small class="p-0 m-0 fw-semibold"><?= user()->username ?></small>
+                                <small class="p-0 m-0"><?= user()->getRoles()['1'] ?></small>
                             </div>
                             <div class="h-100 col-3 text-center">
                                 <img style="object-fit: contain;" class="rounded-circle" height="40" width="40" src="/assets/img/logo.png" alt="">

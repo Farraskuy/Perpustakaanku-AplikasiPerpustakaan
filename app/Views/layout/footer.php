@@ -7,10 +7,25 @@
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    <?php if (in_groups('admin')  && validation_errors()) : ?>
-        const myModal = new bootstrap.Modal('#tambahPetugasModal', {
-            keyboard: false
-        });
-        myModal.show();
+    const myModal = new bootstrap.Modal('.form-modal', {
+        keyboard: false
+    });
+    const myResetModal = new bootstrap.Modal('.form-modal-reset', {
+        keyboard: false
+    });
+
+    if (myModal) {
+        myModal.hide();
+    }
+    if (myResetModal) {
+        myResetModal.hide();
+    }
+    
+    <?php if (in_groups('admin')) : ?>
+        <?php if (session()->getFlashdata('error_password')) : ?>
+            myResetModal.show();
+        <?php elseif (validation_errors()) : ?>
+            myModal.show();
+        <?php endif ?>
     <?php endif ?>
 </script>
