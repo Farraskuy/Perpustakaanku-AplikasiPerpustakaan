@@ -7,6 +7,37 @@
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
+    <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan')  . '")' : '' ?>
+
+    function peringatan(isi) {
+        const notifContainer = document.getElementById('notifContainer');
+        const template = ` 
+            <div class="alert alert-success" role="alert">
+                ${isi}
+            </div>`
+        notifContainer.innerHTML = template;
+        setTimeout(() => {
+            notifContainer.classList.add('active');
+        }, 500);
+        setTimeout(() => {
+            notifContainer.classList.remove('active');
+        }, 3000);
+    }
+
+    function ubahPreview(input) {
+        const preview = document.querySelector('.sampulPreview');
+
+        const filesampul = new FileReader();
+        filesampul.readAsDataURL(input.files[0]);
+
+        filesampul.onload = function(e) {
+            preview.src = e.target.result;
+        }
+    }
+
+
+
+
     const myModal = new bootstrap.Modal('.form-modal', {
         keyboard: false
     });
@@ -20,7 +51,7 @@
     if (myResetModal) {
         myResetModal.hide();
     }
-    
+
     <?php if (in_groups('admin')) : ?>
         <?php if (session()->getFlashdata('error_password')) : ?>
             myResetModal.show();
