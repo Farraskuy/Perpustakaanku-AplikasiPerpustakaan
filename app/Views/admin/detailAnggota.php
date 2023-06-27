@@ -220,7 +220,7 @@
                     <div class="col-sm-9">
                         <p>Preview</p>
                         <div style="height: 150px;" class="w-100 border rounded-3 text-center p-3">
-                            <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/petugas/<?= $data['foto'] ?>" alt="default sampul">
+                            <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/anggota/<?= $data['foto'] ?>" alt="default sampul">
                         </div>
                     </div>
                 </div>
