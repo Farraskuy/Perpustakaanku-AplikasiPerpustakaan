@@ -33,6 +33,7 @@ class Anggota extends BaseController
         $data = [
             "title" => "Anggota | " .  $anggota['nama'],
             "data" => $anggota,
+            "navactive" => "anggota",
             "validation" => validation_errors()
         ];
 

@@ -144,4 +144,17 @@
   background-color: var(--color-purple);
 }
 
-
+.main .konten {
+  padding-left: 15rem;
+  transition: 0.5s ease;
+}
+.main.active .konten {
+  padding-left: 0 !important;
+}
+.main .sidebar {
+  left: 0;
+  transition: 0.5s ease;
+}
+.main.active .sidebar {
+  left: -15rem;
+}

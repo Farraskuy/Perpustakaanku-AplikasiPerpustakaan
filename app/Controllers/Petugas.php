@@ -28,7 +28,8 @@ class Petugas extends BaseController
         }
         $data = [
             "title" => "Petugas | " .  $petugas['nama'],
-            "data" => $petugas
+            "data" => $petugas,
+            "navactive" => "petugas",
         ];
 
         return view('admin/detailPetugas', $data);

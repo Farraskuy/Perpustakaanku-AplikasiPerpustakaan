@@ -21,7 +21,8 @@ class Admin extends BaseController
 
         $data = [
             "title" => "Home | Administrator",
-            "scrollSpy" => false
+            "scrollSpy" => false,
+            "navactive" => "admin",
         ];
         return view('admin/home', $data);
         

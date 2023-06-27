@@ -7,10 +7,13 @@
 
     <nav class="navbar fixed-top navbar-expand bg-white shadow">
         <div class="container-fluid px-5 d-flex justify-content-between">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-                <img src="/assets/img/logo.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
-                <span class="h4 m-0">Perpustakaanku</span>
-            </a>
+            <div class="d-flex gap-3">
+                <button class="btn btn-purple text-white" type="button" onclick="toggleSidebar()"><i class="fa-solid fa-bars fa-lg"></i></button>
+                <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                    <img src="/assets/img/logo.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
+                    <span class="h4 m-0">Perpustakaanku</span>
+                </a>
+            </div>
 
             <div class="nav navbar-nav">
                 <div class="ms-auto dropdown">
@@ -21,7 +24,7 @@
                                 <small class="p-0 m-0"><?= user()->getRoles()['1'] ?></small>
                             </div>
                             <div class="h-100 col-3 text-center">
-                                <img style="object-fit: contain;" class="rounded-circle" height="40" width="40" src="/assets/img/logo.png" alt="">
+                                <img style="object-fit: cover;" class="rounded-circle" height="40" width="40" src="/upload/petugas/<?= user()->foto ?>" alt="">
                             </div>
                         </div>
                     </a>
@@ -45,13 +48,13 @@
     </nav>
 
 
-    <div class="d-flex">
-        <div class="position-fixed bg-white pt-3 vh-100 shadow p-2 overflow-auto" style="z-index: 10; width: 15rem; ">
+    <div class="d-flex main">
+        <div class="position-fixed bg-white pt-3 vh-100 shadow p-2 overflow-auto sidebar" style="z-index: 10; width: 15rem; ">
 
             <div class="" style="padding-top: 61px;">
                 <div class="side-content px-4 nav-pills">
                     <div class="nav-item">
-                        <a class="nav-link side-item p-3 gap-3 " href="/">
+                        <a class="nav-link side-item <?= $navactive == 'admin' ? 'active' : '' ?> p-3 gap-3 " href="/">
                             <i class="fa-regular fa-house fs-5"></i> Dashboard
                         </a>
                     </div>
@@ -66,23 +69,23 @@
                                 Data
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse show" data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body pt-1">
                                 <ul class="nav nav-pills flex-column gap-1">
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item  gap-3 p-3" href="/admin/petugas"><i class="fa-regular fa-user-tie-hair fs-5"></i>Data Petugas</a>
+                                        <a class="nav-link side-item <?= $navactive == 'petugas' ? 'active' : '' ?> gap-3 p-3" href="/admin/petugas"><i class="fa-regular fa-user-tie-hair fs-5"></i>Data Petugas</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item  gap-3 p-3" href="/admin/anggota"><i class="fa-regular fa-square-star fs-5"></i> Data Anggota</a>
+                                        <a class="nav-link side-item <?= $navactive == 'anggota' ? 'active' : '' ?> gap-3 p-3" href="/admin/anggota"><i class="fa-regular fa-square-star fs-5"></i> Data Anggota</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item  gap-3 p-3" href="/admin/buku"><i class="fa-regular fa-book fs-5"></i> Data Buku</a>
+                                        <a class="nav-link side-item <?= $navactive == 'buku' ? 'active' : '' ?> gap-3 p-3" href="/admin/buku"><i class="fa-regular fa-book fs-5"></i> Data Buku</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item  gap-3 p-3" href="/admin/peminjaman"><i class="fa-regular fa-book-circle-arrow-right fs-5"></i>Data Peminjaman</a>
+                                        <a class="nav-link side-item <?= $navactive == 'peminjaman' ? 'active' : '' ?> gap-3 p-3" href="/admin/peminjaman"><i class="fa-regular fa-book-circle-arrow-right fs-5"></i>Data Peminjaman</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item  gap-3 p-3" href="/admin/pengembalian"><i class="fa-regular fa-book-circle-arrow-up fs-5"></i>Data Pengembalian</a>
+                                        <a class="nav-link side-item <?= $navactive == 'pengembalian' ? 'active' : '' ?> gap-3 p-3" href="/admin/pengembalian"><i class="fa-regular fa-book-circle-arrow-up fs-5"></i>Data Pengembalian</a>
                                     </li>
                                 </ul>
                             </div>
@@ -92,7 +95,7 @@
             </div>
 
         </div>
-        <div class="col-10 w-100 bg-light min-vh-100" style="padding-left: 15rem; padding-top: 61px;">
+        <div class="col-10 w-100 bg-light min-vh-100 konten" style="padding-left: 15rem; padding-top: 61px;">
             <div class="position-absolute h-25 bg-purple" style="right: 0; left: 0;"></div>
             <?= $this->renderSection('content'); ?>
 

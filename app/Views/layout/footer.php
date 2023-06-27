@@ -35,7 +35,11 @@
         }
     }
 
+    const main = document.querySelector('.main');
 
+    function toggleSidebar() {
+        main.classList.toggle('active');
+    }
 
 
     const myModal = new bootstrap.Modal('.form-modal', {
