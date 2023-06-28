@@ -12,8 +12,9 @@
     function peringatan(isi) {
         const notifContainer = document.getElementById('notifContainer');
         const template = ` 
-            <div class="alert alert-success" role="alert">
-                ${isi}
+            <div class="col-5 alert alert-success d-flex alert-dismissible fade show" role="alert">
+                <div>${isi}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>`
         notifContainer.innerHTML = template;
         setTimeout(() => {

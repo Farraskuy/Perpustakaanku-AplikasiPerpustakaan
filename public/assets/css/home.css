@@ -158,3 +158,15 @@
 .main.active .sidebar {
   left: -15rem;
 }
+#notifContainer {
+  visibility: hidden;
+  opacity: 0;
+  margin-top: 0px;
+  transition: 1s ease-in-out;
+}
+#notifContainer.active {
+  visibility: visible;
+  opacity: 1;
+  margin-top: 25px;
+  transition: 0.5s ease-in-out;
+}

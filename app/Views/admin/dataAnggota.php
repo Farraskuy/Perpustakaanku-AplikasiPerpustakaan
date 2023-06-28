@@ -2,7 +2,7 @@
 
 <?= $this->section('content'); ?>
 
-<section class="p-5 position-relative">
+
     <div class="bg-white rounded-3 p-3 px-4 mb-3">
         <div class="row align-items-center">
             <div class="col-md-6">
@@ -45,7 +45,7 @@
             </tbody>
         </table>
     </div>
-</section>
+
 
 
 <div class="modal fade  form-modal" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">

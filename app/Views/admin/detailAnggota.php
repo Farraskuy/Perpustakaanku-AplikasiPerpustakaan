@@ -2,7 +2,7 @@
 
 <?= $this->section('content'); ?>
 
-<section class="p-5 position-relative">
+
     
     <div class="bg-white rounded p-3 px-4 mb-3">
         <div class="row align-items-center">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-</section>
+
 
 
 <!-- modal -->
