@@ -10,11 +10,13 @@ class Admin extends BaseController
     protected $bukuModel;
     protected $petugas;
     protected $anggota;
+    protected $buku;
     public function __construct()
     {
         $this->bukuModel = new BukuModel();
         $this->petugas = new Petugas();
         $this->anggota = new Anggota();
+        $this->buku = new Buku();
     }
     public function index()
     {
@@ -52,5 +54,18 @@ class Admin extends BaseController
             "data" => $this->anggota->index(),
         ];
         return view('admin/dataAnggota', $data);
+    }
+
+    public function dataBuku()
+    {
+        $data = [
+            "title" => "Home | Administrator",
+            "subtitle" => "Buku",
+            "navactive" => "buku",
+            "scrollSpy" => false,
+            "validation" => validation_errors(),
+            "data" => $this->buku->index(),
+        ];
+        return view('admin/dataBuku', $data);
     }
 }

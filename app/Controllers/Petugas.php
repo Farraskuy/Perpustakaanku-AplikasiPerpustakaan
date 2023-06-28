@@ -114,6 +114,9 @@ class Petugas extends BaseController
             unlink('upload/petugas/' . $petugas['foto']);
         }
         $this->petugasModel->delete($id);
+
+        session()->setFlashdata('pesan', "Data berhasil dihapus");
+
         return redirect()->to('/admin/petugas');
     }
 
@@ -190,7 +193,7 @@ class Petugas extends BaseController
             'alamat' => $this->request->getVar('alamat'),
         ]);
 
-        session()->setFlashdata('pesan', "Data berhasil Edit");
+        session()->setFlashdata('pesan', "Data berhasil diubah");
 
         return redirect()->to("admin/petugas/" . $id);
     }

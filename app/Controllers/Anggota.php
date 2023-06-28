@@ -158,6 +158,7 @@ class Anggota extends BaseController
         $this->userModel->db->table('auth_groups_users')->delete($id);
 
         session()->setFlashdata('pesan', "Data berhasil dihapus");
+
         return redirect()->to('/admin/anggota');
     }
 
@@ -257,7 +258,7 @@ class Anggota extends BaseController
             'foto' => $namaFoto,
         ]);
 
-        session()->setFlashdata('pesan', "Data berhasil Edit");
+        session()->setFlashdata('pesan', "Data berhasil diubah");
 
         return redirect()->to("admin/anggota/" . $id);
     }

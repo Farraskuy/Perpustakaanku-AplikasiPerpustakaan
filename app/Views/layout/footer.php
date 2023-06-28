@@ -42,18 +42,18 @@
         main.classList.toggle('active');
     }
 
-
-    const myModal = new bootstrap.Modal('.form-modal', {
-        keyboard: false
-    });
-    const myResetModal = new bootstrap.Modal('.form-modal-reset', {
-        keyboard: false
-    });
-
-    if (myModal) {
+    let myModal;
+    if (document.querySelector('.form-modal')) {
+        myModal = new bootstrap.Modal('.form-modal', {
+            keyboard: false
+        });
         myModal.hide();
     }
-    if (myResetModal) {
+    let myResetModal;
+    if (document.querySelector('.form-modal-reset')) {
+        myResetModal = new bootstrap.Modal('.form-modal-reset', {
+            keyboard: false
+        });
         myResetModal.hide();
     }
 

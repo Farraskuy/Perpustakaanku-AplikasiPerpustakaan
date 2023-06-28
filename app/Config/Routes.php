@@ -52,6 +52,13 @@ $routes->group('/admin', ['filter' => 'role:admin,superadmin'], function ($route
     $routes->delete('anggota/(:any)', 'Anggota::hapus/$1');
     $routes->get('anggota/(:any)', 'Anggota::detail/$1');
 
+    // menu buku
+    $routes->get('buku', 'Admin::dataBuku');
+    $routes->post('buku', 'Buku::simpan');
+    $routes->put('buku/(:any)', 'Buku::edit/$1');
+    $routes->delete('buku/(:any)', 'Buku::hapus/$1');
+    $routes->get('buku/(:any)', 'Buku::detail/$1');
+
 });
 
 

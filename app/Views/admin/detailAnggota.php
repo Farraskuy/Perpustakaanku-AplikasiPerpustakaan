@@ -23,7 +23,7 @@
     </div>
     <div class="bg-white rounded p-3 px-4">
         <div class="row g-0">
-            <div class="col-md-4 col-xl-3 row flex-column align-items-center justify-content-center">
+            <div class="col-md-4 col-xl-3 row flex-column align-items-center">
                 <div class="p-3 w-100 col-4" style="height: 400px;">
                     <img src="/upload/anggota/<?= $data['foto'] ?>" class="w-100 h-100" style="object-fit: contain;">
                 </div>

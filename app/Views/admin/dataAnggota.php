@@ -9,7 +9,7 @@
                 <h4 class="m-0">Data | <?= $subtitle ?></h4>
             </div>
             <div class="col-md-6 d-flex justify-content-end align-items-center">
-                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data Anggota</button>
+                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
             </div>
         </div>
     </div>

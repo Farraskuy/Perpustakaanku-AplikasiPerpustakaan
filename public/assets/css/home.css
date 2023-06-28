@@ -143,7 +143,6 @@
 .bg-purple {
   background-color: var(--color-purple);
 }
-
 .main .konten {
   padding-left: 15rem;
   transition: 0.5s ease;
@@ -157,6 +156,12 @@
 }
 .main.active .sidebar {
   left: -15rem;
+}
+.sampul {
+  width: 70px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 #notifContainer {
   visibility: hidden;
