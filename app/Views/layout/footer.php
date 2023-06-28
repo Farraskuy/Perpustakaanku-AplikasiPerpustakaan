@@ -6,4 +6,62 @@
 <script>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+    <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan')  . '")' : '' ?>
+
+    function peringatan(isi) {
+        const notifContainer = document.getElementById('notifContainer');
+        const template = ` 
+            <div class="col-5 alert alert-success d-flex alert-dismissible fade show" role="alert">
+                <div>${isi}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`
+        notifContainer.innerHTML = template;
+        setTimeout(() => {
+            notifContainer.classList.add('active');
+        }, 500);
+        setTimeout(() => {
+            notifContainer.classList.remove('active');
+        }, 3000);
+    }
+
+    function ubahPreview(input) {
+        const preview = document.querySelector('.sampulPreview');
+
+        const filesampul = new FileReader();
+        filesampul.readAsDataURL(input.files[0]);
+
+        filesampul.onload = function(e) {
+            preview.src = e.target.result;
+        }
+    }
+
+    const main = document.querySelector('.main');
+
+    function toggleSidebar() {
+        main.classList.toggle('active');
+    }
+
+    let myModal;
+    if (document.querySelector('.form-modal')) {
+        myModal = new bootstrap.Modal('.form-modal', {
+            keyboard: false
+        });
+        myModal.hide();
+    }
+    let myResetModal;
+    if (document.querySelector('.form-modal-reset')) {
+        myResetModal = new bootstrap.Modal('.form-modal-reset', {
+            keyboard: false
+        });
+        myResetModal.hide();
+    }
+
+    <?php if (in_groups('admin')) : ?>
+        <?php if (session()->getFlashdata('error_password')) : ?>
+            myResetModal.show();
+        <?php elseif (validation_errors()) : ?>
+            myModal.show();
+        <?php endif ?>
+    <?php endif ?>
 </script>

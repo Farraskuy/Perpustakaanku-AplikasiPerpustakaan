@@ -1,12 +1,12 @@
 :root {
-  --color-purple: #9A3DB6;
-  --color-purple-dark: #882AA3;
-  --color-green: #98C900;
-  --color-green-dark: #81AB00;
+  --color-purple: #9a3db6;
+  --color-purple-dark: #882aa3;
+  --color-green: #98c900;
+  --color-green-dark: #81ab00;
 }
 
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 ::-webkit-scrollbar-track {
@@ -55,6 +55,9 @@
 .judul {
   -webkit-line-clamp: 2;
 }
+.text-gray {
+  color: var(--color-purple);
+}
 .text-purple {
   color: var(--color-purple);
 }
@@ -84,15 +87,91 @@
   border-color: var(--color-green-dark) !important;
 }
 .btn-green {
-  background-color: var(--color-green);
+  background-color: var(--color-green) !important;
   color: white;
 }
 .btn-green:hover,
 .btn-green:active {
-  background-color: var(--color-green-dark);
+  background-color: var(--color-green-dark) !important;
   color: white;
 }
-.bookmark{
+.bookmark {
   max-width: 43px;
   max-height: 43px;
+}
+.nav-link.side-item {
+  display: flex;
+  align-items: center;
+  height: 51px;
+}
+.nav-link.side-item i {
+  width: 20px;
+}
+.nav-link.side-item.active {
+  background-color: var(--color-purple) !important;
+}
+.table td.fit,
+.table th.fit {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.table > .aksi > a {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-devider {
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  white-space: nowrap;
+}
+.modal-devider::after {
+  margin-left: 1rem;
+  content: "";
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background-color: #555;
+}
+.bg-purple {
+  background-color: var(--color-purple);
+}
+.main .konten {
+  padding-left: 15rem;
+  transition: 0.5s ease;
+}
+.main.active .konten {
+  padding-left: 0 !important;
+}
+.main .sidebar {
+  left: 0;
+  transition: 0.5s ease;
+}
+.main.active .sidebar {
+  left: -15rem;
+}
+.sampul {
+  width: 70px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+#notifContainer {
+  visibility: hidden;
+  opacity: 0;
+  margin-top: 0px;
+  transition: 1s ease-in-out;
+}
+#notifContainer.active {
+  visibility: visible;
+  opacity: 1;
+  margin-top: 25px;
+  transition: 0.5s ease-in-out;
 }
