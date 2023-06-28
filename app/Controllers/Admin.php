@@ -21,47 +21,47 @@ class Admin extends BaseController
     public function index()
     {
 
-        $data = [
+        $this->data += [
             "title" => "Home | Administrator",
             "navactive" => "admin",
         ];
-        return view('admin/home', $data);
+        return view('admin/home', $this->data);
         
     }
 
     public function dataPetugas()
     {
-        $data = [
+        $this->data += [
             "title" => "Home | Administrator",
             "subtitle" => "Petugas",
             "navactive" => "petugas",
             "validation" => validation_errors(),
             "data" => $this->petugas->index(),
         ];
-        return view('admin/dataPetugas', $data);
+        return view('admin/dataPetugas', $this->data);
     }
 
     public function dataAnggota()
     {
-        $data = [
+        $this->data += [
             "title" => "Home | Administrator",
             "subtitle" => "Anggota",
             "navactive" => "anggota",
             "validation" => validation_errors(),
             "data" => $this->anggota->index(),
         ];
-        return view('admin/dataAnggota', $data);
+        return view('admin/dataAnggota', $this->data);
     }
 
     public function dataBuku()
     {
-        $data = [
+        $this->data += [
             "title" => "Home | Administrator",
             "subtitle" => "Buku",
             "navactive" => "buku",
             "validation" => validation_errors(),
             "data" => $this->buku->index(),
         ];
-        return view('admin/dataBuku', $data);
+        return view('admin/dataBuku', $this->data);
     }
 }

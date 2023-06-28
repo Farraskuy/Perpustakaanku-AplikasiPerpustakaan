@@ -33,7 +33,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::home');
 
 // routes admin
-$routes->group('/admin', ['filter' => 'role:admin,superadmin'], function ($routes) {
+$routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     // dashboard
     $routes->get('/', 'Admin::index');
 

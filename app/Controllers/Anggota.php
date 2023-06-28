@@ -30,14 +30,14 @@ class Anggota extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Anggota dengan id "' . $id . '" tidak ditemukan');
         }
 
-        $data = [
+        $this->data += [
             "title" => "Anggota | " .  $anggota['nama'],
             "data" => $anggota,
             "navactive" => "anggota",
             "validation" => validation_errors()
         ];
 
-        return view('admin/detailAnggota', $data);
+        return view('admin/detailAnggota', $this->data);
     }
 
     public function simpan()

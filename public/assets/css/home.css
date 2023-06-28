@@ -44,7 +44,6 @@
 .wrap-text {
   max-width: 100%;
   max-height: 100%;
-  white-space: pre-wrap;
   word-break: keep-all;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -63,6 +62,9 @@
 }
 .border-purple {
   border-color: var(--color-purple) !important;
+}
+.btn{
+  font-size: 14px !important;
 }
 .btn-purple {
   background-color: var(--color-purple);

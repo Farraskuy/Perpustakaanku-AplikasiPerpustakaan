@@ -27,21 +27,21 @@ class Buku extends BaseController
 
         if (in_groups('admin')) {
 
-            $data = [
+            $this->data += [
                 "title" => "Buku | " .  $buku['judul'],
                 "data" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
                 "navactive" => "buku",
                 "validation" => validation_errors()
             ];
 
-            return view('admin/detailBuku', $data);
+            return view('admin/detailBuku', $this->data);
         }
 
-        $data = [
+        $this->data += [
             "title" => "Buku | " .  $buku['judul'],
             "buku" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
         ];
-        return view('buku/detailBuku', $data);
+        return view('buku/detailBuku', $this->data);
     }
 
     public function simpan()
