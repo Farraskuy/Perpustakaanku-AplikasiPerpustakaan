@@ -24,7 +24,6 @@ class Home extends BaseController
 
         $buku = $this->bukuModel->ambilBuku();
         $data = [
-            'scrollSpy' => true,
             'title' => 'Home',
             'buku' => $buku,
         ];

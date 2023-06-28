@@ -40,7 +40,6 @@ class Buku extends BaseController
         $data = [
             "title" => "Buku | " .  $buku['judul'],
             "buku" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
-            "scrollSpy" => false,
         ];
         return view('buku/detailBuku', $data);
     }

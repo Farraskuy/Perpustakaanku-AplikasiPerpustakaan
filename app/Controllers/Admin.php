@@ -23,7 +23,6 @@ class Admin extends BaseController
 
         $data = [
             "title" => "Home | Administrator",
-            "scrollSpy" => false,
             "navactive" => "admin",
         ];
         return view('admin/home', $data);
@@ -36,7 +35,6 @@ class Admin extends BaseController
             "title" => "Home | Administrator",
             "subtitle" => "Petugas",
             "navactive" => "petugas",
-            "scrollSpy" => false,
             "validation" => validation_errors(),
             "data" => $this->petugas->index(),
         ];
@@ -49,7 +47,6 @@ class Admin extends BaseController
             "title" => "Home | Administrator",
             "subtitle" => "Anggota",
             "navactive" => "anggota",
-            "scrollSpy" => false,
             "validation" => validation_errors(),
             "data" => $this->anggota->index(),
         ];
@@ -62,7 +59,6 @@ class Admin extends BaseController
             "title" => "Home | Administrator",
             "subtitle" => "Buku",
             "navactive" => "buku",
-            "scrollSpy" => false,
             "validation" => validation_errors(),
             "data" => $this->buku->index(),
         ];
