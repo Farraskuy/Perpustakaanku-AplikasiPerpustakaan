@@ -32,6 +32,19 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::home');
 
+// routes buku
+$routes->get('/buku/(:any)', 'Buku::detail/$1');
+
+// menu pinjam
+$routes->group('/pinjam', ['filter' => 'role:anggota'], function ($routes) {
+    $routes->get('/', 'Pinjam::index');
+    $routes->post('/(:any)', 'Pinjam::simpan/$1');
+    $routes->put('/(:any)', 'Pinjam::edit/$1');
+    $routes->delete('/(:any)', 'Pinjam::hapus/$1');
+    $routes->get('/(:any)', 'Pinjam::detail/$1');
+});
+
+
 // routes admin
 $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     // dashboard
@@ -43,7 +56,7 @@ $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->put('petugas/(:any)', 'Petugas::edit/$1');
     $routes->delete('petugas/(:any)', 'Petugas::hapus/$1');
     $routes->get('petugas/(:any)', 'Petugas::detail/$1');
-
+    
     // menu petugas
     $routes->get('anggota', 'Admin::dataAnggota');
     $routes->post('anggota', 'Anggota::simpan');
@@ -51,19 +64,19 @@ $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->put('anggota/(:any)', 'Anggota::edit/$1');
     $routes->delete('anggota/(:any)', 'Anggota::hapus/$1');
     $routes->get('anggota/(:any)', 'Anggota::detail/$1');
-
+    
     // menu buku
     $routes->get('buku', 'Admin::dataBuku');
     $routes->post('buku', 'Buku::simpan');
     $routes->put('buku/(:any)', 'Buku::edit/$1');
     $routes->delete('buku/(:any)', 'Buku::hapus/$1');
     $routes->get('buku/(:any)', 'Buku::detail/$1');
-
 });
 
 
-// routes buku
-$routes->get('/buku/(:any)', 'Buku::detail/$1');
+
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
