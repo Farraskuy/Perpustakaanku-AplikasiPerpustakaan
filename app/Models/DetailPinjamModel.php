@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PinjamModel extends Model
+class DetailPinjamModel extends Model
 {
     protected $table      = 'pinjam';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_pinjam';
 
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_anggota', 'id_petugas', 'status', 'jumlah_buku'];
+    protected $allowedFields = ['id_pinjam', 'id_buku', 'status'];
 
     // Dates
     protected $useTimestamps = true;
