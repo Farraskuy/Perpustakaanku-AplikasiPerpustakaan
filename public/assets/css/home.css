@@ -34,6 +34,15 @@
 .layanan .item:hover {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
+.number {
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  background-color: var(--color-purple);
+  color: white;
+  border-radius: 100%;
+}
 .nav-pills .nav-link {
   color: #000000a6;
   background-color: transparent;
@@ -63,7 +72,7 @@
 .border-purple {
   border-color: var(--color-purple) !important;
 }
-.btn{
+.btn {
   font-size: 14px !important;
 }
 .btn-purple {

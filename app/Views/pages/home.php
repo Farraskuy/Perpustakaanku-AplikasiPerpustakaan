@@ -8,7 +8,7 @@
             <div class="col-12 col-md-7 d-flex flex-column pt-5 justify-content-start justify-content-md-center">
                 <h1 class="fs-4" style="width: fit-content;">Selamat datang di Aplikasi Perpustakaanku!</h1>
                 <p class="fs-6">
-                    Aplikasi ini dibuat untuk memudahkan pengelolaan perpustakaan secara praktis dan cepat, Sehingga dapat memaksimalkan waktu yang dimiliki
+                    Aplikasi ini dibuat untuk mempermudah dan mempercepat pengelolaan, peminjaman, dan pengembalian buku
                 </p>
                 <a href="#layanan" type="button" class="btn btn-primary w-50 mw-25">Mulai jelajahi</a>
             </div>
@@ -21,22 +21,23 @@
 <section id="layanan" class="layanan" style="padding-top: 65px; font-family: poppins;">
     <div class="container">
         <div class="row justify-content-center">
-            <h1 class="fs-5 border-bottom border-secondary border-3 mb-4" style="width: fit-content;">Layanan kami</h1>
+            <h1 class="fs-5 border-bottom border-secondary border-3 " style="width: fit-content;">Pengguna Baru?</h1>
+            <p class="text-center mb-4 fs-6">Coba lihat langkah-langkah dibawah ini!</p>
         </div>
         <div class="row gap-3 justify-content-center text-center fs-6">
             <div class=" col-8 col-md-5 col-lg-4 col-xl-3  p-3 border border-2 rounded-3 item">
                 <img src="/assets/img/member.png" alt="member">
-                <p class="mt-3 fw-semibold">Daftar Keanggotaan</p>
+                <p class="mt-3 fw-semibold">Cara Daftar Keanggotaan</p>
                 <p class="mt-3 fs-6 text-secondary">Daftar Keanggotaan untuk dapat menikmati fasilitas di <span class="fw-semibold">perpustakaanku</span></p>
             </div>
             <div class=" col-8 col-md-5 col-lg-4 col-xl-3  p-3 border border-2 rounded-3 item">
                 <img src="/assets/img/pinjam.png" alt="member">
-                <p class="mt-3 fw-semibold">Pinjam Buku</p>
+                <p class="mt-3 fw-semibold">Cara Pinjam Buku</p>
                 <p class="mt-3 fs-6 text-secondary">Pinjam buku-buku baru untuk dibaca dalam batas waktu tertentu dirumah</p>
             </div>
             <div class=" col-8 col-md-5 col-lg-4 col-xl-3 p-3  border border-2 rounded-3 item">
                 <img src="/assets/img/kembalikan.png" alt="member">
-                <p class="mt-3 fw-semibold">Kembalikan Buku</p>
+                <p class="mt-3 fw-semibold">Cara Kembalikan Buku</p>
                 <p class="mt-3 fs-6 text-secondary">Kembalikan buku yang telah di pinjam tepat waktu untuk meminjam buku lainnya</p>
             </div>
         </div>
