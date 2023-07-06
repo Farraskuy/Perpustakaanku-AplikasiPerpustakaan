@@ -14,6 +14,7 @@
 
             <span class="fs-5 fw-semibold text-dark border-end pe-3">Aksi</span>
             <div class="btn-group" role="group" aria-label="Basic example">
+                <a style="min-width: 80px;" class="btn btn-success text-white fw-semibold"><i class="fa-regular fa-plus"></i> Tambah Stok</a>
                 <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
                 <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
             </div>

@@ -6,10 +6,10 @@ use CodeIgniter\Model;
 
 class DetailPinjamModel extends Model
 {
-    protected $table      = 'pinjam';
+    protected $table      = 'detail_pinjam';
     protected $primaryKey = 'id_pinjam';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;

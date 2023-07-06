@@ -10,10 +10,8 @@ class DetailPinjam extends Migration
     {
         $this->forge->addField([
             'id_pinjam' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
-                'auto_increment' => true,
+                'type'           => 'VARCHAR',
+                'constraint'     => 255,
             ],
             'id_buku' => [
                 'type'       => 'VARCHAR',

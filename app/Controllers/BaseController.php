@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AnggotaModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -60,10 +61,12 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         $this->data = [];
         if (logged_in()) {
+            $anggotaModel = new AnggotaModel();
             $role = array_values(user()->getRoles())[0];
             $this->data += [
                 "username" => user()->username,
-                "role" => $role
+                "role" => $role,
+                "batas_pinjam" => $anggotaModel->find(user_id())['batas_pinjam'],
             ];
         }
     }

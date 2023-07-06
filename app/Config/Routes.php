@@ -35,13 +35,13 @@ $routes->get('/home', 'Home::home');
 // routes buku
 $routes->get('/buku/(:any)', 'Buku::detail/$1');
 
-// menu pinjam
-$routes->group('/pinjam', ['filter' => 'role:anggota'], function ($routes) {
-    $routes->get('/', 'Pinjam::index');
-    $routes->post('/(:any)', 'Pinjam::simpan/$1');
-    $routes->put('/(:any)', 'Pinjam::edit/$1');
-    $routes->delete('/(:any)', 'Pinjam::hapus/$1');
-    $routes->get('/(:any)', 'Pinjam::detail/$1');
+// fitur pinjam
+$routes->group('/pinjam/', ['filter' => 'role:anggota'], function ($routes) {
+    $routes->get('', 'Pinjam::index');
+    $routes->post('(:any)', 'Pinjam::simpan/$1');
+    $routes->put('(:any)', 'Pinjam::edit/$1');
+    $routes->delete('(:any)', 'Pinjam::hapus/$1');
+    $routes->get('(:any)', 'Pinjam::detail/$1');
 });
 
 
