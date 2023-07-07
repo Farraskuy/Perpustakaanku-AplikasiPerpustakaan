@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use App\Controllers\BaseController;
 use App\Models\PetugasModel;
 use CodeIgniter\Config\Services;
 use Config\App;
@@ -17,7 +18,14 @@ class Petugas extends BaseController
 
     public function index()
     {
-        return $this->petugasModel->findAll();
+        $this->data += [
+            "title" => "Home | Administrator",
+            "subtitle" => "Petugas",
+            "navactive" => "petugas",
+            "validation" => validation_errors(),
+            "data" => $this->petugasModel->findAll(),
+        ];
+        return view('admin/petugas/dataPetugas', $this->data);
     }
 
     public function detail($id)
@@ -32,7 +40,7 @@ class Petugas extends BaseController
             "navactive" => "petugas",
         ];
 
-        return view('admin/detailPetugas', $this->data);
+        return view('admin/petugas/detailPetugas', $this->data);
     }
 
     public function simpan()

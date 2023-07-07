@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\User;
 
-use App\Controllers\Petugas;
+use App\Controllers\BaseController;
 use App\Models\AnggotaModel;
 use App\Models\BukuModel;
 use App\Models\DetailPinjamModel;
@@ -25,7 +25,7 @@ class Pinjam extends BaseController
     public function index()
     {
 
-        $pinjam = $this->pinjamModel->dataPinjam(user_id());
+        $pinjam = $this->pinjamModel->getData(null, user_id());
 
         $ketpinjam = $this->pinjamModel->keteranganPinjam(user_id());
         $this->data += [

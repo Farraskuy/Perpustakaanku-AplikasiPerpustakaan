@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use App\Controllers\BaseController;
 use App\Models\AnggotaModel;
 use App\Models\UsersModel;
 use Myth\Auth\Password;
@@ -19,7 +20,14 @@ class Anggota extends BaseController
 
     public function index()
     {
-        return $this->anggotaModel->ambilData();
+        $this->data += [
+            "title" => "Home | Administrator",
+            "subtitle" => "Anggota",
+            "navactive" => "anggota",
+            "validation" => validation_errors(),
+            "data" => $this->anggotaModel->ambilData(),
+        ];
+        return view('admin/anggota/dataAnggota', $this->data);
     }
 
     public function detail($id)
@@ -37,7 +45,7 @@ class Anggota extends BaseController
             "validation" => validation_errors()
         ];
 
-        return view('admin/detailAnggota', $this->data);
+        return view('admin/anggota/detailAnggota', $this->data);
     }
 
     public function simpan()

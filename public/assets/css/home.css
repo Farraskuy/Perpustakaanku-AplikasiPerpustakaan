@@ -119,7 +119,7 @@
 .nav-link.side-item {
   display: flex;
   align-items: center;
-  height: 51px;
+  height: 40px;
 }
 .nav-link.side-item i {
   width: 20px;
