@@ -14,7 +14,7 @@ class AnggotaModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_anggota', 'id_login', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'foto'];
+    protected $allowedFields = ['id_anggota', 'id_login', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'nomor_telepon', 'foto'];
 
     // Dates
     protected $useTimestamps = true;

@@ -19,7 +19,12 @@ class Buku extends BaseController
 
     public function index()
     {
-        return $this->bukuModel->ambilBuku();
+        $buku = $this->bukuModel->ambilBuku();
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON('fgfhfhfhkgou');
+        }
+
     }
 
     public function detail($slug)
@@ -52,172 +57,15 @@ class Buku extends BaseController
         }
         return view('buku/detailBuku', $this->data);
     }
-
-    public function simpan()
+    
+    // AJAX
+    public function listBuku()
     {
-
-        if (!$this->validate([
-            'judul' => [
-                'rules' => 'required|is_unique[buku.judul]',
-                'errors' => [
-                    'required' => 'Kolom judul tidak boleh kosong',
-                    'is_unique' => 'Judul {value} sudah digunakan'
-                ]
-            ],
-            'penulis' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom penulis tidak boleh kosong'
-                ]
-            ],
-            'penerbit' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom penerbit tidak boleh kosong'
-                ]
-            ],
-            'tanggal_terbit' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom tanggal terbit tidak boleh kosong'
-                ]
-            ],
-            'sampul' => [
-                'rules' => 'is_image[sampul]|mime_in[sampul,image/png,image/jpg,image/jpeg]|max_size[sampul,1024]',
-                'errors' => [
-                    'mime_in' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'is_image' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'max_size' => 'Ukuran gambar terlalu besar, Maksimal 5MB',
-                ]
-            ],
-            'sinopsis' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom sinopsis tidak boleh kosong'
-                ]
-            ],
-        ])) {
-            return redirect()->to(base_url('/admin/buku'))->withInput();
-        }
-
-        $fileSampul = $this->request->getFile('sampul');
-
-        if ($fileSampul->getError() == 4) {
-            $namasampul = 'default.png';
-        } else {
-            $namasampul = $fileSampul->getRandomName();
-            $fileSampul->move('upload/buku/', $namasampul);
-        }
-
-        $this->bukuModel->save([
-            'judul' => $this->request->getVar('judul'),
-            'slug' =>  url_title($this->request->getVar('judul'), '-', true),
-            'penulis' => $this->request->getVar('penulis'),
-            'penerbit' => $this->request->getVar('penerbit'),
-            'tanggal_terbit' => $this->request->getVar('tanggal_terbit'),
-            'sampul' => $namasampul,
-            'sinopsis' => $this->request->getVar('sinopsis'),
-        ]);
-
-        session()->setFlashdata('pesan', "Data berhasil ditambahkan");
-
-        return redirect()->to("/admin/buku");
+        return $this->response->setJSON($this->bukuModel->ambilBuku());
     }
-
-    public function hapus($id)
+    public function ambilBuku($id)
     {
-        $buku = $this->bukuModel->where('id', $id)->first();
-        if ($buku['sampul'] != "default.png") {
-            unlink('upload/buku/' . $buku['sampul']);
-        }
-
-        $this->bukuModel->delete($id);
-
-        session()->setFlashdata('pesan', "Data berhasil dihapus");
-
-        return redirect()->to('/admin/buku');
-    }
-
-    public function edit()
-    {
-
-        $buku = $this->bukuModel->ambilBuku($this->request->getVar('slug'));
-        $id = $buku['id'];
-        $ruleJudul = 'required';
-        if ($buku['judul'] != $this->request->getVar('judul')) {
-            $ruleJudul .= '|is_unique[buku.judul]';
-        }
-
-
-        if (!$this->validate([
-            'judul' => [
-                'rules' => $ruleJudul,
-                'errors' => [
-                    'required' => 'Kolom judul tidak boleh kosong',
-                    'is_unique' => 'Judul {value} sudah digunakan'
-                ]
-            ],
-            'penulis' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom penulis tidak boleh kosong'
-                ]
-            ],
-            'penerbit' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom penerbit tidak boleh kosong'
-                ]
-            ],
-            'tanggal_terbit' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom tanggal terbit tidak boleh kosong'
-                ]
-            ],
-            'sampul' => [
-                'rules' => 'max_size[sampul,5120]|is_image[sampul]|mime_in[sampul,image/png,image/jpg,image/jpeg]',
-                'errors' => [
-                    'mime_in' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'is_image' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'max_size' => 'Ukuran gambar terlalu besar, Maksimal 5MB',
-                ]
-            ],
-            'sinopsis' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom sinopsis tidak boleh kosong'
-                ]
-            ],
-        ])) {
-            return redirect()->to(base_url('/admin/buku/' . $this->request->getVar('slug')))->withInput();
-        }
-
-        $fileSampul = $this->request->getFile('sampul');
-
-        if ($fileSampul->getError() == 4) {
-            $namasampul = $this->request->getVar('sampullama');
-        } else {
-            unlink('upload/buku/' . $this->request->getVar('sampullama'));
-            $namasampul = $fileSampul->getRandomName();
-            $fileSampul->move('upload/buku/', $namasampul);
-        }
-        $slug = url_title($this->request->getVar('judul'), '-', true);
-
-        $this->bukuModel->save([
-            'id' => $id,
-            'judul' => $this->request->getVar('judul'),
-            'slug' =>  $slug,
-            'penulis' => $this->request->getVar('penulis'),
-            'penerbit' => $this->request->getVar('penerbit'),
-            'tanggal_terbit' => $this->request->getVar('tanggal_terbit'),
-            'sampul' => $namasampul,
-            'sinopsis' => $this->request->getVar('sinopsis'),
-        ]);
-
-        session()->setFlashdata('pesan', "Data berhasil diubah");
-
-        return redirect()->to("/admin/buku/" . $slug);
+        return $this->response->setJSON($this->bukuModel->find($id));
     }
 
     protected function formatTanggal($tanggal)

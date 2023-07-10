@@ -121,7 +121,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="hapusPinjam" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form class="modal-content" action="/pinjam/" method="post">
             <?= csrf_field() ?>

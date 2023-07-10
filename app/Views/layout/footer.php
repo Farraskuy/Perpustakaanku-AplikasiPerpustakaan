@@ -4,6 +4,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
 <script>
+    // side bar toggler
+    const main = document.querySelector('.main');
+
+    function toggleSidebar() {
+        main.classList.toggle('active');
+    }
+
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
@@ -39,23 +46,22 @@
     const hapusModal = document.getElementById('hapus')
     if (hapusModal) {
         hapusModal.addEventListener('show.bs.modal', event => {
-
-            const button = event.relatedTarget
-            const idPinjam = button.getAttribute('data-bs-idpinjam')
+            const button = event.relatedTarget;
+            const id = button.id;
 
             const modalContent = hapusModal.querySelector('.modal-content');
-            const action = modalContent.getAttribute('action');
-            modalContent.setAttribute('action', action + idPinjam)
-
-
+            const action = modalContent.getAttribute('data-base-action');
+            modalContent.setAttribute('action', action + id);
         })
     }
 
-
-    const main = document.querySelector('.main');
-
-    function toggleSidebar() {
-        main.classList.toggle('active');
+    function toggleFormAkses(value) {
+        const form = document.getElementById('formAksesLogin');
+        if (value == "admin" || value == "petugas") {
+            form.removeAttribute('disabled');
+        } else {
+            form.setAttribute('disabled', 'true');
+        }
     }
 
     let myModal;

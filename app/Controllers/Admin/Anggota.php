@@ -119,15 +119,13 @@ class Anggota extends BaseController
             return redirect()->back()->withInput();
         }
 
-        // insert tabel users login
-        $data = [
+        // insert tabel users untuk login
+        $this->userModel->withGroup('anggota')->save([
             'username' => $this->request->getVar('username'),
             'email' => $this->request->getVar('email'),
             'password_hash' => Password::hash($this->request->getVar('password')),
             'active' => 1,
-        ];
-
-        $this->userModel->withGroup('anggota')->save($data);
+        ]);
         $id = $this->userModel->getInsertID();
 
         $fileFoto = $this->request->getFile('foto');

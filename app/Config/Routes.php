@@ -47,10 +47,10 @@ $routes->group('/pinjam/', ['filter' => 'role:anggota'], function ($routes) {
 // routes admin
 $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     // dashboard
-    $routes->get('/', '\Admin\Admin::index');
-
+    $routes->get('/', 'Admin\Admin::index');
+    
     // menu petugas
-    $routes->get('petugas', 'Admin\Anggota::index');
+    $routes->get('petugas', 'Admin\Petugas::index');
     $routes->post('petugas', 'Admin\Petugas::simpan');
     $routes->put('petugas/(:any)', 'Admin\Petugas::edit/$1');
     $routes->delete('petugas/(:any)', 'Admin\Petugas::hapus/$1');
@@ -77,7 +77,13 @@ $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->put('pinjam/(:any)', 'Admin\Pinjam::edit/$1');
     $routes->delete('pinjam/(:any)', 'Admin\Pinjam::hapus/$1');
     $routes->get('pinjam/(:any)', 'Admin\Pinjam::detail/$1');
+
+    
 });
+
+// AJAX
+$routes->get('/listbuku', 'User\Buku::listBuku');
+$routes->get('/listbuku/ambil/(:any)', 'User\Buku::ambilBuku/$1');
 
 
 

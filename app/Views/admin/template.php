@@ -27,7 +27,7 @@
                         <a class="nav-link side-item <?= $navactive == 'peminjaman' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pinjam"><i class="fa-regular fa-book-circle-arrow-right fs-6"></i>Peminjaman</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link side-item <?= $navactive == 'pengembalian' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pengembalian"><i class="fa-regular fa-book-circle-arrow-up fs-6"></i>Pengembalian</a>
+                        <a class="nav-link side-item <?= $navactive == 'pengambilan' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pengambilan"><i class="fa-regular fa-book-arrow-up fs-6"></i>Pengambilan Buku</a>
                     </li>
                 </ul>
 

@@ -25,14 +25,13 @@ class Pinjam extends BaseController
     }
     public function index()
     {
-
-        $pinjam =$this->pinjamModel->getData();
         $this->data += [
             "title" => "Home | Administrator",
             "subtitle" => "Peminjaman",
             "navactive" => "peminjaman",
             "validation" => validation_errors(),
-            "data" => $pinjam,
+            "dataanggota" => $this->anggotaModel->ambilData(),
+            "data" => $this->pinjamModel->getData(),
         ];
         return view('admin/peminjaman/dataPeminjaman', $this->data);
     }
@@ -40,7 +39,7 @@ class Pinjam extends BaseController
     public function detail($id_pinjam)
     {
 
-        $pinjam = $this->pinjamModel->dataPinjam(user_id(), $id_pinjam);
+        $pinjam = $this->pinjamModel->getData($id_pinjam);
         $this->data += [
             "title" => "Pinjam",
             "pinjam" => $pinjam['pinjam'],
@@ -67,7 +66,7 @@ class Pinjam extends BaseController
         if ($this->bukuModel->isTerpinjam($id_buku, user_id())) {
         }
         $this->pinjamModel->save([
-            'id' => $this->uniqueID(),
+            'id' => uniqueID('PIN', 'pinjam', 'id_pinjam'),
             'id_anggota' => user_id(),
             'status' => 'menunggu',
             'jumlah_pinjam' => 1,
@@ -110,12 +109,5 @@ class Pinjam extends BaseController
         }
 
         return redirect()->back()->with('error_pinjam', 'Errror tidak bisa membatalkan pinjaman. Harap hubungi pihak perpustakaan');
-    }
-
-    protected function uniqueID()
-    {
-        $random = random_int(1000, 9999);
-        $tanggal = Time::now()->format('Ymd');
-        return "PIN$tanggal$random";
     }
 }

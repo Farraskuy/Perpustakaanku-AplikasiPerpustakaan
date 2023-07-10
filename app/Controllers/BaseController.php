@@ -38,7 +38,8 @@ abstract class BaseController extends Controller
      */
     protected $helpers = [
         'form',
-        'auth'
+        'auth',
+        'custom'
     ];
 
     /**
@@ -50,7 +51,7 @@ abstract class BaseController extends Controller
     /**
      * Constructor.
      */
-    protected $data;
+    protected $data = [];
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -59,14 +60,11 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
-        $this->data = [];
         if (logged_in()) {
-            $anggotaModel = new AnggotaModel();
             $role = array_values(user()->getRoles())[0];
             $this->data += [
                 "username" => user()->username,
                 "role" => $role,
-                "batas_pinjam" => $anggotaModel->find(user_id())['batas_pinjam'],
             ];
         }
     }

@@ -1,184 +1,70 @@
-<?= $this->extend('admin/template'); ?>
+<?= $this->extend('template'); ?>
 
 <?= $this->section('content'); ?>
 
-
-
-<div class="bg-white rounded p-3 px-4 mb-3">
-    <div class="row align-items-center">
-        <div class="col-md-6 d-flex align-items-center gap-3">
-            <a href="/admin/buku" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i> </a>
-            <h5 class="m-0">Detail Buku</h5>
+<div class="container" style="padding-top: 65px;">
+    <div class="my-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="/pinjam" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i></a>
+            <h4 class="m-0">Detail Peminjaman Buku</h4>
         </div>
-        <div class="col-md-6 d-flex justify-content-end align-items-center gap-3">
-
-            <span class="fs-5 fw-semibold text-dark border-end pe-3">Aksi</span>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <a style="min-width: 80px;" class="btn btn-success text-white fw-semibold"><i class="fa-regular fa-plus"></i> Tambah Stok</a>
-                <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-                <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-<div class="bg-white rounded p-3 px-4">
-    <div class="row g-0">
-        <div class="col-md-4 col-xl-3 row flex-column align-items-center">
-            <div class="p-3 w-100 col-4" style="height: 400px;">
-                <img src="/upload/buku/<?= $data['sampul'] ?>" class="w-100 h-100" style="object-fit: contain;">
-            </div>
-        </div>
-        <div class="col-md-8 col-xl-9 d-flex justify-content-center">
-            <div class="container-fluid py-4 ">
-                <div class="row">
-                    <div class="col-12">
-                        <h5 class="m-0"><?= $data['judul'] ?></h5>
-                    </div>
+        <div class="p-3 border rounded-3">
+            <div class="row align-items-center mb-3 row-gap-2">
+                <div class="col border-end">
+                    <h6 class="mb-3">
+                        <strong>No Peminjaman </strong>
+                        <span class="border-start border-end px-2 mx-2"><?= $pinjam['id'] ?></span>
+                        <span class="badge bg-<?= $pinjam['status_type'] ?>"><?= $pinjam['status_message'] ?></span>
+                    </h6>
+                    <?php if ($pinjam['status'] == 'menunggu') : ?>
+                        <p class="m-0">Batas waktu pengambilan : <?= $pinjam['batas_ambil'] ?></p>
+                    <?php endif ?>
+                    <?php if ($pinjam['status'] == 'terpinjam') : ?>
+                        <p class="m-0">Waktu pengambilan : <?= $pinjam['tanggal_ambil'] ?></p>
+                        <p class="m-0">Batas waktu pengembalian : <?= $pinjam['tanggal_kembali'] ?></p>
+                    <?php endif ?>
                 </div>
-                <hr>
-                <div class="rov">
+                <div class="col-12 col-md-auto">
+                    <h6 class="text-md-end">Jumlah Buku</h6>
+                    <h4 class="text-md-end"><?= $pinjam['jumlah_pinjam'] ?></h4>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 px-2">
+                <?php foreach ($buku as $item) : ?>
                     <div class="col">
-                        <table class=" table-borderless">
-                            <tbody>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Judul</th>
-                                    <td>: <?= $data['judul'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Penulis</th>
-                                    <td>: <?= $data['penulis'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Penerbir</th>
-                                    <td>: <?= $data['penerbit'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Tanggal Terbit</th>
-                                    <td>: <?= $data['format_tanggal'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Stok</th>
-                                    <td>: <?= $data['stok'] ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <hr>
-                <div class="row flex-column">
-                    <div class="col">
-                        <h6 class="fw-bold">Sinopsis</h6>
-                        <p><?= $data['sinopsis'] ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- modal -->
-    <!-- hapus -->
-    <div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <form class="modal-content" action="/admin/buku/<?= $data['id'] ?>" method="post">
-                <?= csrf_field() ?>
-                <input type="hidden" name="_method" value="DELETE">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Hapus</h1>
-                </div>
-                <div class="modal-body">
-                    <p>Apakah anda yakin ingin menghapus buku ini?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- edit data -->
-    <div class="modal fade form-modal" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <form class="modal-content" method="post" enctype="multipart/form-data">
-
-                <input type="hidden" name="_method" value="PUT">
-                <input type="hidden" name="slug" value="<?= $data['slug'] ?>">
-                <input type="hidden" name="sampullama" value="<?= $data['sampul'] ?>">
-
-                <?= csrf_field() ?>
-
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Edit Buku</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="mb-3 row">
-                        <label for="judul" class="col-sm-3 form-label">Judul buku</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control <?= isset($validation['judul']) ? 'is-invalid' : '' ?>" value="<?= old('judul', $data['judul']) ?>" name="judul" id="judul" autofocus>
-                            <div class="invalid-feedback"><?= isset($validation['judul']) ? $validation['judul'] : '' ?></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="penulis" class="col-sm-3 col-sm-3 form-label">Penulis</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control <?= isset($validation['penulis']) ? 'is-invalid' : '' ?>" value="<?= old('penulis', $data['penulis']) ?>" name="penulis" id="penulis">
-                            <div class="invalid-feedback"><?= isset($validation['penulis']) ? $validation['penulis'] : '' ?></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="penerbit" class="col-sm-3 form-label">Penerbit</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control <?= isset($validation['penerbit']) ? 'is-invalid' : '' ?>" value="<?= old('penerbit', $data['penerbit']) ?>" name="penerbit" id="penerbit">
-                            <div class="invalid-feedback"><?= isset($validation['penerbit']) ? $validation['penerbit'] : '' ?></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="tanggalTerbit" class="col-sm-3 form-label">Tanggal Terbit</label>
-                        <div class="col-sm-9">
-                            <input class="form-control <?= isset($validation['tanggal_terbit']) ? 'is-invalid' : '' ?>" id="tanggalTerbit" value="<?= old('tanggal_terbit', date('Y-m-d', strtotime($data['tanggal_terbit']))) ?>" name="tanggal_terbit" type="date" />
-                            <div class="invalid-feedback"><?= isset($validation['tanggal_terbit']) ? $validation['tanggal_terbit'] : '' ?></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="sampul" class="col-sm-3 form-label">Sampul</label>
-                        <div class="col-sm-9">
-                            <input class="form-control <?= isset($validation['sampul']) ? 'is-invalid' : '' ?>" name="sampul" type="file" id="sampul" onchange="ubahPreview(this)">
-                            <div class="invalid-feedback"><?= isset($validation['sampul']) ? $validation['sampul'] : '' ?></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-9">
-                            <p>Preview</p>
-                            <div style="height: 150px;" class="w-100 border rounded-3 text-center p-3">
-                                <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/buku/<?= $data['sampul'] ?>" alt="default sampul">
+                        <div class="card mb-3 p-3" style="max-width: 540px;">
+                            <div class="row g-0 row-gap-3">
+                                <div class="col-sm-4">
+                                    <img src="/upload/buku/<?= $item['sampul'] ?>" class="h-100 w-100 rounded-start" style="max-height: 150px; object-fit: contain;" alt="...">
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="card-body p-0 ps-3 h-100 d-flex flex-column justify-content-between row-gap-2">
+                                        <div>
+                                            <p class="d-flex justify-content-between m-0">Status <span class="d-flex align-items-center badge bg-<?= $pinjam['status_type'] ?>"><?= $pinjam['status_message'] ?></span></p>
+                                            <hr class="my-2">
+                                            <small class="text-secondary row g-0">
+                                                <span class="wrap-text col-8"><?= $item['penerbit'] ?></span>
+                                                <span class="col-4 d-flex justify-content-end">| <?= date('Y', strtotime($item['tanggal_terbit'])) ?></span>
+                                            </small>
+                                            <h1 class="text-dark card-title my-1 wrap-text judul fs-6"><?= $item['judul'] ?></h1>
+                                            <small class="text-secondary fw-semibold wrap-text judul"><?= $item['penulis'] ?></small>
+                                        </div>
+                                        <div class="w-50 ms-auto d-flex justify-content-end" role="group" aria-label="Basic example">
+                                            <!-- <a href="" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus dari list"><i class="fa-regular fa-square-minus" ></i></a> -->
+                                            <a href="/buku/<?= $item['slug'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail"><i class="fa-regular fa-eye"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <label for="sinopsis" class="col-sm-3 form-label">Sinopsis</label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control <?= isset($validation['sinopsis']) ? 'is-invalid' : '' ?>" name="sinopsis" id="sinopsis" rows="3"><?= old('sinopsis', $data['sinopsis']) ?></textarea>
-                            <div class="invalid-feedback"><?= isset($validation['sinopsis']) ? $validation['sinopsis'] : '' ?></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-warning text-white"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-                </div>
-            </form>
+                <?php endforeach ?>
+
+            </div>
         </div>
     </div>
+</div>
 
 
-
-
-
-
-    <?= $this->endSection(); ?>
+<?= $this->endSection(); ?>
