@@ -9,15 +9,34 @@ class DetailPinjam extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_pinjam' => [
+            'id_anggota' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 255,
             ],
-            'id_buku' => [
+            'id_login' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'status' => [
+            'nama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'jenis_kelamin' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'agama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'nomor_telepon' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'alamat' => [
+                'type'       => 'TEXT',
+            ],
+            'foto' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
@@ -30,8 +49,8 @@ class DetailPinjam extends Migration
                 'NULL'       => true,
             ],
         ]);
-        // $this->forge->addForeignKey('id_pinjam', 'pinjam', 'id_pinjam');
-        $this->forge->createTable('detail_pinjam');
+        $this->forge->addKey('id_anggota', 'user', 'id');
+        $this->forge->createTable('anggota');
     }
 
     public function down()

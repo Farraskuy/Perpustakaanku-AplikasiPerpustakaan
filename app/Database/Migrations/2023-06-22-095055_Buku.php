@@ -8,13 +8,10 @@ class Buku extends Migration
 {
     public function up()
     {
-        return
             $this->forge->addField([
-                'id' => [
-                    'type'           => 'INT',
-                    'constraint'     => 11,
-                    'unsigned'       => true,
-                    'auto_increment' => true,
+                'id_buku' => [
+                    'type'           => 'VARCHAR',
+                    'constraint'     => 255,
                 ],
                 'judul' => [
                     'type'       => 'VARCHAR',
@@ -58,7 +55,7 @@ class Buku extends Migration
                 ],
 
             ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addKey('id_buku', true);
         $this->forge->createTable('buku');
     }
 

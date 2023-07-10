@@ -7,5 +7,6 @@ use Myth\Auth\Models\UserModel;
 class UsersModel extends UserModel
 {
     protected $returnType     = 'array';
-    protected $skipValidation     = true;
+    protected $skipValidation = true;
+    protected $useSoftDeletes = false;
 }

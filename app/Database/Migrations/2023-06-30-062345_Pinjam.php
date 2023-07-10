@@ -9,7 +9,7 @@ class Pinjam extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'id_pinjam' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 255,
             ],
@@ -39,7 +39,7 @@ class Pinjam extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addKey('id_pinjam', true);
         $this->forge->createTable('pinjam');
     }
 

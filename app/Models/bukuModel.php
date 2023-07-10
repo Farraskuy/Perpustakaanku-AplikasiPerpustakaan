@@ -8,9 +8,9 @@ class BukuModel extends Model
 {
     protected $table      = 'buku';
     protected $useTimestamps = true;
-    protected $allowedFields = ['judul', 'slug', 'penulis', 'penerbit', 'tanggal_terbit', 'stok', 'sampul', 'sinopsis'];
+    protected $allowedFields = ['id_buku', 'judul', 'slug', 'penulis', 'penerbit', 'tanggal_terbit', 'stok', 'sampul', 'sinopsis'];
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_buku';
 
     protected $useAutoIncrement = true;
 
@@ -51,7 +51,7 @@ class BukuModel extends Model
     public function isTerpinjam($idBuku, $userId)
     {
         $terpinjamBuilder = $this->db->table('pinjam')
-            ->join('detail_pinjam', 'detail_pinjam.id_pinjam = pinjam.id', 'inner')
+            ->join('detail_pinjam', 'detail_pinjam.id_pinjam = pinjam.id_pinjam', 'inner')
             ->where('pinjam.id_anggota', $userId)
             ->where('detail_pinjam.id_buku', $idBuku)->get()->getNumRows();
 

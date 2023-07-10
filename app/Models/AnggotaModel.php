@@ -7,14 +7,14 @@ use CodeIgniter\Model;
 class AnggotaModel extends Model
 {
     protected $table      = 'anggota';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_anggota';
 
     protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'foto'];
+    protected $allowedFields = ['id_anggota', 'id_login', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'foto'];
 
     // Dates
     protected $useTimestamps = true;
@@ -43,7 +43,7 @@ class AnggotaModel extends Model
     public function ambilData($id = null)
     {
         $builder = $this->db->table('anggota')
-            ->join('users', 'users.id = anggota.id', 'inner');
+            ->join('users', 'users.id = anggota.id_anggota', 'inner');
 
         if ($id) {
             return $builder->where('users.id', $id)->get()->getRowArray();
