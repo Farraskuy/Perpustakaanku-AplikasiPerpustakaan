@@ -48,14 +48,14 @@ $routes->group('/pinjam/', ['filter' => 'role:anggota'], function ($routes) {
 $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     // dashboard
     $routes->get('/', 'Admin\Admin::index');
-    
+
     // menu petugas
     $routes->get('petugas', 'Admin\Petugas::index');
     $routes->post('petugas', 'Admin\Petugas::simpan');
     $routes->put('petugas/(:any)', 'Admin\Petugas::edit/$1');
     $routes->delete('petugas/(:any)', 'Admin\Petugas::hapus/$1');
     $routes->get('petugas/(:any)', 'Admin\Petugas::detail/$1');
-    
+
     // menu petugas
     $routes->get('anggota', 'Admin\Anggota::index');
     $routes->post('anggota', 'Admin\Anggota::simpan');
@@ -63,7 +63,7 @@ $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->put('anggota/(:any)', 'Admin\Anggota::edit/$1');
     $routes->delete('anggota/(:any)', 'Admin\Anggota::hapus/$1');
     $routes->get('anggota/(:any)', 'Admin\Anggota::detail/$1');
-    
+
     // menu buku
     $routes->get('buku', 'Admin\Buku::index');
     $routes->post('buku', 'Admin\Buku::simpan');
@@ -77,8 +77,6 @@ $routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
     $routes->put('pinjam/(:any)', 'Admin\Pinjam::edit/$1');
     $routes->delete('pinjam/(:any)', 'Admin\Pinjam::hapus/$1');
     $routes->get('pinjam/(:any)', 'Admin\Pinjam::detail/$1');
-
-    
 });
 
 // AJAX

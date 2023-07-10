@@ -39,7 +39,7 @@ class Anggota extends BaseController
         }
 
         $this->data += [
-            "title" => "Anggota | " .  $anggota['nama'],
+            "title" => "Anggota | Administrator",
             "data" => $anggota,
             "navactive" => "anggota",
             "validation" => validation_errors()
@@ -85,6 +85,13 @@ class Anggota extends BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Kolom {field} tidak boleh kosong',
+                ]
+            ],
+            'nomor_telepon' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => 'Harap masukan nomor telpon yang sesuai',
+                    'numeric' => 'Harap masukan nomor telpon yang sesuai',
                 ]
             ],
             'jenis_kelamin' => [
@@ -139,8 +146,10 @@ class Anggota extends BaseController
 
         // insert data anggota
         $data = [
-            'id' => $id,
+            'id_anggota' => uniqueID('AGT', 'anggota', 'id_anggota'),
+            'id_login' => $id,
             'nama' => $this->request->getVar('nama'),
+            'nomor_telepon' => $this->request->getVar('nomor_telepon'),
             'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
             'agama' =>  $this->request->getVar('agama'),
             'alamat' =>  $this->request->getVar('alamat'),
@@ -153,37 +162,38 @@ class Anggota extends BaseController
         return redirect()->to("/admin/anggota");
     }
 
-    public function hapus($id)
+    public function hapus($id_anggota)
     {
-        $anggota = $this->anggotaModel->where('id', $id)->first();
+        $anggota = $this->anggotaModel->where('id_anggota', $id_anggota)->first();
         if ($anggota['foto'] != "default.png") {
             unlink('upload/anggota/' . $anggota['foto']);
         }
-        $this->anggotaModel->delete($id);
-        $this->userModel->delete($id);
-        $this->userModel->db->table('auth_groups_users')->delete($id);
+        if ($anggota['id_login']) {
+            $this->userModel->delete($anggota['id_login']);
+        }
+        $this->anggotaModel->delete($id_anggota);
 
         session()->setFlashdata('pesan', "Data berhasil dihapus");
 
         return redirect()->to('/admin/anggota');
     }
 
-    public function edit($id)
+    public function edit($id_anggota)
     {
-        $user = $this->userModel->where('id', $id)->first();
+        $anggota = $this->anggotaModel->ambilData($id_anggota);
 
-        $userRule = 'required';
-        if ($user['username'] != $this->request->getVar('username')) {
-            $userRule .= '|is_unique[users.username]';
+        $usernameRule = 'required';
+        if ($anggota['username'] != $this->request->getVar('username')) {
+            $usernameRule .= '|is_unique[users.username]';
         }
         $emailRule = 'required|valid_email';
-        if ($user['email'] != $this->request->getVar('email')) {
+        if ($anggota['email'] != $this->request->getVar('email')) {
             $emailRule .= '|is_unique[users.email]';
         }
 
         if (!$this->validate([
             'username' => [
-                'rules' => $userRule,
+                'rules' => $usernameRule,
                 'errors' => [
                     'required' => 'Kolom {field} tidak boleh kosong',
                     'is_unique' => '{field} {value} sudah digunakan'
@@ -201,6 +211,13 @@ class Anggota extends BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Kolom {field} tidak boleh kosong',
+                ]
+            ],
+            'nomor_telepon' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => 'Harap masukan nomor telpon yang sesuai',
+                    'numeric' => 'Harap masukan nomor telpon yang sesuai',
                 ]
             ],
             'jenis_kelamin' => [
@@ -231,12 +248,13 @@ class Anggota extends BaseController
                     'required' => 'Kolom {field} tidak boleh kosong'
                 ]
             ],
+
         ])) {
             return redirect()->back()->withInput();
         }
 
         $this->userModel->save([
-            'id' => $id,
+            'id' => $anggota['id_login'],
             'username' => $this->request->getVar('username'),
             'email' => $this->request->getVar('email'),
         ]);
@@ -256,8 +274,9 @@ class Anggota extends BaseController
         }
 
         $this->anggotaModel->save([
-            'id' => $id,
+            'id_anggota' => $id_anggota,
             'nama' => $this->request->getVar('nama'),
+            'nomor_telepon' => $this->request->getVar('nomor_telepon'),
             'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
             'agama' =>  $this->request->getVar('agama'),
             'alamat' =>  $this->request->getVar('alamat'),
@@ -266,10 +285,10 @@ class Anggota extends BaseController
 
         session()->setFlashdata('pesan', "Data berhasil diubah");
 
-        return redirect()->to("admin/anggota/" . $id);
+        return redirect()->to("admin/anggota/" . $id_anggota);
     }
 
-    public function reset($id)
+    public function reset($id_anggota)
     {
         if (!$this->validate([
             'password' => [
@@ -283,20 +302,20 @@ class Anggota extends BaseController
                 'errors' => [
                     'required' => 'Kolom konfirmasi password tidak boleh kosong',
                     'matches' => 'Password tidak sama',
-
                 ]
             ],
         ])) {
             return redirect()->back()->withInput()->with('error_password', validation_show_error('password'));
         }
 
+        $anggota = $this->anggotaModel->ambilData($id_anggota);
         $this->userModel->save([
-            'id' => $id,
+            'id' => $anggota['id_login'],
             'password_hash' => Password::hash($this->request->getVar('password')),
         ]);
 
         session()->setFlashdata('pesan', "Password berhasil reset");
 
-        return redirect()->to("admin/anggota/" . $id);
+        return redirect()->to("admin/anggota/" . $id_anggota);
     }
 }

@@ -40,13 +40,13 @@ class AnggotaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function ambilData($id = null)
+    public function ambilData($id_anggota = null)
     {
         $builder = $this->db->table('anggota')
-            ->join('users', 'users.id = anggota.id_anggota', 'inner');
+            ->join('users', 'users.id = anggota.id_login', 'inner');
 
-        if ($id) {
-            return $builder->where('users.id', $id)->get()->getRowArray();
+        if ($id_anggota) {
+            return $builder->where('anggota.id_anggota', $id_anggota)->get()->getRowArray();
         }
 
         return $builder->get()->getResultArray();
