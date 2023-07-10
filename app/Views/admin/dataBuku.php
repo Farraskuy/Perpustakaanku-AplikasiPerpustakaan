@@ -6,7 +6,7 @@
 <div class="bg-white rounded-3 p-3 px-4 mb-3">
     <div class="row align-items-center">
         <div class="col-md-6">
-            <h4 class="m-0">Data | <?= $subtitle ?></h4>
+            <h5 class="m-0">Data | <?= $subtitle ?></h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center">
             <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>

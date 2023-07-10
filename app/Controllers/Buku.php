@@ -2,15 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Models\AnggotaModel;
 use App\Models\BukuModel;
 
 class Buku extends BaseController
 {
     protected $bukuModel;
+    protected $anggotaModel;
 
     public function __construct()
     {
         $this->bukuModel = new BukuModel();
+        $this->anggotaModel = new AnggotaModel();
     }
 
     public function index()
@@ -26,22 +29,27 @@ class Buku extends BaseController
         }
 
         if (in_groups('admin')) {
-
-            $data = [
+            $this->data += [
                 "title" => "Buku | " .  $buku['judul'],
                 "data" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
                 "navactive" => "buku",
                 "validation" => validation_errors()
             ];
 
-            return view('admin/detailBuku', $data);
+            return view('admin/detailBuku', $this->data);
         }
 
-        $data = [
+        $this->data += [
             "title" => "Buku | " .  $buku['judul'],
             "buku" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
         ];
-        return view('buku/detailBuku', $data);
+
+        if (logged_in()) {
+            if ($this->bukuModel->isTerpinjam($buku['id'], user_id())) {
+                $this->data += ['terpinjam' => true];
+            }
+        }
+        return view('buku/detailBuku', $this->data);
     }
 
     public function simpan()

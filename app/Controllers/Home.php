@@ -23,10 +23,11 @@ class Home extends BaseController
     {
 
         $buku = $this->bukuModel->ambilBuku();
-        $data = [
+        $this->data += [
             'title' => 'Home',
             'buku' => $buku,
         ];
-        return view('/pages/home', $data);
+        
+        return view('/pages/home', $this->data);
     }
 }

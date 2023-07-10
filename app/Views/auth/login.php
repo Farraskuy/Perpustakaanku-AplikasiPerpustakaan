@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
-    <title><?= lang('Auth.loginTitle') ?></title>
+    <title><?= lang('Auth.register') ?></title>
 </head>
 
 <body class="bg-light">
@@ -32,19 +32,19 @@
     <section class="vh-100 bg-light">
         <div class="container py-5 h-100" style="font-family: poppins;">
             <div class="row justify-content-center align-items-center h-100">
-                <div class="col-9">
+                <div class="col col-md-9">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0 align-items-center">
                             <!-- gambar -->
-                            <div class="col-md-5 col-lg-6 d-none d-md-block p-lg-5">
+                            <div class="col-md-6 d-none d-lg-block p-lg-5">
                                 <img src="/assets/img/buku.png" alt="login form" class="img-fluid p-5" />
                             </div>
 
-                            <div class="col-md-6 p-2 p-sm-4 p-md-3">
-                                <div class="card-body p-4 p-lg-5 text-black">
+                            <div class="col-lg-6 p-2 p-sm-4 p-md-3">
+                                <div class="card-body text-black">
                                     <div class="d-flex align-items-center mb-3 pb-1">
                                         <img src="/assets/img/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
-                                        <span class="h4 m-0 fs-5">Perpustakaanku | <?= lang('Auth.loginTitle') ?></span>
+                                        <span class="h4 m-0 fs-5">Perpustakaanku | <?= lang('Auth.register') ?></span>
                                     </div>
 
                                     <?= view('Myth\Auth\Views\_message_block') ?>
@@ -87,9 +87,7 @@
                                         <?php if ($config->activeResetter) : ?>
                                             <a class="small" href="<?= url_to('forgot') ?>">Lupa Password?</a>
                                         <?php endif; ?>
-                                        <?php if ($config->allowRegistration) : ?>
-                                            <p class="text-purple">Belum daftar keanggotaan <a href="<?= url_to('register') ?>">Daftar disini</a></p>
-                                        <?php endif; ?>
+                                       
 
 
                                     </form>

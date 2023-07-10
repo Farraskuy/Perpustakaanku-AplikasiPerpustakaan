@@ -34,6 +34,15 @@
 .layanan .item:hover {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
+.number {
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  background-color: var(--color-purple);
+  color: white;
+  border-radius: 100%;
+}
 .nav-pills .nav-link {
   color: #000000a6;
   background-color: transparent;
@@ -44,7 +53,6 @@
 .wrap-text {
   max-width: 100%;
   max-height: 100%;
-  white-space: pre-wrap;
   word-break: keep-all;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -63,6 +71,9 @@
 }
 .border-purple {
   border-color: var(--color-purple) !important;
+}
+.btn {
+  font-size: 14px !important;
 }
 .btn-purple {
   background-color: var(--color-purple);
@@ -95,6 +106,12 @@
   background-color: var(--color-green-dark) !important;
   color: white;
 }
+
+.btn:disabled{
+  filter: grayscale(0.9);
+}
+
+
 .bookmark {
   max-width: 43px;
   max-height: 43px;
@@ -174,4 +191,7 @@
   opacity: 1;
   margin-top: 25px;
   transition: 0.5s ease-in-out;
+}
+.status-filter-bar {
+  cursor: pointer;
 }

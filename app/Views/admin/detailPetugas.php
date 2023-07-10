@@ -8,7 +8,7 @@
     <div class="row align-items-center">
         <div class="col-md-6 d-flex align-items-center gap-3">
             <a href="/admin/petugas" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i></a>
-            <h4 class="m-0">Detail Petugas</h4>
+            <h5 class="m-0">Detail Petugas</h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center gap-3">
 
@@ -33,7 +33,7 @@
             <div class="container-fluid py-4 ">
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="m-0"><?= $data['nama'] ?></h4>
+                        <h5 class="m-0"><?= $data['nama'] ?></h5>
                     </div>
                 </div>
                 <hr>

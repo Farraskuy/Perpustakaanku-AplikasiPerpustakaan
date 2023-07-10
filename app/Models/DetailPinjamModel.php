@@ -4,20 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BukuModel extends Model
+class DetailPinjamModel extends Model
 {
-    protected $table      = 'buku';
-    protected $useTimestamps = true;
-    protected $allowedFields = ['judul', 'slug', 'penulis', 'penerbit', 'tanggal_terbit', 'stok', 'sampul', 'sinopsis'];
+    protected $table      = 'detail_pinjam';
+    protected $primaryKey = 'id_pinjam';
 
-    protected $primaryKey = 'id';
-
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
+    protected $allowedFields = ['id_pinjam', 'id_buku', 'status'];
+
     // Dates
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -39,22 +39,4 @@ class BukuModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function ambilBuku($slug = '')
-    {
-        if ($slug) {
-            return $this->where('slug', $slug)->first();
-        }
-        return $this->findAll();
-    }
-
-    public function isTerpinjam($idBuku, $userId)
-    {
-        $terpinjamBuilder = $this->db->table('pinjam')
-            ->join('detail_pinjam', 'detail_pinjam.id_pinjam = pinjam.id', 'inner')
-            ->where('pinjam.id_anggota', $userId)
-            ->where('detail_pinjam.id_buku', $idBuku)->get()->getNumRows();
-
-        return $terpinjamBuilder == 0 ? false : true;
-    }
 }

@@ -36,6 +36,22 @@
         }
     }
 
+    const hapusModal = document.getElementById('hapus')
+    if (hapusModal) {
+        hapusModal.addEventListener('show.bs.modal', event => {
+
+            const button = event.relatedTarget
+            const idPinjam = button.getAttribute('data-bs-idpinjam')
+
+            const modalContent = hapusModal.querySelector('.modal-content');
+            const action = modalContent.getAttribute('action');
+            modalContent.setAttribute('action', action + idPinjam)
+
+
+        })
+    }
+
+
     const main = document.querySelector('.main');
 
     function toggleSidebar() {
@@ -63,5 +79,17 @@
         <?php elseif (validation_errors()) : ?>
             myModal.show();
         <?php endif ?>
+    <?php endif ?>
+
+    let pinjamModal;
+    if (document.getElementById('pinjam')) {
+        pinjamModal = new bootstrap.Modal('#pinjam', {
+            keyboard: false
+        });
+        pinjamModal.hide();
+    }
+
+    <?php if (session()->getFlashdata('error_pinjam')) : ?>
+        pinjamModal.show();
     <?php endif ?>
 </script>

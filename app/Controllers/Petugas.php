@@ -26,13 +26,13 @@ class Petugas extends BaseController
         if (empty($petugas)) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Petugas dengan id "' . $id . '" tidak ditemukan');
         }
-        $data = [
+        $this->data += [
             "title" => "Petugas | " .  $petugas['nama'],
             "data" => $petugas,
             "navactive" => "petugas",
         ];
 
-        return view('admin/detailPetugas', $data);
+        return view('admin/detailPetugas', $this->data);
     }
 
     public function simpan()

@@ -3,7 +3,7 @@
 
 <?= $this->include('layout/header'); ?>
 
-<body>
+<body style="font-family: poppins; font-size: 14px;">
 
     <?= $this->include('layout/navbar'); ?>
 

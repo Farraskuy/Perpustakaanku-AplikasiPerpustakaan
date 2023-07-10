@@ -14,7 +14,7 @@ class AnggotaModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id', 'nama', 'jenis_kelamin', 'agama', 'alamat', 'foto'];
+    protected $allowedFields = ['id', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'foto'];
 
     // Dates
     protected $useTimestamps = true;
@@ -40,15 +40,15 @@ class AnggotaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function ambilData($id = '')
+    public function ambilData($id = null)
     {
         $builder = $this->db->table('anggota')
             ->join('users', 'users.id = anggota.id', 'inner');
 
-        if ($id != '') {
+        if ($id) {
             return $builder->where('users.id', $id)->get()->getRowArray();
         }
 
-        return $builder->get()->getResult('array');
+        return $builder->get()->getResultArray();
     }
 }

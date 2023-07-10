@@ -8,12 +8,13 @@
     <div class="row align-items-center">
         <div class="col-md-6 d-flex align-items-center gap-3">
             <a href="/admin/buku" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i> </a>
-            <h4 class="m-0">Detail Buku</h4>
+            <h5 class="m-0">Detail Buku</h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center gap-3">
 
             <span class="fs-5 fw-semibold text-dark border-end pe-3">Aksi</span>
             <div class="btn-group" role="group" aria-label="Basic example">
+                <a style="min-width: 80px;" class="btn btn-success text-white fw-semibold"><i class="fa-regular fa-plus"></i> Tambah Stok</a>
                 <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
                 <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
             </div>
@@ -32,7 +33,7 @@
             <div class="container-fluid py-4 ">
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="m-0"><?= $data['judul'] ?></h4>
+                        <h5 class="m-0"><?= $data['judul'] ?></h5>
                     </div>
                 </div>
                 <hr>
