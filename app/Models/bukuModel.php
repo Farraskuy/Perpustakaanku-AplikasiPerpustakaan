@@ -8,11 +8,11 @@ class BukuModel extends Model
 {
     protected $table      = 'buku';
     protected $useTimestamps = true;
-    protected $allowedFields = ['id_buku', 'judul', 'slug', 'penulis', 'penerbit', 'tanggal_terbit', 'stok', 'sampul', 'sinopsis'];
+    protected $allowedFields = ['id_buku', 'judul', 'slug', 'penulis', 'penerbit', 'tanggal_terbit', 'jumlah_buku', 'sampul', 'sinopsis'];
 
     protected $primaryKey = 'id_buku';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;

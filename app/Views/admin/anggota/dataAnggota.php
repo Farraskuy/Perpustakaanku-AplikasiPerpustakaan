@@ -15,7 +15,7 @@
 </div>
 
 <div class="bg-white rounded p-3 px-4 table-responsive ">
-    <table class="table align-middle">
+    <table class="table table-sm align-middle">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -67,8 +67,9 @@
         </form>
     </div>
 </div>
+
 <!-- tambah modal -->
-<div class="modal fade  form-modal" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" method="post" enctype="multipart/form-data" autocomplete="off">
 

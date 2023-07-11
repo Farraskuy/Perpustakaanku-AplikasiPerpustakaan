@@ -38,7 +38,7 @@ class Buku extends BaseController
 
         $this->data += [
             "title" => "Buku | " .  $buku['judul'],
-            "data" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
+            "data" => $buku,
             "navactive" => "buku",
             "validation" => validation_errors()
         ];
@@ -83,6 +83,14 @@ class Buku extends BaseController
                     'max_size' => 'Ukuran gambar terlalu besar, Maksimal 5MB',
                 ]
             ],
+            'jumlah_buku' => [
+                'rules' => 'required|greater_than[0]|numeric',
+                'errors' => [
+                    'required' => 'Kolom tanggal terbit tidak boleh kosong',
+                    'greater_than' => 'Tidak boleh menyetok sebanyak 0 atau kurang dari 0',
+                    'numeric' => 'Harap isi kolom jumlah buku menggunakan angka',
+                ]
+            ],
             'sinopsis' => [
                 'rules' => 'required',
                 'errors' => [
@@ -90,7 +98,7 @@ class Buku extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to(base_url('/admin/buku'))->withInput();
+            return redirect()->back()->withInput()->with('error_tambah', true);
         }
 
         $fileSampul = $this->request->getFile('sampul');
@@ -103,11 +111,13 @@ class Buku extends BaseController
         }
 
         $this->bukuModel->save([
+            'id_buku' => uniqueID('BK', 'buku', 'id_buku'),
             'judul' => $this->request->getVar('judul'),
             'slug' =>  url_title($this->request->getVar('judul'), '-', true),
             'penulis' => $this->request->getVar('penulis'),
             'penerbit' => $this->request->getVar('penerbit'),
             'tanggal_terbit' => $this->request->getVar('tanggal_terbit'),
+            'jumlah_buku' => $this->request->getVar('jumlah_buku'),
             'sampul' => $namasampul,
             'sinopsis' => $this->request->getVar('sinopsis'),
         ]);
@@ -119,7 +129,7 @@ class Buku extends BaseController
 
     public function hapus($id)
     {
-        $buku = $this->bukuModel->where('id', $id)->first();
+        $buku = $this->bukuModel->where('id_buku', $id)->first();
         if ($buku['sampul'] != "default.png") {
             unlink('upload/buku/' . $buku['sampul']);
         }
@@ -131,11 +141,10 @@ class Buku extends BaseController
         return redirect()->to('/admin/buku');
     }
 
-    public function edit()
+    public function edit($slug)
     {
-
-        $buku = $this->bukuModel->ambilBuku($this->request->getVar('slug'));
-        $id = $buku['id'];
+        $buku = $this->bukuModel->ambilBuku($slug);
+        $id = $buku['id_buku'];
         $ruleJudul = 'required';
         if ($buku['judul'] != $this->request->getVar('judul')) {
             $ruleJudul .= '|is_unique[buku.judul]';
@@ -176,6 +185,14 @@ class Buku extends BaseController
                     'max_size' => 'Ukuran gambar terlalu besar, Maksimal 5MB',
                 ]
             ],
+            'jumlah_buku' => [
+                'rules' => 'required|greater_than[0]|numeric',
+                'errors' => [
+                    'required' => 'Kolom stok tidak boleh kosong',
+                    'greater_than' => 'Harap jumlah buku lebih dari 0',
+                    'numeric' => 'Harap isi kolom jumlah dengan angka',
+                ]
+            ],
             'sinopsis' => [
                 'rules' => 'required',
                 'errors' => [
@@ -183,7 +200,7 @@ class Buku extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to(base_url('/admin/buku/' . $this->request->getVar('slug')))->withInput();
+            return redirect()->back()->withInput()->with('error_edit', true);
         }
 
         $fileSampul = $this->request->getFile('sampul');
@@ -198,28 +215,19 @@ class Buku extends BaseController
         $slug = url_title($this->request->getVar('judul'), '-', true);
 
         $this->bukuModel->save([
-            'id' => $id,
+            'id_buku' => $id,
             'judul' => $this->request->getVar('judul'),
             'slug' =>  $slug,
             'penulis' => $this->request->getVar('penulis'),
             'penerbit' => $this->request->getVar('penerbit'),
             'tanggal_terbit' => $this->request->getVar('tanggal_terbit'),
             'sampul' => $namasampul,
+            'jumlah_buku' => $this->request->getVar('jumlah_buku'),
             'sinopsis' => $this->request->getVar('sinopsis'),
         ]);
 
         session()->setFlashdata('pesan', "Data berhasil diubah");
 
         return redirect()->to("/admin/buku/" . $slug);
-    }
-
-    protected function formatTanggal($tanggal)
-    {
-        $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $timestamp = strtotime($tanggal);
-        $tanggal = date('d', $timestamp);
-        $indexbulan = date('n', $timestamp);
-        $tahun = date('Y', $timestamp);
-        return $tanggal . " " . $bulan[$indexbulan - 1] . " " . $tahun;
     }
 }

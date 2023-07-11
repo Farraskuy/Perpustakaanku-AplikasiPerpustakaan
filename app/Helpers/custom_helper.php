@@ -2,6 +2,18 @@
 
 use CodeIgniter\I18n\Time;
 
+if (!function_exists('formatTanggal')) {
+    function formatTanggal($tanggal)
+    {
+        $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $timestamp = strtotime($tanggal);
+        $tanggal = date('d', $timestamp);
+        $indexbulan = date('n', $timestamp);
+        $tahun = date('Y', $timestamp);
+        return $tanggal . " " . $bulan[$indexbulan - 1] . " " . $tahun;
+    }
+}
+
 if (!function_exists('uniqueID')) {
     function uniqueID($key, $table, $field)
     {

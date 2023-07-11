@@ -123,7 +123,7 @@ class Anggota extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error_tambah', true);
         }
 
         // insert tabel users untuk login
@@ -250,7 +250,7 @@ class Anggota extends BaseController
             ],
 
         ])) {
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error_edit', true);
         }
 
         $this->userModel->save([
@@ -305,7 +305,7 @@ class Anggota extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->back()->withInput()->with('error_password', validation_show_error('password'));
+            return redirect()->back()->withInput()->with('error_password', true);
         }
 
         $anggota = $this->anggotaModel->ambilData($id_anggota);

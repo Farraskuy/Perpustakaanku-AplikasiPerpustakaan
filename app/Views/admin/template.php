@@ -53,7 +53,7 @@
         <div class="col-10 w-100 bg-light min-vh-100 konten" style="padding-left: 15rem; padding-top: 61px;">
             <div class="position-absolute h-25 bg-purple" style="right: 0; left: 0;"></div>
             <section class="p-5 position-relative">
-                <div class="position-absolute px-5 d-flex justify-content-center" style="right: 0; left: 0; top: 0px" id="notifContainer"></div>
+                <div class="position-absolute px-5 d-flex justify-content-center" style="right: 0; left: 0; top: 0px; z-index: 2;" id="notifContainer"></div>
                 <?= $this->renderSection('content'); ?>
             </section>
         </div>

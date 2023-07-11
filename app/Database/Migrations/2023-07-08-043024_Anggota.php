@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class DetailPinjam extends Migration
+class Anggota extends Migration
 {
     public function up()
     {
@@ -14,8 +14,9 @@ class DetailPinjam extends Migration
                 'constraint'     => 255,
             ],
             'id_login' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
             ],
             'nama' => [
                 'type'       => 'VARCHAR',
@@ -49,12 +50,12 @@ class DetailPinjam extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addKey('id_anggota', 'user', 'id');
+        $this->forge->addKey('id_anggota', true);
         $this->forge->createTable('anggota');
     }
 
     public function down()
     {
-        $this->forge->dropTable('detail_pinjam');
+        $this->forge->dropTable('anggota');
     }
 }

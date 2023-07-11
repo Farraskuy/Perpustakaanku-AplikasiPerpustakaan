@@ -64,38 +64,39 @@
         }
     }
 
-    let myModal;
-    if (document.querySelector('.form-modal')) {
-        myModal = new bootstrap.Modal('.form-modal', {
-            keyboard: false
-        });
-        myModal.hide();
-    }
-    let myResetModal;
-    if (document.querySelector('.form-modal-reset')) {
-        myResetModal = new bootstrap.Modal('.form-modal-reset', {
-            keyboard: false
-        });
-        myResetModal.hide();
-    }
-
     <?php if (in_groups('admin')) : ?>
-        <?php if (session()->getFlashdata('error_password')) : ?>
-            myResetModal.show();
-        <?php elseif (validation_errors()) : ?>
-            myModal.show();
-        <?php endif ?>
-    <?php endif ?>
+        if (document.getElementById('tambah')) {
+            const modalTambah = new bootstrap.Modal('#tambah', {
+                keyboard: false
+            });
+            <?php if (session()->getFlashdata('error_tambah')) : ?>
+                modalTambah.show();
+            <?php endif ?>
+        }
 
-    let pinjamModal;
-    if (document.getElementById('pinjam')) {
-        pinjamModal = new bootstrap.Modal('#pinjam', {
-            keyboard: false
-        });
-        pinjamModal.hide();
-    }
-
-    <?php if (session()->getFlashdata('error_pinjam')) : ?>
-        pinjamModal.show();
+        if (document.getElementById('edit')) {
+            const modalEdit = new bootstrap.Modal('#edit', {
+                keyboard: false
+            });
+            <?php if (session()->getFlashdata('error_edit')) : ?>
+                modalEdit.show();
+            <?php endif ?>
+        }
+        if (document.getElementById('reset')) {
+            const modalReset = new bootstrap.Modal('#reset', {
+                keyboard: false
+            });
+            <?php if (session()->getFlashdata('error_password')) : ?>
+                modalReset.show();
+            <?php endif ?>
+        }
+        if (document.getElementById('tambahStok')) {
+            const modalStok = new bootstrap.Modal('#tambahStok', {
+                keyboard: false
+            });
+            <?php if (session()->getFlashdata('error_stok')) : ?>
+                modalStok.show();
+            <?php endif ?>
+        }
     <?php endif ?>
 </script>

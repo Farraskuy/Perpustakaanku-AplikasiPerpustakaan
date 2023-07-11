@@ -15,7 +15,7 @@
             <span class="fs-5 fw-semibold text-dark border-end pe-3">Aksi</span>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-                <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
+                <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapusSatu"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
             </div>
 
         </div>
@@ -38,7 +38,7 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-sm">
                         <table class="table-borderless">
                             <tbody>
                                 <tr>
@@ -64,6 +64,20 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-sm-auto">
+                        <table class=" table-borderless">
+                            <tbody class="text-secondary">
+                                <tr>
+                                    <th class="ps-2 pe-3 py-1">Ditambahkan Pada</th>
+                                    <td>: <?= formatTanggal($data['created_at']) . ' ' . date('H:i', strtotime($data['created_at'])) ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-2 pe-3 py-1">Diperbarui Pada</th>
+                                    <td>: <?= formatTanggal($data['updated_at']) . ' ' . date('H:i', strtotime($data['updated_at'])) ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <hr>
                 <div class="row flex-column">
@@ -80,7 +94,7 @@
 
 
 <!-- hapus modal -->
-<div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="hapusSatu" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form class="modal-content" method="post">
             <?= csrf_field() ?>
@@ -100,7 +114,7 @@
 </div>
 
 <!-- reset modal -->
-<div class="modal fade form-modal-reset" id="reset" aria-hidden="true" tabindex="-1">
+<div class="modal fade" id="reset" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <form class="modal-content" action="/admin/anggota/reset/<?= $data['id'] ?>" method="post">
 
@@ -137,7 +151,7 @@
 </div>
 
 <!-- edit modal -->
-<div class="modal fade form-modal" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" method="post" enctype="multipart/form-data">
 

@@ -39,8 +39,9 @@ class Petugas extends Migration
                 'constraint' => '255',
             ],
             'id_login' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
             ],
             'nomor_telepon' => [
                 'type'       => 'VARCHAR',

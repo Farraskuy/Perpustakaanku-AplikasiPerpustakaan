@@ -144,7 +144,7 @@ class Petugas extends BaseController
         }
 
         if (!$this->validate($rules)) {
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error_tambah', true);
         }
 
         // insert tabel users
@@ -324,7 +324,7 @@ class Petugas extends BaseController
         }
 
         if (!$this->validate($rules)) {
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error_edit', true);
         }
 
         $getAksesLogin = $this->request->getVar('akses_login');
@@ -414,7 +414,7 @@ class Petugas extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->back()->withInput()->with('error_password', validation_show_error('password'));
+            return redirect()->back()->withInput()->with('error_password', true);
         }
 
         $this->userModel->save([

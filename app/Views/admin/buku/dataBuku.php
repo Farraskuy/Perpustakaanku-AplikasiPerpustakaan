@@ -15,16 +15,18 @@
 </div>
 
 <div class="bg-white rounded p-3 px-4 table-responsive ">
-    <table class="table align-middle">
+    <table class="table table-sm align-middle">
         <thead>
-            <tr>
+            <tr class="align-middle">
                 <th scope="col">#</th>
                 <th scope="col">Sampul</th>
+                <th scope="col">ID Buku</th>
                 <th scope="col">Judul</th>
                 <th scope="col">Penerbit</th>
                 <th scope="col">Penulis</th>
-                <th scope="col">Stok</th>
-                <th scope="col" class="fit">Aksi</th>
+                <th scope="col">Jumlah Buku</th>
+                <th scope="col">Ditambahkan Pada</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -34,14 +36,16 @@
                 <tr>
                     <th scope="row"><?= $i++ ?></th>
                     <td class="fit pe-3"><img class="sampul" src="/upload/buku/<?= $item['sampul'] ?>" alt="foto <?= $item['judul'] ?>"></td>
+                    <td><?= $item['id_buku'] ?></td>
                     <td><?= $item['judul'] ?></td>
                     <td><?= $item['penerbit'] ?></td>
                     <td><?= $item['penulis'] ?></td>
-                    <td><?= $item['stok'] ?></td>
+                    <td class="fit"><?= $item['jumlah_buku'] ?></td>
+                    <td class="fit"><?= formatTanggal($item['created_at']) ?></td>
                     <td class="fit aksi">
                         <a class="btn btn-primary" href="/admin/buku/<?= $item['slug'] ?>"><i class="fa-regular fa-eye"></i></a>
                         <a class="btn btn-warning text-white" href="/admin/buku/<?= $item['slug'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <a class="btn btn-danger" href="/admin/buku/<?= $item['slug'] ?>"><i class="fa-regular fa-trash-xmark"></i></a>
+                        <button id="<?= $item['id_buku'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -50,9 +54,28 @@
     </table>
 </div>
 
+<!-- hapus modal -->
+<div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" method="post" data-base-action="/admin/buku/">
+            <?= csrf_field() ?>
+            <input type="hidden" name="_method" value="DELETE">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Hapus</h1>
+            </div>
+            <div class="modal-body">
+                <p>Apakah anda yakin ingin menghapus buku ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-
-<div class="modal fade  form-modal" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<!-- tambah modal -->
+<div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" method="post" enctype="multipart/form-data" autocomplete="off">
 
@@ -92,6 +115,13 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label for="jumlah_buku" class="col-sm-3 form-label">Jumlah Buku</label>
+                    <div class="col-sm-9">
+                        <input class="form-control <?= isset($validation['jumlah_buku']) ? 'is-invalid' : '' ?>" id="jumlah_buku" value="<?= old('jumlah_buku') ?>" name="jumlah_buku" type="number" />
+                        <div class="invalid-feedback"><?= isset($validation['jumlah_buku']) ? $validation['jumlah_buku'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label for="sampul" class="col-sm-3 form-label">Sampul</label>
                     <div class="col-sm-9">
                         <input class="form-control <?= isset($validation['sampul']) ? 'is-invalid' : '' ?>" name="sampul" type="file" id="sampul" onchange="ubahPreview(this)">
@@ -107,6 +137,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="mb-3 row">
                     <label for="sinopsis" class="col-sm-3 form-label">Sinopsis</label>
                     <div class="col-sm-9">
@@ -114,8 +145,6 @@
                         <div class="invalid-feedback"><?= isset($validation['sinopsis']) ? $validation['sinopsis'] : '' ?></div>
                     </div>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
