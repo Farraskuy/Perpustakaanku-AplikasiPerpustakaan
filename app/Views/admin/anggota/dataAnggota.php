@@ -21,6 +21,7 @@
                 <th scope="col">#</th>
                 <th scope="col">ID Anggota</th>
                 <th scope="col">Nama</th>
+                <th scope="col">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Nomor Telepon</th>
                 <th scope="col" class="fit">Aksi</th>
@@ -33,13 +34,14 @@
                 <tr>
                     <th scope="row"><?= $i++ ?></th>
                     <td><?= $item['id_anggota'] ?></td>
+                    <td><?= $item['nama'] ?></td>
                     <td><?= $item['username'] ?></td>
                     <td><?= $item['email'] ?></td>
                     <td><?= $item['nomor_telepon'] ?></td>
                     <td class="fit aksi">
                         <a class="btn btn-primary" href="/admin/anggota/<?= $item['id_anggota'] ?>"><i class="fa-regular fa-eye"></i></a>
-                        <a class="btn btn-warning text-white" href="/admin/anggota/<?= $item['id_anggota'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <button class="btn btn-danger" id="<?= $item['id_anggota'] ?>" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                        <a class="btn btn-warning text-white" href="/admin/anggota/<?= $item['id_anggota'] ?>/edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <button class="btn btn-danger" data-id="<?= $item['id_anggota'] ?>" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>

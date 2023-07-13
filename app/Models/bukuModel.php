@@ -48,6 +48,12 @@ class BukuModel extends Model
         return $this->findAll();
     }
 
+    public function ambilBukuKecuali($id_pinjam)
+    {
+        $detailPinjamBuilder = $this->db->table('detail_Pinjam')->select('id_buku')->where('id_pinjam', $id_pinjam);
+        return $this->db->table('buku')->whereNotIn('id_buku', $detailPinjamBuilder)->get()->getResultArray();
+    }
+
     public function isTerpinjam($idBuku, $userId)
     {
         $terpinjamBuilder = $this->db->table('pinjam')

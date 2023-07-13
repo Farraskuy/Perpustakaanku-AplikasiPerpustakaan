@@ -14,12 +14,12 @@
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan')  . '")' : '' ?>
+    <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan')  . '", "success")' : '' ?>
 
-    function peringatan(isi) {
+    function peringatan(isi, type) {
         const notifContainer = document.getElementById('notifContainer');
         const template = ` 
-            <div class="col-5 alert alert-success d-flex alert-dismissible fade show" role="alert">
+            <div class="col-5 alert alert-${type} d-flex alert-dismissible fade show" role="alert">
                 <div>${isi}</div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>`
@@ -47,9 +47,32 @@
     if (hapusModal) {
         hapusModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
-            const id = button.id;
+            const id = button.getAttribute('data-id');
 
             const modalContent = hapusModal.querySelector('.modal-content');
+            const action = modalContent.getAttribute('data-base-action');
+            modalContent.setAttribute('action', action + id);
+        })
+    }
+
+    const hapusdetailModal = document.getElementById('hapusdetail')
+    if (hapusdetailModal) {
+        hapusdetailModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-lb-id');
+
+            const modalContent = hapusdetailModal.querySelector('.modal-content');
+            const action = modalContent.getAttribute('data-base-action');
+            modalContent.setAttribute('action', action + id);
+        })
+    }
+    const perpanjangModal = document.getElementById('perpanjang')
+    if (perpanjangModal) {
+        perpanjangModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+
+            const modalContent = perpanjangModal.querySelector('.modal-content');
             const action = modalContent.getAttribute('data-base-action');
             modalContent.setAttribute('action', action + id);
         })
@@ -64,39 +87,44 @@
         }
     }
 
-    <?php if (in_groups('admin')) : ?>
-        if (document.getElementById('tambah')) {
-            const modalTambah = new bootstrap.Modal('#tambah', {
-                keyboard: false
-            });
-            <?php if (session()->getFlashdata('error_tambah')) : ?>
-                modalTambah.show();
-            <?php endif ?>
-        }
-
-        if (document.getElementById('edit')) {
-            const modalEdit = new bootstrap.Modal('#edit', {
-                keyboard: false
-            });
-            <?php if (session()->getFlashdata('error_edit')) : ?>
-                modalEdit.show();
-            <?php endif ?>
-        }
-        if (document.getElementById('reset')) {
-            const modalReset = new bootstrap.Modal('#reset', {
-                keyboard: false
-            });
-            <?php if (session()->getFlashdata('error_password')) : ?>
-                modalReset.show();
-            <?php endif ?>
-        }
-        if (document.getElementById('tambahStok')) {
-            const modalStok = new bootstrap.Modal('#tambahStok', {
-                keyboard: false
-            });
-            <?php if (session()->getFlashdata('error_stok')) : ?>
-                modalStok.show();
-            <?php endif ?>
-        }
-    <?php endif ?>
+    if (document.getElementById('tambah')) {
+        const modalTambah = new bootstrap.Modal('#tambah', {
+            keyboard: false
+        });
+        <?php if (session()->getFlashdata('error_tambah')) : ?>
+            modalTambah.show();
+        <?php endif ?>
+    }
+    if (document.getElementById('edit')) {
+        const modalEdit = new bootstrap.Modal('#edit', {
+            keyboard: false
+        });
+        <?php if (session()->getFlashdata('error_edit')) : ?>
+            modalEdit.show();
+        <?php endif ?>
+    }
+    if (document.getElementById('reset')) {
+        const modalReset = new bootstrap.Modal('#reset', {
+            keyboard: false
+        });
+        <?php if (session()->getFlashdata('error_password')) : ?>
+            modalReset.show();
+        <?php endif ?>
+    }
+    if (document.getElementById('pinjamBuku')) {
+        const modalPinjamBuku = new bootstrap.Modal('#pinjamBuku', {
+            keyboard: false
+        });
+        <?php if (session()->getFlashdata('error_pinjam_buku')) : ?>
+            modalPinjamBuku.show();
+        <?php endif ?>
+    }
+    if (document.getElementById('perpanjang')) {
+        const modalPerpanjang = new bootstrap.Modal('#perpanjang', {
+            keyboard: false
+        });
+        <?php if (session()->getFlashdata('error_perpanjang')) : ?>
+            modalPerpanjang.show();
+        <?php endif ?>
+    }
 </script>

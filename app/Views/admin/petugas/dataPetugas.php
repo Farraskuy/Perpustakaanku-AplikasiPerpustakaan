@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="bg-white rounded p-3 px-4 table-responsive">
-    <table class="table">
+    <table class="table table-sm align-middle">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -43,8 +43,8 @@
                     <td><?= $item['akses_login'] ?></td>
                     <td class="fit aksi">
                         <a class="btn btn-primary" href="/admin/petugas/<?= $item['id_petugas'] ?>"><i class="fa-regular fa-eye"></i></a>
-                        <a class="btn btn-warning text-white" href="/admin/petugas/<?= $item['id_petugas'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <button id="<?= $item['id_petugas'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                        <a class="btn btn-warning text-white" href="/admin/petugas/<?= $item['id_petugas'] ?>/edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <button data-id="<?= $item['id_petugas'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>

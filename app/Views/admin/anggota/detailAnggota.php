@@ -31,7 +31,7 @@
             <div class="container-fluid py-4 ">
                 <div class="row">
                     <div class="col-12">
-                        <h5 class="m-0"><?= $data['username'] ?></h5>
+                        <h5 class="m-0"><?= $data['nama'] ?></h5>
                     </div>
                 </div>
                 <hr>

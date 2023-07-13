@@ -14,7 +14,7 @@ class PinjamModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_pinjam',  'id_anggota', 'id_petugas', 'status', 'jumlah_pinjam', 'batas_ambil', 'tanggal_ambil', 'batas_kembali'];
+    protected $allowedFields = ['id_pinjam',  'id_anggota', 'id_petugas', 'status', 'jumlah_buku', 'tanggal_kembali'];
 
     // Dates
     protected $useTimestamps = true;
@@ -52,19 +52,21 @@ class PinjamModel extends Model
 
     public function getData($id_pinjam = null, $id_anggota = null)
     {
-        $pinjamBuilder = $this->db->table('pinjam')->select("pinjam.* ,
+        $pinjamBuilder = $this->db->table('pinjam')->select(
+            "pinjam.id_pinjam, anggota.nama as nama_anggota, petugas.nama as nama_petugas, pinjam.*,
             CASE
-                WHEN pinjam.status = 'menunggu' THEN 'warning'
-                WHEN pinjam.status = 'melawati' THEN 'danger'
-                ELSE 'success'
-            END AS status_type,
+                WHEN DATE(NOW()) > pinjam.tanggal_kembali THEN 'danger'
+                ELSE 'warning'
+                END AS status_type,
             CASE
-                WHEN pinjam.status = 'menunggu' THEN 'Menunggu diambil'
-                WHEN pinjam.status = 'melawati' THEN 'Harus dikembalikan'
-                ELSE 'Terpinjam'
-            END AS status_message
-        ");
-
+                WHEN DATE(NOW()) > pinjam.tanggal_kembali THEN 'Telat Dikumpulkan'    
+                ELSE 'Belum dikembalikan'
+            END AS status_message,
+            DATEDIFF(DATE(NOW()), pinjam.tanggal_kembali) AS denda_perhari
+        "
+        )
+            ->join('petugas', 'petugas.id_petugas = pinjam.id_petugas', 'inner')
+            ->join('anggota', 'anggota.id_anggota = pinjam.id_anggota', 'inner');
 
         if ($id_anggota) {
             $dataPinjam = $pinjamBuilder->where('id_anggota', $id_anggota)->get()->getResultArray();

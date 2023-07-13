@@ -48,6 +48,11 @@ class Anggota extends BaseController
         return view('admin/anggota/detailAnggota', $this->data);
     }
 
+    public function detailEdit($id)
+    {
+        return redirect()->to(base_url("/admin/anggota/$id"))->with('error_edit', ' ');
+    }
+
     public function simpan()
     {
 

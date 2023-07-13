@@ -19,33 +19,47 @@
                     </div>
                 </div>
 
-                <hr class="my-3">
+                <hr class="my-3 mb-0">
 
-                <ul class="nav nav-pills flex-column row-gap-2 px-3">
-                    <small class="fw-semibold text-secondary">Peminjaman</small>
-                    <li class="nav-item ">
-                        <a class="nav-link side-item <?= $navactive == 'peminjaman' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pinjam"><i class="fa-regular fa-book-circle-arrow-right fs-6"></i>Peminjaman</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link side-item <?= $navactive == 'pengambilan' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pengambilan"><i class="fa-regular fa-book-arrow-up fs-6"></i>Pengambilan Buku</a>
-                    </li>
-                </ul>
-
-                <hr class="my-3">
-                <ul class="nav nav-pills flex-column gap-1 px-3">
-                    <small class="fw-semibold text-secondary">Data</small>
-                    <li class="nav-item ">
-                        <a class="nav-link side-item <?= $navactive == 'petugas' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/petugas"><i class="fa-regular fa-user-tie-hair fs-6"></i>Data Petugas</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link side-item <?= $navactive == 'anggota' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/anggota"><i class="fa-regular fa-square-star fs-6"></i> Data Anggota</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link side-item <?= $navactive == 'buku' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku"><i class="fa-regular fa-book fs-6"></i> Data Buku</a>
-                    </li>
-                </ul>
-
-                <hr class="my-3">
+                <div class="accordion accordion-flush accordion-custom">
+                    <div class="accordion-item">
+                        <button class="accordion-button accordion-button-custom <?= !in_array($navactive, ['peminjaman', 'pengambilan']) ? 'collapsed' : '' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-controls="transaksi" aria-expanded="false">
+                            <small class="text-secondary fw-semibold" style="font-size: 12.5px;">Transaksi</small>
+                        </button>
+                        <div id="transaksi" class="accordion-collapse collapse <?= in_array($navactive, ['peminjaman', 'pengambilan']) ? 'show' : '' ?>">
+                            <div class="accordion-body pb-2">
+                                <ul class="nav nav-pills flex-column row-gap-2">
+                                    <li class="nav-item ">
+                                        <a class="nav-link side-item <?= $navactive == 'peminjaman' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pinjam"><i class="fa-regular fa-book-circle-arrow-right fs-6"></i>Peminjaman</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link side-item <?= $navactive == 'pengambilan' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pengambilan"><i class="fa-regular fa-book-circle-arrow-up fs-6"></i>Pengembalian</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button <?= !in_array($navactive, ['petugas', 'anggota', 'buku']) ? 'collapsed' : '' ?> accordion-button-custom" type="button" data-bs-toggle="collapse" data-bs-target="#data" aria-controls="data" aria-expanded="false">
+                            <small class="text-secondary fw-semibold" style="font-size: 12.5px;">Data</small>
+                        </button>
+                        <div id="data" class="accordion-collapse collapse <?= in_array($navactive, ['petugas', 'anggota', 'buku']) ? 'show' : '' ?>">
+                            <div class="accordion-body pb-2">
+                                <ul class="nav nav-pills flex-column row-gap-2">
+                                    <li class="nav-item ">
+                                        <a class="nav-link side-item <?= $navactive == 'petugas' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/petugas"><i class="fa-regular fa-user-tie-hair fs-6"></i>Data Petugas</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link side-item <?= $navactive == 'anggota' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/anggota"><i class="fa-regular fa-square-star fs-6"></i> Data Anggota</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link side-item <?= $navactive == 'buku' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku"><i class="fa-regular fa-book fs-6"></i> Data Buku</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

@@ -46,6 +46,11 @@ class Buku extends BaseController
         return view('admin/buku/detailBuku', $this->data);
     }
 
+    public function detailEdit($slug)
+    {
+        return redirect()->to(base_url("/admin/buku/$slug"))->with('error_edit', ' ');
+    }
+
     public function simpan()
     {
 

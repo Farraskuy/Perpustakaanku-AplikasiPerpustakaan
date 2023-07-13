@@ -11,13 +11,11 @@
             <h5 class="m-0">Detail Buku</h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center gap-3">
-
             <span class="fs-5 fw-semibold text-dark border-end pe-3">Aksi</span>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
                 <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapusSatu"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
             </div>
-
         </div>
     </div>
 </div>

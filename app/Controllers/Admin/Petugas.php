@@ -49,6 +49,11 @@ class Petugas extends BaseController
         return view('admin/petugas/detailPetugas', $this->data);
     }
 
+    public function detailEdit($id)
+    {
+        return redirect()->to(base_url("/admin/petugas/$id"))->with('error_edit', ' ');
+    }
+
     public function simpan()
     {
         $rules = [
@@ -426,5 +431,4 @@ class Petugas extends BaseController
 
         return redirect()->to("admin/anggota/" . $id);
     }
-
 }

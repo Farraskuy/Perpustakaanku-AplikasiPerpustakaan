@@ -40,12 +40,12 @@
                     <td><?= $item['judul'] ?></td>
                     <td><?= $item['penerbit'] ?></td>
                     <td><?= $item['penulis'] ?></td>
-                    <td class="fit"><?= $item['jumlah_buku'] ?></td>
-                    <td class="fit"><?= formatTanggal($item['created_at']) ?></td>
+                    <td><?= $item['jumlah_buku'] ?></td>
+                    <td><?= formatTanggal($item['created_at']) ?></td>
                     <td class="fit aksi">
                         <a class="btn btn-primary" href="/admin/buku/<?= $item['slug'] ?>"><i class="fa-regular fa-eye"></i></a>
-                        <a class="btn btn-warning text-white" href="/admin/buku/<?= $item['slug'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <button id="<?= $item['id_buku'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                        <a class="btn btn-warning text-white" href="/admin/buku/<?= $item['slug'] ?>/edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <button data-id="<?= $item['id_buku'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>

@@ -50,4 +50,15 @@ class PetugasModel extends Model
 
         return $petugas->get()->getResultArray();
     }
+    public function getDataByIDLogin($id = null)
+    {
+        $petugas = $this->db->table('petugas');
+
+        if ($id) {
+            return $petugas->join('users', 'users.id = petugas.id_login', 'left')->where('users.id', $id)->get()->getRowArray();
+        }
+
+        return $petugas->get()->getResultArray();
+    }
+
 }
