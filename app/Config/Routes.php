@@ -29,49 +29,67 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get('/home', 'Home::home');
+$routes->get('/', 'Index::index');
 
 // routes buku
-$routes->get('/buku/(:any)', 'Buku::detail/$1');
+$routes->get('/buku/(:any)', 'User\Buku::detail/$1');
 
 // fitur pinjam
 $routes->group('/pinjam/', ['filter' => 'role:anggota'], function ($routes) {
-    $routes->get('', 'Pinjam::index');
-    $routes->post('(:any)', 'Pinjam::simpan/$1');
-    $routes->put('(:any)', 'Pinjam::edit/$1');
-    $routes->delete('(:any)', 'Pinjam::hapus/$1');
-    $routes->get('(:any)', 'Pinjam::detail/$1');
+    $routes->get('', 'User\Pinjam::index');
+    $routes->post('(:any)', 'User\Pinjam::simpan/$1');
+    $routes->put('(:any)', 'User\Pinjam::edit/$1');
+    $routes->delete('(:any)', 'User\Pinjam::hapus/$1');
+    $routes->get('(:any)', 'User\Pinjam::detail/$1');
 });
 
 
 // routes admin
-$routes->group('/admin', ['filter' => 'role:admin'], function ($routes) {
+$routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) {
     // dashboard
-    $routes->get('/', 'Admin::index');
+    $routes->get('/', 'Admin\Admin::index');
 
     // menu petugas
-    $routes->get('petugas', 'Admin::dataPetugas');
-    $routes->post('petugas', 'Petugas::simpan');
-    $routes->put('petugas/(:any)', 'Petugas::edit/$1');
-    $routes->delete('petugas/(:any)', 'Petugas::hapus/$1');
-    $routes->get('petugas/(:any)', 'Petugas::detail/$1');
+    $routes->get('petugas', 'Admin\Petugas::index');
+    $routes->post('petugas', 'Admin\Petugas::simpan');
+    $routes->put('petugas/(:any)', 'Admin\Petugas::edit/$1');
+    $routes->delete('petugas/(:any)', 'Admin\Petugas::hapus/$1');
+    $routes->get('petugas/(:any)/edit', 'Admin\Petugas::detailEdit/$1');
+    $routes->get('petugas/(:any)', 'Admin\Petugas::detail/$1');
     
     // menu petugas
-    $routes->get('anggota', 'Admin::dataAnggota');
-    $routes->post('anggota', 'Anggota::simpan');
-    $routes->put('anggota/reset/(:any)', 'Anggota::reset/$1');
-    $routes->put('anggota/(:any)', 'Anggota::edit/$1');
-    $routes->delete('anggota/(:any)', 'Anggota::hapus/$1');
-    $routes->get('anggota/(:any)', 'Anggota::detail/$1');
+    $routes->get('anggota', 'Admin\Anggota::index');
+    $routes->post('anggota', 'Admin\Anggota::simpan');
+    $routes->put('anggota/reset/(:any)', 'Admin\Anggota::reset/$1');
+    $routes->put('anggota/(:any)', 'Admin\Anggota::edit/$1');
+    $routes->delete('anggota/(:any)', 'Admin\Anggota::hapus/$1');
+    $routes->get('anggota/(:any)/edit', 'Admin\Anggota::detailEdit/$1');
+    $routes->get('anggota/(:any)', 'Admin\Anggota::detail/$1');
     
     // menu buku
-    $routes->get('buku', 'Admin::dataBuku');
-    $routes->post('buku', 'Buku::simpan');
-    $routes->put('buku/(:any)', 'Buku::edit/$1');
-    $routes->delete('buku/(:any)', 'Buku::hapus/$1');
-    $routes->get('buku/(:any)', 'Buku::detail/$1');
+    $routes->get('buku', 'Admin\Buku::index');
+    $routes->post('buku', 'Admin\Buku::simpan');
+    $routes->put('buku/(:any)', 'Admin\Buku::edit/$1');
+    $routes->delete('buku/(:any)', 'Admin\Buku::hapus/$1');
+    $routes->get('buku/(:any)/edit', 'Admin\Buku::detailEdit/$1');
+    $routes->get('buku/(:any)', 'Admin\Buku::detail/$1');
+
+    // menu pinjam
+    $routes->get('pinjam', 'Admin\Pinjam::index');
+    $routes->post('pinjam', 'Admin\Pinjam::simpan');
+    $routes->post('pinjam/(:any)', 'Admin\Pinjam::tambahDetail/$1');
+    $routes->put('pinjam/perpanjang/(:any)', 'Admin\Pinjam::perpanjangWaktu/$1');
+    $routes->put('pinjam/(:any)', 'Admin\Pinjam::edit/$1');
+    $routes->delete('pinjam/(:any)/hapusdetail/(:any)', 'Admin\Pinjam::hapusDetail/$1/$2');
+    $routes->delete('pinjam/(:any)', 'Admin\Pinjam::hapus/$1');
+    $routes->get('pinjam/(:any)/tambah', 'Admin\Pinjam::detailTambah/$1');
+    $routes->get('pinjam/(:any)/edit', 'Admin\Pinjam::detailEdit/$1');
+    $routes->get('pinjam/(:any)', 'Admin\Pinjam::detail/$1');
 });
+
+// AJAX
+$routes->get('/listbuku', 'User\Buku::listBuku');
+$routes->get('/listbuku/ambil/(:any)', 'User\Buku::ambilBuku/$1');
 
 
 

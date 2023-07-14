@@ -3,52 +3,75 @@
 <?= $this->section('content'); ?>
 
 
-    <div class="bg-white rounded-3 p-3 px-4 mb-3">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h5 class="m-0">Data | <?= $subtitle ?></h5>
-            </div>
-            <div class="col-md-6 d-flex justify-content-end align-items-center">
-                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
-            </div>
+<div class="bg-white rounded-3 p-3 px-4 mb-3">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h5 class="m-0">Data | <?= $subtitle ?></h5>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end align-items-center">
+            <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
         </div>
     </div>
+</div>
 
-    <div class="bg-white rounded p-3 px-4 table-responsive ">
-        <table class="table align-middle">
-            <thead>
+<div class="bg-white rounded p-3 px-4 table-responsive ">
+    <table class="table table-sm align-middle">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID Anggota</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nomor Telepon</th>
+                <th scope="col" class="fit">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php $i = 1 ?>
+            <?php foreach ($data as $item) : ?>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Status</th>
-                    <th scope="col" class="fit">Aksi</th>
+                    <th scope="row"><?= $i++ ?></th>
+                    <td><?= $item['id_anggota'] ?></td>
+                    <td><?= $item['nama'] ?></td>
+                    <td><?= $item['username'] ?></td>
+                    <td><?= $item['email'] ?></td>
+                    <td><?= $item['nomor_telepon'] ?></td>
+                    <td class="fit aksi">
+                        <a class="btn btn-primary" href="/admin/anggota/<?= $item['id_anggota'] ?>"><i class="fa-regular fa-eye"></i></a>
+                        <a class="btn btn-warning text-white" href="/admin/anggota/<?= $item['id_anggota'] ?>/edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <button class="btn btn-danger" data-id="<?= $item['id_anggota'] ?>" type="button" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
+            <?php endforeach ?>
 
-                <?php $i = 1 ?>
-                <?php foreach ($data as $item) : ?>
-                    <tr>
-                        <th scope="row"><?= $i++ ?></th>
-                        <td><?= $item['username'] ?></td>
-                        <td><?= $item['email'] ?></td>
-                        <td><?= $item['active'] == 1 ? '<span class="btn btn-success">Aktif</span>' : '<span class="btn btn-danger">Tidak aktif</span>' ?></td>
-                        <td class="fit aksi">
-                            <a class="btn btn-primary" href="/admin/anggota/<?= $item['id'] ?>"><i class="fa-regular fa-eye"></i></a>
-                            <a class="btn btn-warning text-white" href="/admin/anggota/<?= $item['id'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a class="btn btn-danger" href="/admin/anggota/<?= $item['id'] ?>"><i class="fa-regular fa-trash-xmark"></i></a>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
 
-            </tbody>
-        </table>
+<!-- hapus modal -->
+<div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" method="post" data-base-action="/admin/anggota/">
+            <?= csrf_field() ?>
+            <input type="hidden" name="_method" value="DELETE">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Hapus</h1>
+            </div>
+            <div class="modal-body">
+                <p>Apakah anda yakin ingin menghapus anggota ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
+            </div>
+        </form>
     </div>
+</div>
 
-
-
-<div class="modal fade  form-modal" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<!-- tambah modal -->
+<div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" method="post" enctype="multipart/form-data" autocomplete="off">
 
@@ -77,7 +100,7 @@
                 <div class="mb-3 row">
                     <label for="password" class="col-sm-3 form-label">Password</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control <?= isset($validation['password']) ? 'is-invalid' : '' ?>" value="<?= old('password', "") ?>" name="password" id="password" autocomplete="off" >
+                        <input type="password" class="form-control <?= isset($validation['password']) ? 'is-invalid' : '' ?>" value="<?= old('password') ?>" name="password" id="password" autocomplete="off">
                         <div class="invalid-feedback"><?= isset($validation['password']) ? $validation['password'] : '' ?></div>
                     </div>
                 </div>
@@ -95,6 +118,13 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control <?= isset($validation['nama']) ? 'is-invalid' : '' ?>" value="<?= old('nama') ?>" name="nama" id="nama">
                         <div class="invalid-feedback"><?= isset($validation['nama']) ? $validation['nama'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="nomor_telepon" class="col-sm-3 form-label">Nomor Telepon</label>
+                    <div class="col-sm-9">
+                        <input type="tel" class="form-control <?= isset($validation['nomor_telepon']) ? 'is-invalid' : '' ?>" value="<?= old('nomor_telepon') ?>" name="nomor_telepon" id="nomor_telepon" autofocus>
+                        <div class="invalid-feedback"><?= isset($validation['nomor_telepon']) ? $validation['nomor_telepon'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">

@@ -7,14 +7,14 @@ use CodeIgniter\Model;
 class PetugasModel extends Model
 {
     protected $table      = 'petugas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_petugas';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['nama', 'jenis_kelamin', 'agama', 'alamat', 'jabatan', 'foto'];
+    protected $allowedFields = ['id_petugas', 'id_login', 'akses_login', 'nama', 'jenis_kelamin', 'agama', 'alamat', 'jabatan', 'nomor_telepon', 'foto'];
 
     // Dates
     protected $useTimestamps = true;
@@ -39,5 +39,26 @@ class PetugasModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getData($idPetugas = null)
+    {
+        $petugas = $this->db->table('petugas');
+
+        if ($idPetugas) {
+            return $petugas->join('users', 'users.id = petugas.id_login', 'left')->where('id_petugas', $idPetugas)->get()->getRowArray();
+        }
+
+        return $petugas->get()->getResultArray();
+    }
+    public function getDataByIDLogin($id = null)
+    {
+        $petugas = $this->db->table('petugas');
+
+        if ($id) {
+            return $petugas->join('users', 'users.id = petugas.id_login', 'left')->where('users.id', $id)->get()->getRowArray();
+        }
+
+        return $petugas->get()->getResultArray();
+    }
 
 }

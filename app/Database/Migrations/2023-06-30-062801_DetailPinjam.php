@@ -30,7 +30,7 @@ class DetailPinjam extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addForeignKey('id_pinjam', 'pinjam', 'id');
+        $this->forge->addForeignKey('id_pinjam', 'pinjam', 'id_pinjam');
         $this->forge->createTable('detail_pinjam');
     }
 

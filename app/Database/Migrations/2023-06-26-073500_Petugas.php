@@ -10,11 +10,9 @@ class Petugas extends Migration
     {
 
         $this->forge->addField([
-            'id' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
-                'auto_increment' => true,
+            'id_petugas' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 255,
             ],
             'foto' => [
                 'type'       => 'VARCHAR',
@@ -36,6 +34,19 @@ class Petugas extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
+            'akses_login' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'id_login' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
+            ],
+            'nomor_telepon' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
             'alamat' => [
                 'type' => 'TEXT',
                 'null' => true,
@@ -49,7 +60,7 @@ class Petugas extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addKey('id_petugas', true);
         $this->forge->createTable('petugas');
     }
 

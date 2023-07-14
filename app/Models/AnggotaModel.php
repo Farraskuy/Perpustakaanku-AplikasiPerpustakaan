@@ -7,14 +7,14 @@ use CodeIgniter\Model;
 class AnggotaModel extends Model
 {
     protected $table      = 'anggota';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_anggota';
 
     protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'foto'];
+    protected $allowedFields = ['id_anggota', 'id_login', 'nama', 'jenis_kelamin', 'agama', 'batas_pinjam', 'alamat', 'nomor_telepon', 'foto'];
 
     // Dates
     protected $useTimestamps = true;
@@ -40,13 +40,13 @@ class AnggotaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function ambilData($id = null)
+    public function ambilData($id_anggota = null)
     {
         $builder = $this->db->table('anggota')
-            ->join('users', 'users.id = anggota.id', 'inner');
+            ->join('users', 'users.id = anggota.id_login', 'inner');
 
-        if ($id) {
-            return $builder->where('users.id', $id)->get()->getRowArray();
+        if ($id_anggota) {
+            return $builder->where('anggota.id_anggota', $id_anggota)->get()->getRowArray();
         }
 
         return $builder->get()->getResultArray();

@@ -4,31 +4,42 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Pinjam extends Migration
+class Anggota extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id_pinjam' => [
+            'id_anggota' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 255,
             ],
-            'id_petugas' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'id_anggota' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'status' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'jumlah_buku' => [
+            'id_login' => [
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
+            ],
+            'nama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'jenis_kelamin' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'agama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'nomor_telepon' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'alamat' => [
+                'type'       => 'TEXT',
+            ],
+            'foto' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
             ],
             'created_at' => [
                 'type'       => 'DATETIME',
@@ -39,12 +50,12 @@ class Pinjam extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addKey('id_pinjam', true);
-        $this->forge->createTable('pinjam');
+        $this->forge->addKey('id_anggota', true);
+        $this->forge->createTable('anggota');
     }
 
     public function down()
     {
-        $this->forge->dropTable('pinjam');
+        $this->forge->dropTable('anggota');
     }
 }

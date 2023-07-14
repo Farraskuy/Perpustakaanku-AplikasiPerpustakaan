@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\AnggotaModel;
+use App\Models\PetugasModel;
+use App\Models\UsersModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -38,7 +40,8 @@ abstract class BaseController extends Controller
      */
     protected $helpers = [
         'form',
-        'auth'
+        'auth',
+        'custom'
     ];
 
     /**
@@ -46,11 +49,13 @@ abstract class BaseController extends Controller
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
     // protected $session;
+    protected $data = [];
+    protected $userID;
 
     /**
      * Constructor.
      */
-    protected $data;
+
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -59,14 +64,13 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
-        $this->data = [];
         if (logged_in()) {
-            $anggotaModel = new AnggotaModel();
+            $user = new UsersModel();
+            $this->userID = $user->getUser(user_id())['userID'];
             $role = array_values(user()->getRoles())[0];
             $this->data += [
                 "username" => user()->username,
                 "role" => $role,
-                "batas_pinjam" => $anggotaModel->find(user_id())['batas_pinjam'],
             ];
         }
     }
