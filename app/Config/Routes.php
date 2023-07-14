@@ -56,7 +56,7 @@ $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) 
     $routes->delete('petugas/(:any)', 'Admin\Petugas::hapus/$1');
     $routes->get('petugas/(:any)/edit', 'Admin\Petugas::detailEdit/$1');
     $routes->get('petugas/(:any)', 'Admin\Petugas::detail/$1');
-    
+
     // menu petugas
     $routes->get('anggota', 'Admin\Anggota::index');
     $routes->post('anggota', 'Admin\Anggota::simpan');
@@ -65,7 +65,7 @@ $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) 
     $routes->delete('anggota/(:any)', 'Admin\Anggota::hapus/$1');
     $routes->get('anggota/(:any)/edit', 'Admin\Anggota::detailEdit/$1');
     $routes->get('anggota/(:any)', 'Admin\Anggota::detail/$1');
-    
+
     // menu buku
     $routes->get('buku', 'Admin\Buku::index');
     $routes->post('buku', 'Admin\Buku::simpan');
@@ -78,13 +78,27 @@ $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) 
     $routes->get('pinjam', 'Admin\Pinjam::index');
     $routes->post('pinjam', 'Admin\Pinjam::simpan');
     $routes->post('pinjam/(:any)', 'Admin\Pinjam::tambahDetail/$1');
+    
     $routes->put('pinjam/perpanjang/(:any)', 'Admin\Pinjam::perpanjangWaktu/$1');
     $routes->put('pinjam/(:any)', 'Admin\Pinjam::edit/$1');
-    $routes->delete('pinjam/(:any)/hapusdetail/(:any)', 'Admin\Pinjam::hapusDetail/$1/$2');
+
+    $routes->delete('pinjam/(:any)/(:any)', 'Admin\Pinjam::hapusDetail/$1/$2');
     $routes->delete('pinjam/(:any)', 'Admin\Pinjam::hapus/$1');
+    
     $routes->get('pinjam/(:any)/tambah', 'Admin\Pinjam::detailTambah/$1');
     $routes->get('pinjam/(:any)/edit', 'Admin\Pinjam::detailEdit/$1');
     $routes->get('pinjam/(:any)', 'Admin\Pinjam::detail/$1');
+
+    // menu pengembalian
+    $routes->get('pengembalian', 'Admin\Pengembalian::index');
+
+    $routes->get('pengembalian/kembali/(:any)', 'Admin\Pengembalian::kembali/$1');
+    $routes->post('pengembalian/kembali/(:any)', 'Admin\Pengembalian::aksiKembali/$1');
+    
+    $routes->delete('pengembalian/(:any)', 'Admin\Pengembalian::hapus/$1');
+    
+    $routes->get('pengembalian/(:any)/edit', 'Admin\Pengembalian::detailEdit/$1');
+    $routes->get('pengembalian/(:any)', 'Admin\Pengembalian::detail/$1');
 });
 
 // AJAX

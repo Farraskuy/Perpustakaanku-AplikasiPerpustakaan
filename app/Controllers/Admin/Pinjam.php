@@ -31,7 +31,7 @@ class Pinjam extends BaseController
             "navactive" => "peminjaman",
             "validation" => validation_errors(),
             "dataanggota" => $this->anggotaModel->ambilData(),
-            "data" => $this->pinjamModel->getData(),
+            "data" => $this->pinjamModel->getDataPinjam(),
         ];
         return view('admin/peminjaman/dataPeminjaman', $this->data);
     }
@@ -45,7 +45,7 @@ class Pinjam extends BaseController
             "validation" => validation_errors(),
             "dataanggota" => $this->anggotaModel->findAll(),
             "databuku" => $this->bukuModel->ambilBukuKecuali($id_pinjam),
-            "data" => $this->pinjamModel->getData($id_pinjam)
+            "data" => $this->pinjamModel->getDataPinjam($id_pinjam)
         ];
         return view('/admin/peminjaman/detailPeminjaman', $this->data);
     }
@@ -144,14 +144,25 @@ class Pinjam extends BaseController
 
     public function tambahDetail($id)
     {
-        if (!$this->validate([
+        $kondisiArray = [];
+        foreach ($this->request->getVar('buku') as $id_buku) {
+            $kondisiArray += ["kondisi-$id_buku" => [
+                'rules' => 'required|in_list[baik,rusak]',
+                'errors' => [
+                    'required' => 'Harap pilih kondisi buku saat ini dengan kondisi yang tersedia',
+                    'in_list' => 'Harap pilih kondisi yang tersedia'
+                ]
+            ]];
+        }
+
+        if (!$this->validate(array_merge($kondisiArray, [
             'buku.*' => [
                 'rules' => 'is_not_unique[buku.id_buku]',
                 'errors' => [
                     'is_not_unique' => 'Harap pilih buku yang tersedia'
                 ]
-            ],
-        ])) {
+            ]
+        ]))) {
             return redirect()->back()->withInput()->with('error_pinjam_buku', 'Harap pilih buku yang tersedia');
         }
 
@@ -159,6 +170,7 @@ class Pinjam extends BaseController
             $this->detailPinjamModel->insert([
                 'id_pinjam' => $id,
                 'id_buku' => $id_buku,
+                'kondisi' => $this->request->getVar("kondisi-$id_buku"),
                 'status' => 'terpinjam',
             ]);
             $this->pinjamModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id);

@@ -4,7 +4,6 @@
 
 <?php $pinjam = $data['pinjam'] ?>
 
-
 <div class="bg-white rounded-3 p-3 px-4 mb-3">
     <div class="row align-items-center">
         <div class="col-md-6 d-flex align-items-center gap-3">
@@ -39,8 +38,8 @@
             <h4 class="text-md-end"><?= $pinjam['jumlah_buku'] ?></h4>
         </div>
     </div>
-    <div class="p-2">
-        <table class="table table-sm table-responsive align-middle">
+    <div class="p-2 table-responsive">
+        <table class="table table-sm align-middle">
             <thead class="table-light">
                 <tr class="align-middle">
                     <th scope="col">#</th>
@@ -48,6 +47,7 @@
                     <th scope="col">Judul</th>
                     <th scope="col">Penerbit</th>
                     <th scope="col">Penulis</th>
+                    <th scope="col">Kondisi Buku</th>
                     <th scope="col" class="fit">Aksi</th>
                 </tr>
             </thead>
@@ -61,8 +61,9 @@
                         <td><?= $item['judul'] ?></td>
                         <td><?= $item['penerbit'] ?></td>
                         <td><?= $item['penulis'] ?></td>
+                        <td><?= $item['kondisi'] ?></td>
                         <td class="fit aksi">
-                            <button data-lb-id="<?= $item['id_buku'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapusdetail"><i class="fa-regular fa-trash-xmark"></i></button>
+                            <button data-id="<?= $item['id_buku'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapusdetail"><i class="fa-regular fa-trash-xmark"></i></button>
                         </td>
                     </tr>
                 <?php endforeach ?>
@@ -71,6 +72,9 @@
         </table>
     </div>
 </div>
+
+
+
 
 <!-- hapus modal -->
 <div class="modal fade" id="hapusSatu" tabindex="-1" aria-hidden="true">
@@ -97,7 +101,7 @@
 <!-- hapus detail modal -->
 <div class="modal fade" id="hapusdetail" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content" data-base-action="/admin/pinjam/<?= $pinjam['id_pinjam'] ?>/hapusdetail/" method="post">
+        <form class="modal-content" action="/admin/pinjam/<?= $pinjam['id_pinjam'] ?>/" method="post">
 
             <?= csrf_field() ?>
 
@@ -192,6 +196,7 @@
                             <th scope="col">Penerbit</th>
                             <th scope="col">Penulis</th>
                             <th scope="col" class="px-3">Ketersediaan Buku</th>
+                            <th scope="col">Kondisi</th>
                             <th scope="col">Pilih</th>
                         </tr>
                     </thead>
@@ -206,10 +211,20 @@
                                 <td><?= $item['penerbit'] ?></td>
                                 <td><?= $item['penulis'] ?></td>
                                 <td class="fit px-3"><?= $item['jumlah_buku'] ?></td>
+
+                                <td>
+                                    <select class="form-select form-select-sm <?= isset($validation["kondisi-" . $item['id_buku']]) ? 'is-invalid' : '' ?>" name="kondisi-<?= $item['id_buku'] ?>" aria-label="Default select example">
+                                        <option value="" <?= old("kondisi-" . $item['id_buku']) == '' ? 'selected' : '' ?>>Pilih Kondisi</option>
+                                        <option value="baik" <?= old("kondisi-" . $item['id_buku']) == 'baik' ? 'selected' : '' ?>>Baik</option>
+                                        <option value="rusak" <?= old("kondisi-" . $item['id_buku']) == 'rusak' ? 'selected' : '' ?>>Rusak</option>
+                                    </select>
+                                    <div class="invalid-feedback"><?= isset($validation["kondisi-" . $item['id_buku']]) ? $validation["kondisi-" . $item['id_buku']] : '' ?></div>
+                                </td>
                                 <td class="fit aksi position-relative">
                                     <input type="checkbox" class="form-check" name="buku[]" value="<?= $item['id_buku'] ?>" id="<?= $item['id_buku'] ?>" <?= old('buku') ? (in_array($item['id_buku'], old('buku')) ? 'checked' : '') : '' ?> hidden>
                                     <label class="pilih-buku" for="<?= $item['id_buku'] ?>"></label>
                                 </td>
+
                             </tr>
                         <?php endforeach ?>
 

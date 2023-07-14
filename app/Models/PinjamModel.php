@@ -14,7 +14,7 @@ class PinjamModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_pinjam',  'id_anggota', 'id_petugas', 'status', 'jumlah_buku', 'tanggal_kembali'];
+    protected $allowedFields = ['id_pinjam',  'id_anggota', 'id_petugas', 'status', 'jumlah_buku', 'tanggal_kembali', 'tanggal_dikembalikan', 'id_petugas_pengembalian'];
 
     // Dates
     protected $useTimestamps = true;
@@ -50,7 +50,7 @@ class PinjamModel extends Model
         return array_merge($bataspinjam, $jumlahmenunggu, $jumlahpinjam, $jumlahkembali);
     }
 
-    public function getData($id_pinjam = null, $id_anggota = null)
+    public function getDataPinjam($id_pinjam = null, $id_anggota = null)
     {
         $pinjamBuilder = $this->db->table('pinjam')->select(
             "pinjam.id_pinjam, anggota.nama as nama_anggota, petugas.nama as nama_petugas, pinjam.*,
@@ -66,7 +66,43 @@ class PinjamModel extends Model
         "
         )
             ->join('petugas', 'petugas.id_petugas = pinjam.id_petugas', 'inner')
-            ->join('anggota', 'anggota.id_anggota = pinjam.id_anggota', 'inner');
+            ->join('anggota', 'anggota.id_anggota = pinjam.id_anggota', 'inner')
+            ->where('pinjam.status', 'terpinjam');
+
+        if ($id_anggota) {
+            $dataPinjam = $pinjamBuilder->where('id_anggota', $id_anggota)->get()->getResultArray();
+            $dataBuku = [];
+            foreach ($dataPinjam as $data) {
+                $dataBuku[$data['id_pinjam']] = $this->db->table('detail_pinjam')->join('buku', 'buku.id_buku = detail_pinjam.id_buku', 'inner')->where('id_pinjam', $data['id_pinjam'])->get()->getResultArray();
+            }
+            return ['buku' => $dataBuku, 'pinjam' => $dataPinjam];
+        }
+        if ($id_pinjam) {
+            $dataPinjam = $pinjamBuilder->where('id_pinjam', $id_pinjam)->get()->getRowArray();
+            $dataBuku = $this->db->table('detail_pinjam')->join('buku', 'buku.id_buku = detail_pinjam.id_buku', 'inner')->where('id_pinjam', $dataPinjam['id_pinjam'])->get()->getResultArray();
+            return ['buku' => $dataBuku, 'pinjam' => $dataPinjam];
+        }
+
+        return $pinjamBuilder->get()->getResultArray();
+    }
+    public function getDataKembali($id_pinjam = null, $id_anggota = null)
+    {
+        $pinjamBuilder = $this->db->table('pinjam')->select(
+            "pinjam.id_pinjam, anggota.nama as nama_anggota, petugas.nama as nama_petugas, pinjam.*,
+            CASE
+                WHEN DATE(NOW()) > pinjam.tanggal_kembali THEN 'danger'
+                ELSE 'warning'
+                END AS status_type,
+            CASE
+                WHEN DATE(NOW()) > pinjam.tanggal_kembali THEN 'Telat Dikumpulkan'    
+                ELSE 'Belum dikembalikan'
+            END AS status_message,
+            DATEDIFF(DATE(NOW()), pinjam.tanggal_kembali) AS denda_perhari
+        "
+        )
+            ->join('petugas', 'petugas.id_petugas = pinjam.id_petugas_pengembalian', 'inner')
+            ->join('anggota', 'anggota.id_anggota = pinjam.id_anggota', 'inner')
+            ->where('pinjam.status', 'dikembalikan');
 
         if ($id_anggota) {
             $dataPinjam = $pinjamBuilder->where('id_anggota', $id_anggota)->get()->getResultArray();

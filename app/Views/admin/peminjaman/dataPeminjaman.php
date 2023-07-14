@@ -8,7 +8,7 @@
             <h5 class="m-0">Data | <?= $subtitle ?></h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
+            <button type="button" class="btn btn-success fw-semibold" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
         </div>
     </div>
 </div>
@@ -20,7 +20,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Nomor Peminjaman</th>
                 <th scope="col">Nama Peminjam</th>
-                <th scope="col">Petugas Yang Melayani</th>
+                <th scope="col">Petugas Peminjaman</th>
                 <th scope="col">Tanggal Pinjam</th>
                 <th scope="col">Tanggal Kembali</th>
                 <th scope="col">Jumlah Pinjam</th>
@@ -40,14 +40,12 @@
                     <td><?= formatTanggal($item['created_at']) ?></td>
                     <td><?= formatTanggal($item['tanggal_kembali']) ?></td>
                     <td><?= $item['jumlah_buku'] ?></td>
-                    <td>
-                        <h6><span class="badge bg-<?= $item['status_type'] ?>"><?= $item['status_message'] ?></span></h6>
-                    </td>
+                    <td class="h6"><span class="badge bg-<?= $item['status_type'] ?>"><?= $item['status_message'] ?></span></td>
                     <td class="fit aksi">
                         <div class="p-1 border rounded-3">
                             <div class="d-flex gap-1 flex-column">
-                                <button data-id="<?= $item['id_pinjam'] ?>" type="button" class="w-100 btn btn-sm btn-warning fw-semibold text-white" data-bs-toggle="modal" data-bs-target="#perpanjang"><i class="fa-regular fa-hourglass-clock"></i> Perpanjang</button>
-                                <button data-id="<?= $item['id_pinjam'] ?>" type="button" class="w-100 btn btn-sm btn-orange fw-semibold" data-bs-toggle="modal" data-bs-target="#kembalikan"><i class="fa-regular fa-solid fa-reply-clock"></i> Kembalikan</button>
+                                <button data-id="<?= $item['id_pinjam'] ?>" type="button" class="btn btn-sm btn-warning fw-semibold text-white" data-bs-toggle="modal" data-bs-target="#perpanjang"><i class="fa-regular fa-hourglass-clock"></i> Perpanjang</button>
+                                <button data-id="<?= $item['id_pinjam'] ?>" type="button" class="btn btn-sm btn-orange fw-semibold" data-bs-toggle="modal" data-bs-target="#pengembalian"><i class="fa-regular fa-solid fa-reply-clock"></i> Kembalikan</button>
                             </div>
                             <hr class="my-1">
                             <a class="btn btn-success" href="/admin/pinjam/<?= $item['id_pinjam'] ?>/tambah"><i class="fa-solid fa-books-medical"></i></a>
@@ -66,7 +64,7 @@
 <!-- hapus modal -->
 <div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content" method="post" data-base-action="/admin/pinjam/">
+        <form class="modal-content" method="post" action="/admin/pinjam/">
 
             <?= csrf_field() ?>
 
@@ -85,7 +83,25 @@
     </div>
 </div>
 
-<!-- modal edit -->
+<!-- pengembalian modal -->
+<div class="modal fade" id="pengembalian" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" method="post">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Pengembalian</h1>
+            </div>
+            <div class="modal-body">
+                <p>Apakah anda yakin ingin mengembalikan semua buku di peminjaman ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <a href="/admin/pengembalian/kembali/" class="btn btn-orange fw-semibold"><i class="fa-regular fa-solid fa-reply-clock"></i> Ya, Kembalikan</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal perpanjang -->
 <div class="modal fade" id="perpanjang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" method="post" enctype="multipart/form-data" data-base-action="/admin/pinjam/perpanjang/">
@@ -111,7 +127,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button class="btn btn-warning text-white fw-semibold" type="submit"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                <button class="btn btn-warning text-white fw-semibold" type="submit"><i class="fa-regular fa-hourglass-clock"></i> Perpanjang</button>
             </div>
         </form>
     </div>

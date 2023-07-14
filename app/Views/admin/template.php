@@ -23,17 +23,17 @@
 
                 <div class="accordion accordion-flush accordion-custom">
                     <div class="accordion-item">
-                        <button class="accordion-button accordion-button-custom <?= !in_array($navactive, ['peminjaman', 'pengambilan']) ? 'collapsed' : '' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-controls="transaksi" aria-expanded="false">
+                        <button class="accordion-button accordion-button-custom <?= !in_array($navactive, ['peminjaman', 'pengembalian']) ? 'collapsed' : '' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#transaksi" aria-controls="transaksi" aria-expanded="false">
                             <small class="text-secondary fw-semibold" style="font-size: 12.5px;">Transaksi</small>
                         </button>
-                        <div id="transaksi" class="accordion-collapse collapse <?= in_array($navactive, ['peminjaman', 'pengambilan']) ? 'show' : '' ?>">
+                        <div id="transaksi" class="accordion-collapse collapse <?= in_array($navactive, ['peminjaman', 'pengembalian']) ? 'show' : '' ?>">
                             <div class="accordion-body pb-2">
                                 <ul class="nav nav-pills flex-column row-gap-2">
                                     <li class="nav-item ">
                                         <a class="nav-link side-item <?= $navactive == 'peminjaman' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pinjam"><i class="fa-regular fa-book-circle-arrow-right fs-6"></i>Peminjaman</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item <?= $navactive == 'pengambilan' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pengambilan"><i class="fa-regular fa-book-circle-arrow-up fs-6"></i>Pengembalian</a>
+                                        <a class="nav-link side-item <?= $navactive == 'pengembalian' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/pengembalian"><i class="fa-regular fa-book-circle-arrow-up fs-6"></i>Pengembalian</a>
                                     </li>
                                 </ul>
                             </div>
