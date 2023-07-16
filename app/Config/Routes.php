@@ -29,7 +29,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Index::index');
+$routes->get('/', 'Admin\Admin::index',  ['filter' => 'role:admin,petugas']);
+$routes->get('/', 'User\Home::index');
 
 // routes buku
 $routes->get('/buku/(:any)', 'User\Buku::detail/$1');
@@ -48,6 +49,10 @@ $routes->group('/pinjam/', ['filter' => 'role:anggota'], function ($routes) {
 $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) {
     // dashboard
     $routes->get('/', 'Admin\Admin::index');
+
+    // konfigurasi
+    $routes->get('konfigurasi', 'Admin\Admin::appConfig', ['filter' => 'permission:management-config-app']);
+    $routes->post('konfigurasi', 'Admin\Admin::appConfigSave', ['filter' => 'permission:management-config-app']);
 
     // menu petugas
     $routes->get('petugas', 'Admin\Petugas::index');

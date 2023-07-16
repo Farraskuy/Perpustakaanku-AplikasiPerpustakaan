@@ -9,7 +9,6 @@
                 <span class="h5 fs-5 m-0">Perpustakaanku</span>
             </a>
         </div>
-
         <?php if (!in_groups(['admin', 'petugas'])) : ?>
             <ul class="navbar-nav ms-auto me-2 my-2 my-lg-0 navbar-nav-scroll">
                 <li class="nav-item me-1">

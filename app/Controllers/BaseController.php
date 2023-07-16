@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AnggotaModel;
+use App\Models\AppConfigModel;
 use App\Models\PetugasModel;
 use App\Models\UsersModel;
 use CodeIgniter\Controller;
@@ -66,11 +67,14 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         if (logged_in()) {
             $user = new UsersModel();
+            $appConfig = new AppConfigModel();
+
             $this->userID = $user->getUser(user_id())['userID'];
             $role = array_values(user()->getRoles())[0];
             $this->data += [
                 "username" => user()->username,
                 "role" => $role,
+                "config" => $appConfig->first()
             ];
         }
     }
