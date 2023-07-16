@@ -1,7 +1,7 @@
 <nav class="navbar fixed-top navbar-expand bg-white shadow">
-    <div class="<?= in_groups('admin') ? 'container-fluid px-5 d-flex justify-content-between' : 'container' ?>">
+    <div class="<?= !in_groups(['anggota', 'user-biasa']) ? 'container-fluid px-5 d-flex justify-content-between' : 'container' ?>">
         <div class="d-flex gap-3">
-            <?php if (in_groups('admin')) : ?>
+            <?php if (!in_groups(['anggota', 'user-biasa'])) : ?>
                 <button class="btn text-purple" type="button" onclick="toggleSidebar()"><i class="fa-solid fa-bars fa-lg"></i></button>
             <?php endif ?>
             <a class="navbar-brand d-flex align-items-center gap-2" href="/">
@@ -10,7 +10,7 @@
             </a>
         </div>
 
-        <?php if (!in_groups('admin')) : ?>
+        <?php if (in_groups(['anggota', 'user-biasa'])) : ?>
             <ul class="navbar-nav ms-auto me-2 my-2 my-lg-0 navbar-nav-scroll">
                 <li class="nav-item me-1">
                     <a href="/pinjam" class="nav-link" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pinjamanku">

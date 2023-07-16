@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ConfigAppModel extends Model
+class AppConfigModel extends Model
 {
-    protected $table      = 'config_app';
+    protected $table      = 'app_config';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -14,7 +14,7 @@ class ConfigAppModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id', 'key', 'value'];
+    protected $allowedFields = ['id', 'nomor_telepon', 'email', 'alamat', 'denda_telat', 'denda_hilang', 'denda_rusak', 'logo'];
 
     // Dates
     protected $useTimestamps = true;
