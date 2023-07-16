@@ -57,7 +57,7 @@
 <!-- hapus modal -->
 <div class="modal fade" id="hapus" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content" method="post" data-base-action="/admin/buku/">
+        <form class="modal-content" method="post" action="/admin/buku/">
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="DELETE">
             <div class="modal-header">

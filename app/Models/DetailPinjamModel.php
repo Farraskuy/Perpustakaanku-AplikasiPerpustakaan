@@ -14,7 +14,7 @@ class DetailPinjamModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_pinjam', 'id_buku', 'status'];
+    protected $allowedFields = ['id_pinjam', 'id_buku', 'status', 'kondisi', 'kondisi_akhir'];
 
     // Dates
     protected $useTimestamps = true;

@@ -69,19 +69,18 @@
             const id = button.getAttribute('data-id');
 
             const modalContent = hapusModal.querySelector('.modal-content');
-            const action = modalContent.getAttribute('data-base-action');
+            const action = modalContent.getAttribute('action');
             modalContent.setAttribute('action', action + id);
         })
     }
-
     const hapusdetailModal = document.getElementById('hapusdetail')
     if (hapusdetailModal) {
         hapusdetailModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
-            const id = button.getAttribute('data-lb-id');
+            const id = button.getAttribute('data-id');
 
             const modalContent = hapusdetailModal.querySelector('.modal-content');
-            const action = modalContent.getAttribute('data-base-action');
+            const action = modalContent.getAttribute('action');
             modalContent.setAttribute('action', action + id);
         })
     }
@@ -92,8 +91,19 @@
             const id = button.getAttribute('data-id');
 
             const modalContent = perpanjangModal.querySelector('.modal-content');
-            const action = modalContent.getAttribute('data-base-action');
+            const action = modalContent.getAttribute('action');
             modalContent.setAttribute('action', action + id);
+        })
+    }
+    const pengembalianModal = document.getElementById('pengembalian')
+    if (pengembalianModal) {
+        pengembalianModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+
+            const modalContent = pengembalianModal.querySelector('.modal-footer a');
+            const action = modalContent.getAttribute('href');
+            modalContent.setAttribute('href', action + id);
         })
     }
 
