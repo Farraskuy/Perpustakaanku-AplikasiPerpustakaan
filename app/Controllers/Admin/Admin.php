@@ -56,6 +56,7 @@ class Admin extends BaseController
 
     public function appConfigSave()
     {
+        
         if (!$this->validate([
             'nomor_telepon' => [
                 'rules' => 'required|numeric',

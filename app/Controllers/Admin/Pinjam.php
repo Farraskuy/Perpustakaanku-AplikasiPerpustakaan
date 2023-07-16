@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\AnggotaModel;
+use App\Models\AppConfigModel;
 use App\Models\BukuModel;
 use App\Models\DetailPinjamModel;
 use App\Models\PinjamModel;
@@ -15,6 +16,7 @@ class Pinjam extends BaseController
     protected $detailPinjamModel;
     protected $bukuModel;
     protected $anggotaModel;
+    protected $config;
 
     public function __construct()
     {
@@ -22,11 +24,15 @@ class Pinjam extends BaseController
         $this->anggotaModel = new AnggotaModel();
         $this->pinjamModel = new PinjamModel();
         $this->detailPinjamModel = new DetailPinjamModel();
+        $this->config = new AppConfigModel();
     }
     public function index()
     {
+        if (!$this->config->first()) {
+            return redirect()->back()->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+        }
         $this->data += [
-            "title" => "Home | Administrator",
+            "title" => "Peminjaman",
             "subtitle" => "Peminjaman",
             "navactive" => "peminjaman",
             "validation" => validation_errors(),
@@ -39,7 +45,7 @@ class Pinjam extends BaseController
     public function detail($id_pinjam)
     {
         $this->data += [
-            "title" => "Pinjam",
+            "title" => "Peminjaman",
             "subtitle" => "Detail Peminjaman",
             "navactive" => "peminjaman",
             "validation" => validation_errors(),

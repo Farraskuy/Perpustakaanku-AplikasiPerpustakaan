@@ -15,6 +15,7 @@
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
     <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan')  . '", "success")' : '' ?>
+    <?= session()->getFlashdata('error') ? 'peringatan("' . session()->getFlashdata('error')  . '", "danger")' : '' ?>
 
     function peringatan(isi, type) {
         const notifContainer = document.getElementById('notifContainer');
@@ -29,8 +30,26 @@
         }, 500);
         setTimeout(() => {
             notifContainer.classList.remove('active');
-        }, 3000);
+        }, 4000);
     }
+
+    function formatRupiah(input) {
+        const rawValue = input.value.replace(/[^0-9]/g, '');
+        if (rawValue) {
+            const formattedValue = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(rawValue);
+            input.value = formattedValue.split(',')[0];
+            input.previousElementSibling.value = formattedValue.split(',')[0].replace(/[^0-9]/g, '');
+            console.log(input.previousElementSibling.value);
+        } else {
+            input.value = '';
+            input.previousElementSibling.value = '';
+            console.log(input.previousElementSibling.value);
+        }
+    }
+
 
     function ubahPreview(input) {
         const preview = document.querySelector('.sampulPreview');

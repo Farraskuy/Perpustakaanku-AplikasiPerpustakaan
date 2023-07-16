@@ -34,18 +34,21 @@
         <div class="col-md-6 border-end">
             <p class="modal-devider">Utilitas</p>
             <div class="mb-3">
-                <label for="denda_rusak" class="form-label">Denda Buku Rusak</label>
-                <input type="number" class="form-control <?= isset($validation['denda_rusak']) ? 'is-invalid' : '' ?>" id="denda_rusak" name="denda_rusak" value="<?= old('denda_rusak', isset($config['denda_rusak']) ? $config['denda_rusak'] : '') ?>">
+                <label for="denda_rusak" class="form-label">Denda Telat Pengumpulan</label>
+                <input type="hidden" name="denda_rusak" value="<?= preg_replace('/[^0-9]/', '', old('denda_rusak', isset($config['denda_rusak']) ? $config['denda_rusak'] : '')) ?>">
+                <input oninput="formatRupiah(this)" type="text" class="form-control <?= isset($validation['denda_rusak']) ? 'is-invalid' : '' ?>" id="denda_rusak" value="<?= 'Rp. ' . number_format(old('denda_rusak', isset($config['denda_rusak']) ? $config['denda_rusak'] : ''), 0, ',', '.') ?>">
                 <div class="invalid-feedback"><?= isset($validation['denda_rusak']) ? $validation['denda_rusak'] : '' ?></div>
             </div>
             <div class="mb-3">
-                <label for="denda_hilang" class="form-label">Denda Buku Hilang</label>
-                <input type="number" class="form-control <?= isset($validation['denda_hilang']) ? 'is-invalid' : '' ?>" id="denda_hilang" name="denda_hilang" value="<?= old('denda_hilang', isset($config['denda_hilang']) ? $config['denda_hilang'] : '') ?>">
+                <label for="denda_hilang" class="form-label">Denda Telat Pengumpulan</label>
+                <input type="hidden" name="denda_hilang" value="<?= preg_replace('/[^0-9]/', '', old('denda_hilang', isset($config['denda_hilang']) ? $config['denda_hilang'] : '')) ?>">
+                <input oninput="formatRupiah(this)" type="text" class="form-control <?= isset($validation['denda_hilang']) ? 'is-invalid' : '' ?>" id="denda_hilang" value="<?= 'Rp. ' . number_format(old('denda_hilang', isset($config['denda_hilang']) ? $config['denda_hilang'] : ''), 0, ',', '.') ?>">
                 <div class="invalid-feedback"><?= isset($validation['denda_hilang']) ? $validation['denda_hilang'] : '' ?></div>
             </div>
             <div class="mb-3">
                 <label for="denda_telat" class="form-label">Denda Telat Pengumpulan</label>
-                <input type="number" class="form-control <?= isset($validation['denda_telat']) ? 'is-invalid' : '' ?>" id="denda_telat" name="denda_telat" value="<?= old('denda_telat', isset($config['denda_telat']) ? $config['denda_telat'] : '') ?>">
+                <input type="hidden" name="denda_telat" value="<?= preg_replace('/[^0-9]/', '', old('denda_telat', isset($config['denda_telat']) ? $config['denda_telat'] : '')) ?>">
+                <input oninput="formatRupiah(this)" type="text" class="form-control <?= isset($validation['denda_telat']) ? 'is-invalid' : '' ?>" id="denda_telat" value="<?= 'Rp. ' . number_format(old('denda_telat', isset($config['denda_telat']) ? $config['denda_telat'] : ''), 0, ',', '.') ?>">
                 <div class="invalid-feedback"><?= isset($validation['denda_telat']) ? $validation['denda_telat'] : '' ?></div>
             </div>
         </div>
