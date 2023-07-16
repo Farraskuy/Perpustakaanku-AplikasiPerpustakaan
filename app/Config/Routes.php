@@ -29,7 +29,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Index::index');
+$routes->get('/', 'Admin\Admin::index',  ['filter' => 'role:admin,petugas,ultimateAdmin']);
+$routes->get('/', 'User\Home::index');
 
 // routes buku
 $routes->get('/buku/(:any)', 'User\Buku::detail/$1');
@@ -45,9 +46,13 @@ $routes->group('/pinjam/', ['filter' => 'role:anggota'], function ($routes) {
 
 
 // routes admin
-$routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) {
+$routes->group('/admin', ['filter' => 'role:admin,petugas,ultimateAdmin'], function ($routes) {
     // dashboard
     $routes->get('/', 'Admin\Admin::index');
+
+    // konfigurasi
+    $routes->get('konfigurasi', 'Admin\Admin::appConfig', ['permission:management-config-app']);
+    $routes->put('konfigurasi', 'Admin\Admin::appConfigSave', ['permission:management-config-app']);
 
     // menu petugas
     $routes->get('petugas', 'Admin\Petugas::index');
@@ -56,7 +61,7 @@ $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) 
     $routes->delete('petugas/(:any)', 'Admin\Petugas::hapus/$1');
     $routes->get('petugas/(:any)/edit', 'Admin\Petugas::detailEdit/$1');
     $routes->get('petugas/(:any)', 'Admin\Petugas::detail/$1');
-    
+
     // menu petugas
     $routes->get('anggota', 'Admin\Anggota::index');
     $routes->post('anggota', 'Admin\Anggota::simpan');
@@ -65,7 +70,7 @@ $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) 
     $routes->delete('anggota/(:any)', 'Admin\Anggota::hapus/$1');
     $routes->get('anggota/(:any)/edit', 'Admin\Anggota::detailEdit/$1');
     $routes->get('anggota/(:any)', 'Admin\Anggota::detail/$1');
-    
+
     // menu buku
     $routes->get('buku', 'Admin\Buku::index');
     $routes->post('buku', 'Admin\Buku::simpan');

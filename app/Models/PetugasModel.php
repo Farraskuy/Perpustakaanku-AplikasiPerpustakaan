@@ -40,9 +40,11 @@ class PetugasModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+
     public function getData($idPetugas = null)
     {
-        $petugas = $this->db->table('petugas');
+
+        $petugas = $this->db->table('petugas')->whereNotIn('petugas.id_login', $this->notUltimateAdmin());
 
         if ($idPetugas) {
             return $petugas->join('users', 'users.id = petugas.id_login', 'left')->where('id_petugas', $idPetugas)->get()->getRowArray();
@@ -52,7 +54,7 @@ class PetugasModel extends Model
     }
     public function getDataByIDLogin($id = null)
     {
-        $petugas = $this->db->table('petugas');
+        $petugas = $this->db->table('petugas')->whereNotIn('petugas.id_login', $this->notUltimateAdmin());
 
         if ($id) {
             return $petugas->join('users', 'users.id = petugas.id_login', 'left')->where('users.id', $id)->get()->getRowArray();
@@ -61,4 +63,8 @@ class PetugasModel extends Model
         return $petugas->get()->getResultArray();
     }
 
+    private function notUltimateAdmin()
+    {
+        return $this->db->table('auth_groups_users')->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')->where('auth_groups.name ', 'ultimateAdmin')->get()->getRowArray();
+    }
 }

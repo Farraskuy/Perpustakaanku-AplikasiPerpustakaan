@@ -24,12 +24,20 @@ class Admin extends BaseController
     }
     public function index()
     {
-
         $this->data += [
-            "title" => "Home | Administrator",
+            "title" => "Home | Dashboard",
             "navactive" => "admin",
         ];
         return view('admin/home', $this->data);
-        
-    }    
+    }
+
+    public function appConfig()
+    {
+        $this->data += [
+            "title" => "Admin | Konfigurasi",
+            "subtitle" => "Konfigurasi",
+            "navactive" => "konfigurasi",
+        ];
+        return view('/admin/config', $this->data);
+    }
 }

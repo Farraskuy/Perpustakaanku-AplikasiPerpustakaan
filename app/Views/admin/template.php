@@ -61,6 +61,18 @@
                     </div>
                 </div>
 
+                <hr class="mb-2 my-0">
+
+                <div class="side-content px-3 nav-pills">
+                    <small class="text-secondary fw-semibold">Pengaturan</small>
+                    <div class="nav-item my-2">
+                        <a class="nav-link side-item <?= $navactive == 'konfigurasi' ? 'active' : '' ?> p-3 gap-2 fw-semibold" href="/admin/konfigurasi">
+                            <i class="fa-regular fa-screwdriver-wrench"></i>Konfigurasi Perpustakaan
+                        </a>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
