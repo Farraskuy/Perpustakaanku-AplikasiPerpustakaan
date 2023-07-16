@@ -14,7 +14,7 @@ class ConfigAppModel extends Model
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id', 'id_super_admin', 'nama_perpustakaan', 'alamat', 'denda_terlambat', 'denda_rusak', 'logo', 'status'];
+    protected $allowedFields = ['id', 'key', 'value'];
 
     // Dates
     protected $useTimestamps = true;

@@ -12,37 +12,14 @@ class ConfigApp extends Migration
             'id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
-                'unsigned'   => true,
+                'unsigned'       => true,
             ],
-            'id_super_admin' => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
-            ],
-            'nama_perpustakaan' => [
+            'key' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'constraint' => 255,
             ],
-            'alamat' => [
+            'value' => [
                 'type'       => 'TEXT',
-            ],
-            'denda_terlambat' => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
-            ],
-            'denda_rusak' => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
-            ],
-            'logo' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'status' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
             ],
             'created_at' => [
                 'type'       => 'DATETIME',
