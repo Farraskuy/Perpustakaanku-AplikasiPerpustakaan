@@ -28,9 +28,11 @@ class Pinjam extends BaseController
     }
     public function index()
     {
+        // cek konfigurasi aplikasi
         if (!$this->config->first()) {
-            return redirect()->back()->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
         }
+
         $this->data += [
             "title" => "Peminjaman",
             "subtitle" => "Peminjaman",
@@ -44,6 +46,10 @@ class Pinjam extends BaseController
 
     public function detail($id_pinjam)
     {
+        // cek konfigurasi aplikasi
+        if (!$this->config->first()) {
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+        }
         $this->data += [
             "title" => "Peminjaman",
             "subtitle" => "Detail Peminjaman",
@@ -177,7 +183,6 @@ class Pinjam extends BaseController
                 'id_pinjam' => $id,
                 'id_buku' => $id_buku,
                 'kondisi' => $this->request->getVar("kondisi-$id_buku"),
-                'status' => 'terpinjam',
             ]);
             $this->pinjamModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id);
             $this->bukuModel->set('jumlah_buku', 'jumlah_buku - 1', false)->update($id_buku);
@@ -199,29 +204,6 @@ class Pinjam extends BaseController
         $this->bukuModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id_buku);
 
         session()->setFlashdata('pesan', 'Data buku pinjaman berhasil dihapus');
-
-        return redirect()->back();
-    }
-
-    public function perpanjangWaktu($id_pinjam)
-    {
-        if (!$this->validate([
-            'waktu' => [
-                'rules' => 'is_natural|greater_than[0]|less_than_equal_to[8]',
-                'errors' => [
-                    'is_natural' => 'Harap isi dengan angka',
-                    'less_than_equal_to' => 'Tidak boleh memperpanjang lebih dari 8 Hari',
-                    'greater_than' => 'Tidak boleh memperpanjang kurang dari 1 Hari',
-                ],
-            ],
-        ])) {
-            return redirect()->back()->withInput()->with('error_perpanjang', 'true');
-        }
-
-        $waktu = $this->request->getVar('waktu');
-        $this->pinjamModel->set('tanggal_kembali', "tanggal_kembali + INTERVAL " . $waktu . " DAY", false)->update($id_pinjam);
-
-        session()->setFlashdata('pesan', 'Waktu peminjaman berhasil diperpanjang');
 
         return redirect()->back();
     }

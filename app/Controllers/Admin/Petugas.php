@@ -214,7 +214,6 @@ class Petugas extends BaseController
 
     public function edit($id)
     {
-
         $rules = [
             'nama' => [
                 'rules' => 'required',
@@ -252,7 +251,7 @@ class Petugas extends BaseController
                 ]
             ],
             'akses_login' => [
-                'rules' => 'required|in_list[none,petugas,admin]',
+                'rules' => 'required|in_list[none,petugas]',
                 'errors' => [
                     'required' => 'Harap pilih akses login yang sesuai',
                     'in_list' => 'Harap pilih akses login yang sesuai',

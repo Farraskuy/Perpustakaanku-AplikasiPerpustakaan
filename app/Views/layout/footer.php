@@ -5,9 +5,8 @@
 
 <script>
     // side bar toggler
-    const main = document.querySelector('.main');
-
     function toggleSidebar() {
+        const main = document.querySelector('.main');
         main.classList.toggle('active');
     }
 
@@ -33,23 +32,80 @@
         }, 4000);
     }
 
-    function formatRupiah(input) {
-        const rawValue = input.value.replace(/[^0-9]/g, '');
-        if (rawValue) {
-            const formattedValue = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-            }).format(rawValue);
-            input.value = formattedValue.split(',')[0];
-            input.previousElementSibling.value = formattedValue.split(',')[0].replace(/[^0-9]/g, '');
-            console.log(input.previousElementSibling.value);
-        } else {
-            input.value = '';
-            input.previousElementSibling.value = '';
-            console.log(input.previousElementSibling.value);
-        }
+    function valueToFormatRupiah(e) {
+        const formattedValue = formatRupiah(e.value);
+        e.value = formattedValue;
+        e.previousElementSibling.value = formattedValue.replace(/[^0-9]/g, '');
     }
 
+    function formatRupiah(value) {
+        if (!value) value = 0;
+        value += '';
+        const rawValue = value.replace(/[^0-9]/g, '');
+        const formattedValue = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        }).format(rawValue);
+        return formattedValue.split(',')[0];
+    }
+
+    const dendaRusak = <?= isset($config['denda_rusak']) ? $config['denda_rusak'] : 0 ?>;
+    const dendaHilang = <?= isset($config['denda_hilang']) ? $config['denda_hilang'] : 0 ?>;
+    const inputDendaTelat = document.getElementById('denda_telat');
+    const inputDendaKondisi = document.getElementById('denda_kondisi');
+    const inputJumlahDenda = document.getElementById('jumlah_denda');
+    const inputKembali = document.getElementById('kembali');
+    const inputBayar = document.getElementById('bayar');
+
+    if (inputBayar) {
+        inputBayar.addEventListener('input', (e) => {
+            valueToFormatRupiah(inputBayar);
+            hitungKembali()
+        })
+        hitungKembali();
+    }
+
+    function cekKondisi(element) {
+        const kondisi = element.value;
+        const kondisiLama = element.getAttribute('kondisi-lama');
+        element.setAttribute('kondisi-lama', kondisi);
+
+        const inputDendaKondisi = document.getElementById('denda_kondisi');
+        let dendaKondisi = parseInt(inputDendaKondisi.value.replace(/[^0-9]/g, ''));
+
+        let dendaLama = 0;
+        if (kondisiLama == 'rusak') dendaLama = dendaRusak;
+        if (kondisiLama == 'hilang') dendaLama = dendaHilang;
+        dendaKondisi -= dendaLama;
+
+        let denda = 0;
+        if (kondisi == 'rusak') denda = dendaRusak;
+        if (kondisi == 'hilang') denda = dendaHilang;
+        dendaKondisi += denda;
+
+        inputDendaKondisi.value = formatRupiah(dendaKondisi);
+
+        hitungTotal()
+    }
+
+    function hitungTotal() {
+        const dendaTelat = parseInt(inputDendaTelat.value.replace(/[^0-9]/g, ''));
+        const dendaKondisi = parseInt(inputDendaKondisi.value.replace(/[^0-9]/g, ''));
+        inputJumlahDenda.value = formatRupiah(dendaTelat + dendaKondisi);
+        hitungKembali()
+    }
+
+    function hitungKembali() {
+        const jumlahDenda = parseInt(inputJumlahDenda.value.replace(/[^0-9]/g, ''));
+        const bayar = parseInt(inputBayar.value.replace(/[^0-9]/g, ''));
+        console.log(jumlahDenda);
+        console.log(bayar);
+        if (!jumlahDenda || jumlahDenda > bayar) {
+            inputKembali.value = formatRupiah();
+        } else {
+            inputKembali.value = formatRupiah(jumlahDenda - bayar);
+        }
+    }
 
     function ubahPreview(input) {
         const preview = document.querySelector('.sampulPreview');
@@ -109,7 +165,7 @@
 
     function toggleFormAkses(value) {
         const form = document.getElementById('formAksesLogin');
-        if (value == "admin" || value == "petugas") {
+        if (value == "petugas") {
             form.removeAttribute('disabled');
         } else {
             form.setAttribute('disabled', 'true');

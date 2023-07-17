@@ -30,6 +30,9 @@ class Pinjam extends Migration
                 'constraint' => 11,
                 'unsigned'   => true,
             ],
+            'tanggal_kembali' => [
+                'type'       => 'DATETIME',
+            ],
             'created_at' => [
                 'type'       => 'DATETIME',
                 'NULL'       => true,
