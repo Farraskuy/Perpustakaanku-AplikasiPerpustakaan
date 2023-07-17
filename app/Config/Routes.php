@@ -51,8 +51,8 @@ $routes->group('/admin', ['filter' => 'role:admin,petugas'], function ($routes) 
     $routes->get('/', 'Admin\Admin::index');
 
     // konfigurasi
-    $routes->get('konfigurasi', 'Admin\Admin::appConfig', ['filter' => 'permission:management-config-app']);
-    $routes->post('konfigurasi', 'Admin\Admin::appConfigSave', ['filter' => 'permission:management-config-app']);
+    $routes->get('informasi', 'Admin\Admin::appConfig', ['filter' => 'permission:management-config-app']);
+    $routes->post('informasi', 'Admin\Admin::appConfigSave', ['filter' => 'permission:management-config-app']);
 
     // menu petugas
     $routes->get('petugas', 'Admin\Petugas::index');

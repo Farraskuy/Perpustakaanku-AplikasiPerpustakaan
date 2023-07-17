@@ -37,9 +37,8 @@ class Admin extends BaseController
     public function appConfig()
     {
         $this->data += [
-            "title" => "Admin | Konfigurasi",
-            "subtitle" => "Konfigurasi",
-            "navactive" => "konfigurasi",
+            "title" => "Admin | informasi",
+            "navactive" => "informasi",
             "validation" => validation_errors(),
         ];
         return view('/admin/config', $this->data);
@@ -56,7 +55,7 @@ class Admin extends BaseController
 
     public function appConfigSave()
     {
-        
+
         if (!$this->validate([
             'nomor_telepon' => [
                 'rules' => 'required|numeric',

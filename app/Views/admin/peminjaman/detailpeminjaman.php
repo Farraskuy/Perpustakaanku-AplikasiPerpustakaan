@@ -120,45 +120,70 @@
     </div>
 </div>
 
-<!-- modal edit -->
-<div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<!-- modal EDIT pengembalian -->
+<div class="modal fade form-modal" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <form class="modal-content" method="post" enctype="multipart/form-data" autocomplete="off">
+        <form class="modal-content" method="post">
 
             <?= csrf_field() ?>
 
             <input type="hidden" name="_method" value="PUT">
-
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Edit <?= $subtitle ?></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3 row">
-                    <label for="peminjam" class="col-sm-3 form-label">Peminjam</label>
-                    <div class="col-sm-9">
-                        <select class="form-select form-select-sm <?= isset($validation['peminjam']) ? 'is-invalid' : '' ?>" id="peminjam" name="peminjam" aria-label="Default select example">
-                            <option value="" <?= old('peminjam') == '' ? 'selected' : '' ?>>Pilih Anggota</option>
-
-                            <?php foreach ($dataanggota as $item) : ?>
-                                <option value="<?= $item['id_anggota'] ?>" <?= old('peminjam', $pinjam['id_anggota']) ==  $item['id_anggota']  ? 'selected' : '' ?>><?= $item['id_anggota'] . " - " . $item['nama'] ?></option>
-                            <?php endforeach ?>
-
-                        </select>
-                        <div class="invalid-feedback"><?= isset($validation['peminjam']) ? $validation['peminjam'] : '' ?></div>
+            <div class="modal-header flex-column">
+                <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                    <h1 class="modal-title fs-5 m-0" id="staticBackdropLabel">Form Peminjaman Buku</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row g-0 w-100">
+                    <div class="col-md-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="fa-regular fa-magnifying-glass"></i></span>
+                            <input type="search" class="form-control" id="cariAnggota" placeholder="Cari ID Anggota, Nama">
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label for="tanggal_pengembalian" class="col-sm-3 form-label">Tanggal Pengembalian</label>
+            </div>
+            <div class="modal-body position-relative p-0">
+
+                <table class="table table-responsive align-middle">
+                    <thead class="table-light position-sticky" style="top: 0; z-index: 2;">
+                        <tr class="align-middle">
+                            <th scope="col">#</th>
+                            <th scope="col">ID Anggota</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php $i = 1 ?>
+                        <?php foreach ($dataanggota as $item) : ?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= $item['id_anggota'] ?></td>
+                                <td><?= $item['nama'] ?></td>
+                                <td class="fit aksi position-relative">
+                                    <input type="radio" class="form-radio" name="peminjam" value="<?= $item['id_anggota'] ?>" id="<?= $item['id_anggota'] ?>" <?= old('peminjam', $pinjam['id_anggota']) == $item['id_anggota'] ? 'checked' : '' ?> hidden>
+                                    <label class="pilih-buku" for="<?= $item['id_anggota'] ?>"></label>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+
+                    </tbody>
+                </table>
+                <div class="mb-3 row g-0 p-3 pb-0 align-items-center border-top">
+                    <label for="tanggal_pengembalian" class="col-sm-3 form-label m-0">Tanggal Pengembalian</label>
                     <div class="col-sm-9">
                         <input class="form-control form-control-sm <?= isset($validation['tanggal_pengembalian']) ? 'is-invalid' : '' ?>" id="tanggal_pengembalian" value="<?= old('tanggal_pengembalian', $pinjam['tanggal_kembali']) ?>" name="tanggal_pengembalian" type="date" />
                         <div class="invalid-feedback"><?= isset($validation['tanggal_pengembalian']) ? $validation['tanggal_pengembalian'] : '' ?></div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button class="btn btn-warning text-white fw-semibold" type="submit"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+            <div class="modal-footer justify-content-between">
+                <p class="col text-danger"><?= session()->getFlashdata('error_pinjam_buku') ? session()->getFlashdata('error_pinjam_buku') : '' ?></p>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-warning text-white fw-semibold"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                </div>
             </div>
         </form>
     </div>

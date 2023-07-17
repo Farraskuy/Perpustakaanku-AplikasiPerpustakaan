@@ -2,8 +2,6 @@
 
 <?= $this->section('content'); ?>
 
-<?= d($validation) ?>
-
 <div class="bg-white rounded-3 p-3 px-4 mb-3 shadow">
     <h5 class="m-0">Informasi Perpustakaan</h5>
 </div>
