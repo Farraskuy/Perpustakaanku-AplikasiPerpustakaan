@@ -35,6 +35,14 @@ class Pengembalian extends Migration
                 'constraint' => 11,
                 'unsigned'   => true,
             ],
+            'tanggal_pinjam' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'tanggal-kembali' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
             'created_at' => [
                 'type'       => 'DATETIME',
                 'NULL'       => true,

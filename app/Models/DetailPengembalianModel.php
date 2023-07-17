@@ -6,15 +6,15 @@ use CodeIgniter\Model;
 
 class DetailPengembalianModel extends Model
 {
-    protected $table      = 'detail_pinjam';
-    protected $primaryKey = 'id_pinjam';
+    protected $table      = 'detail_pengembalian';
+    protected $primaryKey = 'id_pengembalian';
 
     protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_pinjam', 'id_buku', 'status', 'kondisi', 'kondisi_akhir'];
+    protected $allowedFields = ['id_pengembalian', 'id_buku', 'kondisi', 'kondisi_akhir', 'denda_telat', 'denda_kondisi', 'total_denda'];
 
     // Dates
     protected $useTimestamps = true;

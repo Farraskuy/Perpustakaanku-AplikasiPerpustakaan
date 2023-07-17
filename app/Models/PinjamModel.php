@@ -62,7 +62,10 @@ class PinjamModel extends Model
                 WHEN DATE(NOW()) > pinjam.tanggal_kembali THEN 'Telat Dikumpulkan'    
                 ELSE 'Belum dikembalikan'
             END AS status_message,
-            DATEDIFF(DATE(NOW()), pinjam.tanggal_kembali) AS keterlambatan
+            CASE
+                WHEN DATE(NOW()) > pinjam.tanggal_kembali THEN DATEDIFF(DATE(NOW()), pinjam.tanggal_kembali)    
+                ELSE 0
+            END AS keterlambatan,
         "
         )
             ->join('petugas', 'petugas.id_petugas = pinjam.id_petugas', 'inner')

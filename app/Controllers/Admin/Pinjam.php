@@ -101,9 +101,7 @@ class Pinjam extends BaseController
 
         $insertID = $this->pinjamModel->getInsertID();
 
-        session()->setFlashdata('pesan', 'Data peminjaman berhasil ditambahkan');
-
-        return redirect()->to('/admin/pinjam/' . $insertID);
+        return redirect()->to('/admin/pinjam/' . $insertID)->with('pesan', 'Data peminjaman berhasil ditambahkan')->with('error_pinjam_buku', ' ');
     }
 
     public function edit($id)

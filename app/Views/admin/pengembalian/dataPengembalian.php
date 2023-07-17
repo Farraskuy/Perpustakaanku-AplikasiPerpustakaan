@@ -24,7 +24,6 @@
                 <th scope="col">Tanggal Pinjam</th>
                 <th scope="col">Tanggal Batas Kembali</th>
                 <th scope="col">Tanggal Dikembalikan</th>
-                <th scope="col">Status</th>
                 <th scope="col" class="fit">Aksi</th>
             </tr>
         </thead>
@@ -33,19 +32,16 @@
             <?php $i = 1 ?>
             <?php foreach ($data as $item) : ?>
                 <tr>
-                    <td scope="row"><?= $i ?></td>
-                    <td><?= $item['id_pinjam'] ?></td>
+                    <td scope="row"><?= $i++ ?></td>
+                    <td><?= $item['id_pengembalian'] ?></td>
                     <td><?= $item['nama_anggota'] ?></td>
                     <td><?= $item['nama_petugas'] ?></td>
-                    <td><?= formatTanggal($item['created_at']) ?></td>
+                    <td><?= formatTanggal($item['tanggal_pinjam']) ?></td>
                     <td><?= formatTanggal($item['tanggal_kembali']) ?></td>
-                    <td><?= formatTanggal($item['tanggal_dikembalikan']) ?></td>
-                    <td>
-                        <h6><span class="badge bg-<?= $item['status_type'] ?>"><?= $item['status_message'] ?></span></h6>
-                    </td>
+                    <td><?= formatTanggal($item['created_at']) ?></td>
                     <td class="fit aksi">
-                        <a class="btn btn-primary" href="/admin/pengembalian/<?= $item['id_pinjam'] ?>"><i class="fa-regular fa-eye"></i></a>
-                        <button data-id="<?= $item['id_pinjam'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                        <a class="btn btn-primary" href="/admin/pengembalian/<?= $item['id_pengembalian'] ?>"><i class="fa-regular fa-eye"></i></a>
+                        <button data-id="<?= $item['id_pengembalian'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -101,7 +97,7 @@
                     <thead class="table-light position-sticky" style="top: 0; z-index: 2;">
                         <tr class="align-middle">
                             <th scope="col">#</th>
-                            <th scope="col">Nomor Peminjaman</th>
+                            <th scope="col">Nomor Pengembalian</th>
                             <th scope="col">Nama Peminjam</th>
                             <th scope="col">Tanggal Pinjam</th>
                             <th scope="col">Jumlah Buku</th>
