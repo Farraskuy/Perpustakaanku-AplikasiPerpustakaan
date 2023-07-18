@@ -118,12 +118,12 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
             $routes->put('(:any)', 'Kategori::edit/$1');
             $routes->delete('(:any)', 'Kategori::hapus/$1');
         });
-        // menu data pengarang
-        $routes->group('pengarang', function ($routes) {
-            $routes->get('/', 'Pengarang::index');
-            $routes->post('/', 'Pengarang::simpan');
-            $routes->put('(:any)', 'Pengarang::edit/$1');
-            $routes->delete('(:any)', 'Pengarang::hapus/$1');
+        // menu data penulis
+        $routes->group('penulis', function ($routes) {
+            $routes->get('/', 'Penulis::index');
+            $routes->post('/', 'Penulis::simpan');
+            $routes->put('(:any)', 'Penulis::edit/$1');
+            $routes->delete('(:any)', 'Penulis::hapus/$1');
         });
         // menu data penerbit
         $routes->group('penerbit', function ($routes) {

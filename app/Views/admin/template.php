@@ -50,7 +50,7 @@
                                         <a class="nav-link side-item <?= $navactive == 'buku' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku"><i class="fa-regular fa-book-copy fs-6"></i>Data Buku</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item <?= $navactive == 'pengarang' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/pengarang"><i class="fa-regular fa-pen-nib fs-6"></i>Pengarang</a>
+                                        <a class="nav-link side-item <?= $navactive == 'penulis' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/penulis"><i class="fa-regular fa-pen-nib fs-6"></i>Penulis</a>
                                     </li>
                                     <li class="nav-item ">
                                         <a class="nav-link side-item <?= $navactive == 'penerbit' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/penerbit"><i class="fa-regular fa-file-arrow-up fs-6"></i>Penerbit</a>

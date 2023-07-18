@@ -31,13 +31,13 @@
             <?php foreach ($data as $item) : ?>
                 <tr>
                     <td><?= $i++ ?></td>
-                    <td><?= $item['id_pengarang'] ?></td>
+                    <td><?= $item['id_penulis'] ?></td>
                     <td><?= $item['nama'] ?></td>
                     <td><?= formatTanggal($item['created_at']) . ' ' . date('H:i', strtotime($item['created_at'])) ?></td>
                     <td><?= formatTanggal($item['updated_at']) . ' ' . date('H:i', strtotime($item['updated_at'])) ?></td>
                     <td class="fit">
-                        <button data-id="<?= $item['id_pengarang'] ?>" data-nilai="<?= $item['nama'] ?>" type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target=".editMasterBuku"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <button data-id="<?= $item['id_pengarang'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                        <button data-id="<?= $item['id_penulis'] ?>" data-nilai="<?= $item['nama'] ?>" type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target=".editMasterBuku"><i class="fa-regular fa-pen-to-square"></i></button>
+                        <button data-id="<?= $item['id_penulis'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -79,10 +79,10 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <label for="pengarang" class="col-sm-3 form-label m-0">Nama <?= $subtitle ?></label>
+                    <label for="penulis" class="col-sm-3 form-label m-0">Nama <?= $subtitle ?></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['pengarang']) ? 'is-invalid' : '' ?>" value="<?= old('pengarang') ?>" name="pengarang" id="pengarang">
-                        <div class="invalid-feedback"><?= isset($validation['pengarang']) ? $validation['pengarang'] : '' ?></div>
+                        <input type="text" class="form-control <?= isset($validation['penulis']) ? 'is-invalid' : '' ?>" value="<?= old('penulis') ?>" name="penulis" id="penulis">
+                        <div class="invalid-feedback"><?= isset($validation['penulis']) ? $validation['penulis'] : '' ?></div>
                     </div>
                 </div>
             </div>
@@ -107,8 +107,8 @@
                 <div class="row">
                     <label for="inputEditMasterBuku" class="col-sm-3 form-label m-0">Nama <?= $subtitle ?></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['pengarang_edit']) ? 'is-invalid' : '' ?>" value="<?= old('pengarang_edit') ?>" name="pengarang_edit" id="inputEditMasterBuku">
-                        <div class="invalid-feedback"><?= isset($validation['pengarang_edit']) ? $validation['pengarang_edit'] : '' ?></div>
+                        <input type="text" class="form-control <?= isset($validation['penulis_edit']) ? 'is-invalid' : '' ?>" value="<?= old('penulis_edit') ?>" name="penulis_edit" id="inputEditMasterBuku">
+                        <div class="invalid-feedback"><?= isset($validation['penulis_edit']) ? $validation['penulis_edit'] : '' ?></div>
                     </div>
                 </div>
             </div>

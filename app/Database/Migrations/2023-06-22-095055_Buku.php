@@ -55,8 +55,8 @@ class Buku extends Migration
                 'NULL'       => true,
             ],
         ]);
-        // $this->forge->addKey('id_buku', true);
-        // $this->forge->createTable('buku');
+        $this->forge->addKey('id_buku', true);
+        $this->forge->createTable('buku');
 
         // tabel rak
         $this->forge->addField([
@@ -84,9 +84,9 @@ class Buku extends Migration
         $this->forge->addKey('id_rak', true);
         $this->forge->createTable('rak');
 
-        // tabel pengarang
+        // tabel penulis
         $this->forge->addField([
-            'id_pengarang' => [
+            'id_penulis' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
@@ -103,8 +103,8 @@ class Buku extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addKey('id_pengarang', true);
-        $this->forge->createTable('pengarang');
+        $this->forge->addKey('id_penulis', true);
+        $this->forge->createTable('penulis');
 
         // tabel penerbit
         $this->forge->addField([
@@ -155,7 +155,7 @@ class Buku extends Migration
     {
         $this->forge->dropTable('buku');
         $this->forge->dropTable('rak');
-        $this->forge->dropTable('pengarang');
+        $this->forge->dropTable('penulis');
         $this->forge->dropTable('penerbit');
         $this->forge->dropTable('kategori');
     }

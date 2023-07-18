@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PengarangModel extends Model
+class PenulisModel extends Model
 {
-    protected $table      = 'pengarang';
-    protected $primaryKey = 'id_pengarang';
+    protected $table      = 'penulis';
+    protected $primaryKey = 'id_penulis';
 
     protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_pengarang', 'nama'];
+    protected $allowedFields = ['id_penulis', 'nama'];
 
     // Dates
     protected $useTimestamps = true;

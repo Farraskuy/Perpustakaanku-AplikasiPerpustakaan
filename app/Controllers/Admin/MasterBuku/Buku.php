@@ -75,6 +75,13 @@ class Buku extends BaseController
                     'required' => 'Kolom penerbit tidak boleh kosong'
                 ]
             ],
+            'penulis' => [
+                'rules' => 'required|is_not_unique[penulis.id_penulis]',
+                'errors' => [
+                    'required' => 'Harap pilih akses login yang sesuai',
+                    'in_list' => 'Harap pilih penulis yang tesedia',
+                ]
+            ],
             'tanggal_terbit' => [
                 'rules' => 'required',
                 'errors' => [
