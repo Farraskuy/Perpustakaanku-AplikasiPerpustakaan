@@ -4,12 +4,12 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Pinjam extends Migration
+class Pengembalian extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id_pinjam' => [
+            'id_pengembalian' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 255,
             ],
@@ -21,7 +21,7 @@ class Pinjam extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'status' => [
+            'keterangan' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
@@ -30,8 +30,18 @@ class Pinjam extends Migration
                 'constraint' => 11,
                 'unsigned'   => true,
             ],
-            'tanggal_kembali' => [
+            'total_denda' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
+            ],
+            'tanggal_pinjam' => [
                 'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'tanggal-kembali' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
             ],
             'created_at' => [
                 'type'       => 'DATETIME',
@@ -46,12 +56,12 @@ class Pinjam extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addKey('id_pinjam', true);
-        $this->forge->createTable('pinjam');
+        $this->forge->addKey('id_pengembalian', true);
+        $this->forge->createTable('pengembalian');
     }
 
     public function down()
     {
-        $this->forge->dropTable('pinjam');
+        $this->forge->dropTable('pengembalian');
     }
 }

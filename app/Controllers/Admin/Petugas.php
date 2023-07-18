@@ -28,14 +28,14 @@ class Petugas extends BaseController
             "subtitle" => "Petugas",
             "navactive" => "petugas",
             "validation" => validation_errors(),
-            "data" => $this->petugasModel->getData(),
+            "data" => $this->petugasModel->getDataPetugas(),
         ];
         return view('admin/petugas/dataPetugas', $this->data);
     }
 
     public function detail($id)
     {
-        $petugas = $this->petugasModel->getData($id);
+        $petugas = $this->petugasModel->getDataPetugas($id);
         if (empty($petugas)) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Petugas dengan id "' . $id . '" tidak ditemukan');
         }
@@ -214,7 +214,6 @@ class Petugas extends BaseController
 
     public function edit($id)
     {
-
         $rules = [
             'nama' => [
                 'rules' => 'required',
@@ -252,7 +251,7 @@ class Petugas extends BaseController
                 ]
             ],
             'akses_login' => [
-                'rules' => 'required|in_list[none,petugas,admin]',
+                'rules' => 'required|in_list[none,petugas]',
                 'errors' => [
                     'required' => 'Harap pilih akses login yang sesuai',
                     'in_list' => 'Harap pilih akses login yang sesuai',
@@ -274,7 +273,7 @@ class Petugas extends BaseController
             ],
         ];
 
-        $petugas = $this->petugasModel->getData($id);
+        $petugas = $this->petugasModel->getDataPetugas($id);
         $akses_login = $petugas['akses_login'];
         $idLogin = $petugas['id_login'];
 

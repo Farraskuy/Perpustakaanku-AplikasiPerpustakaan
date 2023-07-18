@@ -246,18 +246,18 @@
   transition: 0.3s ease;
 }
 
-.form-radio[name="nopinjam"]:checked ~ .pilih-buku,
+.form-radio[name="peminjam"]:checked ~ .pilih-buku,
 .form-check[name="buku[]"]:checked ~ .pilih-buku {
   background-color: var(--color-green);
   border-left: 2px solid var(--color-green);
 }
-.form-radio[name="nopinjam"]:hover ~ .pilih-buku,
+.form-radio[name="peminjam"]:hover ~ .pilih-buku,
 .form-check[name="buku[]"]:hover ~ .pilih-buku {
   background-color: var(--color-green);
   opacity: 0.7;
   border-left: 2px solid var(--color-green);
 }
-.form-radio[name="nopinjam"]:checked ~ .pilih-buku::before,
+.form-radio[name="peminjam"]:checked ~ .pilih-buku::before,
 .form-check[name="buku[]"]:checked ~ .pilih-buku::before {
   border: 2px solid white;
   height: 10px;
@@ -268,7 +268,7 @@
   border-right: none;
 }
 
-.form-radio[name="nopinjam"]:hover ~ .pilih-buku::before,
+.form-radio[name="peminjam"]:hover ~ .pilih-buku::before,
 .form-check[name="buku[]"]:hover ~ .pilih-buku::before {
   border-color: white;
 }

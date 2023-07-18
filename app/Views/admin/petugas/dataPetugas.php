@@ -154,8 +154,6 @@
                                     <label class="btn btn-outline-primary" for="none">Tidak Ada</label>
                                     <input type="radio" class="btn-check" value="petugas" onchange="toggleFormAkses(this.value)" name="akses_login" id="petugas" <?= old('akses_login') == 'petugas' ? 'checked' : '' ?>>
                                     <label class="btn btn-outline-primary" for="petugas">Petugas</label>
-                                    <input type="radio" class="btn-check" value="admin" onchange="toggleFormAkses(this.value)" name="akses_login" id="admin" <?= old('akses_login') == 'admin' ? 'checked' : '' ?>>
-                                    <label class="btn btn-outline-primary" for="admin">Admin</label>
                                 </div>
                             </div>
                             <fieldset <?= old('akses_login', 'none') == 'none' ? 'disabled' : '' ?> id="formAksesLogin">

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DendaModel extends Model
+class DetailPengembalianModel extends Model
 {
-    protected $table      = 'denda';
-    protected $primaryKey = 'id_denda';
+    protected $table      = 'detail_pengembalian';
+    protected $primaryKey = 'id_pengembalian';
 
     protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_denda', 'id_anggota', 'id_petugas', 'total_denda', 'bayar', 'kembali'];
+    protected $allowedFields = ['id_pengembalian', 'id_buku', 'kondisi', 'kondisi_akhir', 'denda_telat', 'denda_kondisi', 'total_denda'];
 
     // Dates
     protected $useTimestamps = true;

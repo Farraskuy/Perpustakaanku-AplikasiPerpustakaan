@@ -2,7 +2,7 @@
 
 <?= $this->section('content'); ?>
 
-<?php $pinjam = $data['pinjam'] ?>
+<?php $pinjam = $data['pengembalian'] ?>
 
 
 <div class="bg-white rounded-3 p-3 px-4 mb-3">
@@ -24,9 +24,8 @@
     <div class="row align-items-start mb-3 row-gap-2">
         <div class="col">
             <h6 class="mb-3">
-                <strong>No Peminjaman </strong>
-                <span class="border-start border-end px-2 mx-2"><?= $pinjam['id_pinjam'] ?></span>
-                <span class="badge bg-<?= $pinjam['status_type'] ?>"><?= $pinjam['status_message'] ?></span>
+                <strong>No Pengembalian </strong>
+                <span class="border-start border-end px-2 mx-2"><?= $pinjam['id_pengembalian'] ?></span>
             </h6>
             <div class="table-responsive">
                 <table class="table table-sm table-borderless align-middle">
@@ -43,7 +42,7 @@
                     <tr class="border-bottom">
                         <th>Tanggal Pinjam</th>
                         <td>:</td>
-                        <td><?= formatTanggal($pinjam['created_at']) ?></td>
+                        <td><?= formatTanggal($pinjam['tanggal_pinjam']) ?></td>
                     </tr>
                     <tr>
                         <th>Tanggal Kembali</th>
@@ -53,7 +52,7 @@
                     <tr>
                         <th>Tanggal Pinjam</th>
                         <td>:</td>
-                        <td><?= formatTanggal($pinjam['tanggal_dikembalikan']) ?></td>
+                        <td><?= formatTanggal($pinjam['created_at']) ?></td>
                     </tr>
                 </table>
             </div>

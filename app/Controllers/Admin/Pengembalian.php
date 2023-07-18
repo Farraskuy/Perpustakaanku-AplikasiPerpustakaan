@@ -3,34 +3,45 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\AnggotaModel;
+use App\Models\AppConfigModel;
 use App\Models\BukuModel;
+use App\Models\DetailPengembalianModel;
 use App\Models\DetailPinjamModel;
 use App\Models\PengembalianModel;
 use App\Models\PinjamModel;
-use CodeIgniter\I18n\Time;
 
 class Pengembalian extends BaseController
 {
     protected $pinjamModel;
     protected $detailPinjamModel;
     protected $bukuModel;
+    protected $config;
+    protected $pengembalianModel;
+    protected $detailPengembalianModel;
 
     public function __construct()
     {
+        $this->config = new AppConfigModel();
+        $this->bukuModel = new BukuModel();
         $this->pinjamModel = new PinjamModel();
         $this->detailPinjamModel = new DetailPinjamModel();
-        $this->bukuModel = new BukuModel();
+        $this->pengembalianModel = new PengembalianModel();
+        $this->detailPengembalianModel = new DetailPengembalianModel();
     }
 
     public function index()
     {
+        // cek konfigurasi aplikasi
+        if (!$this->config->first()) {
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+        }
+
         $this->data += [
             "title" => "Pengembalian | Admin",
             "subtitle" => "Pengembalian",
             "navactive" => "pengembalian",
             "validation" => validation_errors(),
-            "data" => $this->pinjamModel->getDataKembali(),
+            "data" => $this->pengembalianModel->getDataKembali(),
             "datapinjam" => $this->pinjamModel->getDataPinjam(),
         ];
         return view('admin/pengembalian/dataPengembalian', $this->data);
@@ -38,12 +49,17 @@ class Pengembalian extends BaseController
 
     public function detail($id_pinjam)
     {
+        // cek konfigurasi aplikasi
+        if (!$this->config->first()) {
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+        }
+
         $this->data += [
-            "title" => "Pinjam",
+            "title" => "Pengembalian",
             "subtitle" => "Detail Peminjaman",
-            "navactive" => "peminjaman",
+            "navactive" => "pengembalian",
             "validation" => validation_errors(),
-            "data" => $this->pinjamModel->getDataKembali($id_pinjam)
+            "data" => $this->pengembalianModel->getDataKembali($id_pinjam)
         ];
         return view('/admin/pengembalian/detailPengembalian', $this->data);
     }
@@ -54,6 +70,11 @@ class Pengembalian extends BaseController
 
     public function kembali($id_pinjam)
     {
+        // cek konfigurasi aplikasi
+        if (!$this->config->first()) {
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+        }
+
         $this->data += [
             "title" => "Pengembalian | Admin",
             "subtitle" => "Pengembalian",
@@ -67,7 +88,7 @@ class Pengembalian extends BaseController
     public function aksiKembali($id_pinjam)
     {
         $pinjam = $this->pinjamModel->getDataPinjam($id_pinjam);
-
+        $config = $this->config->first();
         $rules = [
             'bayar' => [
                 'rules' => 'required|is_natural',
@@ -78,9 +99,10 @@ class Pengembalian extends BaseController
             ]
         ];
         $kondisiBukuArray = [];
+
         foreach ($pinjam['buku'] as $buku) {
             $kondisiBukuArray += ["kondisi-" . $buku['id_buku'] => [
-                'rules' => 'required|in_list[baik,rusak]',
+                'rules' => 'required|in_list[baik,rusak,hilang]',
                 'errors' => [
                     'required' => 'Harap pilih kondisi buku saat ini dengan kondisi yang tersedia',
                     'in_list' => 'Harap pilih kondisi yang tersedia'
@@ -92,33 +114,65 @@ class Pengembalian extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $this->pinjamModel
-            ->set('status', 'dikembalikan')
-            ->set('id_petugas_pengembalian', $this->userID)
-            ->set('tanggal_dikembalikan', 'DATE(NOW())', false)
-            ->update($id_pinjam);
-
-
+        $dendaTelat = $dendaKondisi = 0;
         foreach ($pinjam['buku'] as $buku) {
-            $this->detailPinjamModel
-                ->set('kondisi_akhir', $this->request->getVar("kondisi-" . $buku['id_buku']))
-                ->set('status', 'dikembalikan')
-                ->where('id_pinjam', $id_pinjam)
-                ->where('id_buku', $buku['id_buku'])
-                ->update();
-            $this->bukuModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($buku['id_buku']);
+            $dendaTelat += $pinjam['pinjam']['keterlambatan'] * $config['denda_telat'];
+            $kondisiBuku = $this->request->getVar('kondisi-' . $buku['id_buku']);
+            if ($kondisiBuku == 'rusak') {
+                $dendaKondisi += $config['denda_rusak'];
+            } elseif ($kondisiBuku == 'hilang') {
+                $dendaKondisi += $config['denda_hilang'];
+            }
         }
+
+        $totalDenda = $dendaKondisi + $dendaTelat;
+        $bayar = (int)$this->request->getVar('bayar');
+        if ($bayar < $totalDenda) {
+            return redirect()->back()->withInput()->with('error', 'Harap masukan nominal pembayaran yang setara atau lebih');
+        }
+
+        $this->pengembalianModel->save([
+            'id_pengembalian' => uniqueID('KMB', 'pengembalian', 'id_pengembalian'),
+            'id_petugas' => $this->userID,
+            'id_anggota' => $pinjam['pinjam']['id_anggota'],
+            'keterangan' => $dendaTelat ? 'tepatwaktu' : 'terlambat',
+            'jumlah_buku' => $pinjam['pinjam']['jumlah_buku'],
+            'total_denda' => $totalDenda,
+            'tanggal_kembali' => $pinjam['pinjam']['tanggal_kembali'],
+            'tanggal_pinjam' => $pinjam['pinjam']['created_at'],
+        ]);
+
+        $insertID =  $this->pengembalianModel->getInsertID();
+        foreach ($pinjam['buku'] as $buku) {
+            $dendaKondisi = 0;
+            $kondisiBuku = $this->request->getVar('kondisi-' . $buku['id_buku']);
+            if ($kondisiBuku == 'rusak') {
+                $dendaKondisi = $config['denda_rusak'];
+            } elseif ($kondisiBuku == 'hilang') {
+                $dendaKondisi = $config['denda_hilang'];
+            }
+            $this->detailPengembalianModel->insert([
+                'id_pengembalian' => $insertID,
+                'id_buku' => $buku['id_buku'],
+                'kondisi' => $buku['kondisi'],
+                'kondisi_akhir' => $kondisiBuku,
+                'denda_telat' => $dendaTelat ? $config['denda_telat'] : '0',
+                'denda_kondisi' => $dendaKondisi,
+                'total_denda' => $totalDenda
+            ]);
+        }
+
+        $this->detailPinjamModel->delete($id_pinjam);
+        $this->pinjamModel->delete($id_pinjam);
 
         return redirect()->to(base_url("/admin/pengembalian"))->with('pesan', 'Pinjaman berhasil dikembalikan');
     }
 
-    public function edit($id)
-    {
-        return redirect()->to('/admin/pinjam/' . $id)->with('pesan', 'Data peminjaman berhasil diubah');
-    }
-
     public function hapus($id)
     {
-        return redirect()->back()->with('error_pinjam', 'Errror tidak bisa membatalkan pinjaman. Harap hubungi pihak perpustakaan');
+        $this->detailPengembalianModel->where('id_pengembalian', $id)->delete();
+        $this->pengembalianModel->delete($id);
+
+        return redirect()->to(base_url('/admin/pengembalian/'))->with('pesan', 'Data peminjaman berhasil dihapus');
     }
 }

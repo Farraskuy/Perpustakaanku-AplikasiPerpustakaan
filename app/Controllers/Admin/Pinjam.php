@@ -28,9 +28,11 @@ class Pinjam extends BaseController
     }
     public function index()
     {
+        // cek konfigurasi aplikasi
         if (!$this->config->first()) {
-            return redirect()->back()->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
         }
+
         $this->data += [
             "title" => "Peminjaman",
             "subtitle" => "Peminjaman",
@@ -44,6 +46,10 @@ class Pinjam extends BaseController
 
     public function detail($id_pinjam)
     {
+        // cek konfigurasi aplikasi
+        if (!$this->config->first()) {
+            return redirect()->to(base_url('/'))->with('error', 'Harap minta Admin untuk melegkapi informasi perpustakaan untuk menggunakan fitur ini!');
+        }
         $this->data += [
             "title" => "Peminjaman",
             "subtitle" => "Detail Peminjaman",
@@ -95,13 +101,15 @@ class Pinjam extends BaseController
 
         $insertID = $this->pinjamModel->getInsertID();
 
-        session()->setFlashdata('pesan', 'Data peminjaman berhasil ditambahkan');
-
-        return redirect()->to('/admin/pinjam/' . $insertID);
+        return redirect()->to('/admin/pinjam/' . $insertID)->with('pesan', 'Data peminjaman berhasil ditambahkan')->with('error_pinjam_buku', ' ');
     }
 
     public function edit($id)
     {
+        // cek buku
+        if (!$this->pinjamModel->find($id)) {
+            return redirect()->to(base_url('/admin/pinjam'))->with('error', 'Peminjaman dengan ID "' . $id . '", Tidak ditemukan');
+        }
         if (!$this->validate([
             'peminjam' => [
                 'rules' => 'required|is_not_unique[anggota.id_anggota]',
@@ -128,24 +136,16 @@ class Pinjam extends BaseController
             'tanggal_kembali' => $this->request->getVar('tanggal_pengembalian')
         ]);
 
-        session()->setFlashdata('pesan', 'Data peminjaman berhasil diubah');
-
-        return redirect()->to('/admin/pinjam/' . $id);
+        return redirect()->to('/admin/pinjam/' . $id)->with('pesan', 'Data peminjaman berhasil diubah');
     }
 
     public function hapus($id)
     {
-        $detailPinjam = $this->detailPinjamModel->where('id_pinjam', $id)->findAll();
-        // mengembalikan semua stok buku dan kuota pinjam
-        foreach ($detailPinjam as $item) {
-            $this->bukuModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($item['id_buku']);
-        }
-
         if ($this->detailPinjamModel->delete($id) &&  $this->pinjamModel->delete($id)) {
-            return redirect()->to('/admin/pinjam/')->with('sukses_pinjam', 'Berhasil Meminjam Buku');
+            return redirect()->to('/admin/pinjam/')->with('pesan', 'Berhasil menghapus data');
         }
 
-        return redirect()->back()->with('error_pinjam', 'Errror tidak bisa membatalkan pinjaman. Harap hubungi pihak perpustakaan');
+        return redirect()->back()->with('error', 'Errror tidak bisa membatalkan pinjaman. Harap hubungi pihak perpustakaan');
     }
 
     public function tambahDetail($id)
@@ -177,15 +177,11 @@ class Pinjam extends BaseController
                 'id_pinjam' => $id,
                 'id_buku' => $id_buku,
                 'kondisi' => $this->request->getVar("kondisi-$id_buku"),
-                'status' => 'terpinjam',
             ]);
             $this->pinjamModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id);
-            $this->bukuModel->set('jumlah_buku', 'jumlah_buku - 1', false)->update($id_buku);
         }
 
-        session()->setFlashdata('pesan', 'Data buku pinjaman berhasil ditambahkan');
-
-        return redirect()->back();
+        return redirect()->back()->with('pesan', 'Data buku pinjaman berhasil ditambahkan');
     }
 
     public function hapusDetail($id_pinjam, $id_buku)
@@ -196,33 +192,7 @@ class Pinjam extends BaseController
 
         $this->detailPinjamModel->where('id_buku', $id_buku)->where('id_pinjam', $id_pinjam)->delete();
         $this->pinjamModel->set('jumlah_buku', 'jumlah_buku - 1', false)->update($id_pinjam);
-        $this->bukuModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id_buku);
 
-        session()->setFlashdata('pesan', 'Data buku pinjaman berhasil dihapus');
-
-        return redirect()->back();
-    }
-
-    public function perpanjangWaktu($id_pinjam)
-    {
-        if (!$this->validate([
-            'waktu' => [
-                'rules' => 'is_natural|greater_than[0]|less_than_equal_to[8]',
-                'errors' => [
-                    'is_natural' => 'Harap isi dengan angka',
-                    'less_than_equal_to' => 'Tidak boleh memperpanjang lebih dari 8 Hari',
-                    'greater_than' => 'Tidak boleh memperpanjang kurang dari 1 Hari',
-                ],
-            ],
-        ])) {
-            return redirect()->back()->withInput()->with('error_perpanjang', 'true');
-        }
-
-        $waktu = $this->request->getVar('waktu');
-        $this->pinjamModel->set('tanggal_kembali', "tanggal_kembali + INTERVAL " . $waktu . " DAY", false)->update($id_pinjam);
-
-        session()->setFlashdata('pesan', 'Waktu peminjaman berhasil diperpanjang');
-
-        return redirect()->back();
+        return redirect()->back()->with('pesan', 'Data buku pinjaman berhasil dihapus');
     }
 }

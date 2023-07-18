@@ -17,7 +17,7 @@ class DetailPinjam extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'status' => [
+            'kondisi' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
@@ -26,6 +26,10 @@ class DetailPinjam extends Migration
                 'NULL'       => true,
             ],
             'updated_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'deleted_at' => [
                 'type'       => 'DATETIME',
                 'NULL'       => true,
             ],
