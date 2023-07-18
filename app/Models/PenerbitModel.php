@@ -9,7 +9,7 @@ class PenerbitModel extends Model
     protected $table      = 'penerbit';
     protected $primaryKey = 'id_penerbit';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
