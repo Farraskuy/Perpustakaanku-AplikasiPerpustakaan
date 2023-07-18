@@ -8,7 +8,6 @@ use App\Models\AppConfigModel;
 use App\Models\BukuModel;
 use App\Models\DetailPinjamModel;
 use App\Models\PinjamModel;
-use CodeIgniter\I18n\Time;
 
 class Pinjam extends BaseController
 {
@@ -25,6 +24,7 @@ class Pinjam extends BaseController
         $this->pinjamModel = new PinjamModel();
         $this->detailPinjamModel = new DetailPinjamModel();
         $this->config = new AppConfigModel();
+        $this->data += ["inNavTransaksi" => true];
     }
     public function index()
     {

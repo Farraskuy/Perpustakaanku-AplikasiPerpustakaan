@@ -162,6 +162,20 @@
             modalContent.setAttribute('href', action + id);
         })
     }
+    const editMasterBukuModal = document.querySelector('.editMasterBuku')
+    if (editMasterBukuModal) {
+        editMasterBukuModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const nilai = button.getAttribute('data-nilai');
+
+            const input = editMasterBukuModal.querySelector('#kategori_edit');
+            input.value = nilai;
+            const modalContent = editMasterBukuModal.querySelector('.modal-content');
+            const action = modalContent.getAttribute('action');
+            modalContent.setAttribute('action', action + id);
+        })
+    }
 
     function toggleFormAkses(value) {
         const form = document.getElementById('formAksesLogin');

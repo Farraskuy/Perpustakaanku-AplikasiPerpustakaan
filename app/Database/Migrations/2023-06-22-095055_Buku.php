@@ -8,6 +8,7 @@ class Buku extends Migration
 {
     public function up()
     {
+        // tabel buku
         $this->forge->addField([
             'id_buku' => [
                 'type'           => 'VARCHAR',
@@ -54,12 +55,104 @@ class Buku extends Migration
                 'NULL'       => true,
             ],
         ]);
-        $this->forge->addKey('id_buku', true);
-        $this->forge->createTable('buku');
+        // $this->forge->addKey('id_buku', true);
+        // $this->forge->createTable('buku');
+
+        // tabel rak
+        $this->forge->addField([
+            'id_rak' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'lokasi' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'created_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+        ]);
+        $this->forge->addKey('id_rak', true);
+        $this->forge->createTable('rak');
+
+        // tabel pengarang
+        $this->forge->addField([
+            'id_pengarang' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'nama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'created_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+        ]);
+        $this->forge->addKey('id_pengarang', true);
+        $this->forge->createTable('pengarang');
+
+        // tabel penerbit
+        $this->forge->addField([
+            'id_penerbit' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'nama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'created_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+        ]);
+        $this->forge->addKey('id_penerbit', true);
+        $this->forge->createTable('penerbit');
+
+        // tabel kategori
+        $this->forge->addField([
+            'id_kategori' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'nama' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'created_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
+        ]);
+        $this->forge->addKey('id_kategori', true);
+        $this->forge->createTable('kategori');
     }
 
     public function down()
     {
         $this->forge->dropTable('buku');
+        $this->forge->dropTable('rak');
+        $this->forge->dropTable('pengarang');
+        $this->forge->dropTable('penerbit');
+        $this->forge->dropTable('kategori');
     }
 }

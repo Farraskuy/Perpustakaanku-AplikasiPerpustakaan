@@ -2,7 +2,6 @@
 
 <?= $this->section('content'); ?>
 
-
 <div class="bg-white rounded-3 p-3 px-4 mb-3">
     <div class="row align-items-center">
         <div class="col-md-6">

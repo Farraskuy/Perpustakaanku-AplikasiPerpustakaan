@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Controllers\Admin\MasterBuku;
 
 use App\Controllers\BaseController;
 use App\Models\AnggotaModel;
@@ -15,6 +15,7 @@ class Buku extends BaseController
     {
         $this->bukuModel = new BukuModel();
         $this->anggotaModel = new AnggotaModel();
+        $this->data += ["inNavBuku" => true];
     }
 
     public function index()

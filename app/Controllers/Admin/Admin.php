@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Controllers\Admin\Anggota;
-use App\Controllers\Admin\Buku;
+use App\Controllers\Admin\MasterBuku\Buku;
 use App\Controllers\Admin\Petugas;
 use App\Models\AppConfigModel;
 use App\Models\BukuModel;
