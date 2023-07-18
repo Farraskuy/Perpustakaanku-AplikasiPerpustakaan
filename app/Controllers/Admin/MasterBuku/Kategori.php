@@ -8,9 +8,6 @@ use App\Models\KategoriModel;
 class Kategori extends BaseController
 {
     protected $kategori;
-    protected $pengarang;
-    protected $penerbit;
-    protected $rak;
 
     public function __construct()
     {

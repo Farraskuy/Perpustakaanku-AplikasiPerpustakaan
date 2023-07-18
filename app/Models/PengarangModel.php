@@ -9,7 +9,7 @@ class PengarangModel extends Model
     protected $table      = 'pengarang';
     protected $primaryKey = 'id_pengarang';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;

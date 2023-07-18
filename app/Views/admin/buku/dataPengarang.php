@@ -19,8 +19,8 @@
         <thead>
             <tr class="align-middle">
                 <th scope="col">#</th>
-                <th scope="col">ID Kategori</th>
-                <th scope="col">Kategori</th>
+                <th scope="col">ID <?= $subtitle ?></th>
+                <th scope="col"><?= $subtitle ?></th>
                 <th scope="col">Ditambahkan Pada</th>
                 <th scope="col">Diubah Pada</th>
                 <th scope="col">Aksi</th>
@@ -31,13 +31,13 @@
             <?php foreach ($data as $item) : ?>
                 <tr>
                     <td><?= $i++ ?></td>
-                    <td><?= $item['id_kategori'] ?></td>
+                    <td><?= $item['id_pengarang'] ?></td>
                     <td><?= $item['nama'] ?></td>
                     <td><?= formatTanggal($item['created_at']) . ' ' . date('H:i', strtotime($item['created_at'])) ?></td>
                     <td><?= formatTanggal($item['updated_at']) . ' ' . date('H:i', strtotime($item['updated_at'])) ?></td>
                     <td class="fit">
-                        <button data-id="<?= $item['id_kategori'] ?>" data-nilai="<?= $item['nama'] ?>" type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target=".editMasterBuku"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <button data-id="<?= $item['id_kategori'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
+                        <button data-id="<?= $item['id_pengarang'] ?>" data-nilai="<?= $item['nama'] ?>" type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target=".editMasterBuku"><i class="fa-regular fa-pen-to-square"></i></button>
+                        <button data-id="<?= $item['id_pengarang'] ?>" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus"><i class="fa-regular fa-trash-xmark"></i></button>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -56,7 +56,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Hapus</h1>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin ingin menghapus buku ini?</p>
+                <p>Apakah anda yakin ingin menghapus <?= $subtitle ?> ini?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -79,10 +79,10 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <label for="kategori" class="col-sm-3 form-label m-0">Nama Kategori</label>
+                    <label for="pengarang" class="col-sm-3 form-label m-0">Nama <?= $subtitle ?></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['kategori']) ? 'is-invalid' : '' ?>" value="<?= old('kategori') ?>" name="kategori" id="kategori">
-                        <div class="invalid-feedback"><?= isset($validation['kategori']) ? $validation['kategori'] : '' ?></div>
+                        <input type="text" class="form-control <?= isset($validation['pengarang']) ? 'is-invalid' : '' ?>" value="<?= old('pengarang') ?>" name="pengarang" id="pengarang">
+                        <div class="invalid-feedback"><?= isset($validation['pengarang']) ? $validation['pengarang'] : '' ?></div>
                     </div>
                 </div>
             </div>
@@ -101,14 +101,14 @@
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="PUT">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Form Ubah Kategori</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Form Ubah <?= $subtitle ?></h1>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <label for="inputEditMasterBuku" class="col-sm-3 form-label m-0">Nama Kategori</label>
+                    <label for="inputEditMasterBuku" class="col-sm-3 form-label m-0">Nama <?= $subtitle ?></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['kategori_edit']) ? 'is-invalid' : '' ?>" value="<?= old('kategori_edit') ?>" name="kategori_edit" id="inputEditMasterBuku">
-                        <div class="invalid-feedback"><?= isset($validation['kategori_edit']) ? $validation['kategori_edit'] : '' ?></div>
+                        <input type="text" class="form-control <?= isset($validation['pengarang_edit']) ? 'is-invalid' : '' ?>" value="<?= old('pengarang_edit') ?>" name="pengarang_edit" id="inputEditMasterBuku">
+                        <div class="invalid-feedback"><?= isset($validation['pengarang_edit']) ? $validation['pengarang_edit'] : '' ?></div>
                     </div>
                 </div>
             </div>

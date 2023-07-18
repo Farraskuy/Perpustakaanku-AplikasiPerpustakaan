@@ -169,7 +169,7 @@
             const id = button.getAttribute('data-id');
             const nilai = button.getAttribute('data-nilai');
 
-            const input = editMasterBukuModal.querySelector('#kategori_edit');
+            const input = editMasterBukuModal.querySelector('#inputEditMasterBuku');
             input.value = nilai;
             const modalContent = editMasterBukuModal.querySelector('.modal-content');
             const action = modalContent.getAttribute('action');
