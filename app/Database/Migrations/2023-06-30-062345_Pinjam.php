@@ -41,6 +41,10 @@ class Pinjam extends Migration
                 'type'       => 'DATETIME',
                 'NULL'       => true,
             ],
+            'deleted_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
         ]);
         $this->forge->addKey('id_pinjam', true);
         $this->forge->createTable('pinjam');

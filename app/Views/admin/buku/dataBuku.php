@@ -24,8 +24,7 @@
                 <th scope="col">Judul</th>
                 <th scope="col">Penerbit</th>
                 <th scope="col">Penulis</th>
-                <th scope="col">Jumlah Buku</th>
-                <th scope="col">Ditambahkan Pada</th>
+                <th scope="col" class="px-3">Jumlah Buku</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -40,8 +39,19 @@
                     <td><?= $item['judul'] ?></td>
                     <td><?= $item['penerbit'] ?></td>
                     <td><?= $item['penulis'] ?></td>
-                    <td><?= $item['jumlah_buku'] ?></td>
-                    <td><?= formatTanggal($item['created_at']) ?></td>
+                    <td class="fit">
+                        <div class="d-flex flex-column align-items-center gap-2 fs-6 border rounded-3 position-relative p-2  mt-2 pt-3">
+                            <span class="badge rounded-pill text-bg-secondary position-absolute w-100" style="top: -10px;">Total : <?= $item['jumlah_buku'] ?></span>
+                            <div class="d-flex w-100 gap-2">
+                                <span class="flex-grow-1 badge rounded-pill text-bg-primary">Tersedia : <?= $item['jumlah_buku'] - $item['jumlah_terpinjam'] - $item['jumlah_rusak'] - $item['jumlah_hilang'] ?></span>
+                                <span class="flex-grow-1 badge rounded-pill text-bg-success">Terpinjam : <?= $item['jumlah_terpinjam'] ?></span>
+                            </div>
+                            <div class="d-flex w-100 gap-2">
+                                <span class="flex-grow-1 badge rounded-pill text-bg-warning text-white">Rusak : <?= $item['jumlah_rusak'] ?></span>
+                                <span class="flex-grow-1 badge rounded-pill text-bg-danger">Hilang : <?= $item['jumlah_hilang'] ?></span>
+                            </div>
+                        </div>
+                    </td>
                     <td class="fit aksi">
                         <a class="btn btn-primary" href="/admin/buku/<?= $item['slug'] ?>"><i class="fa-regular fa-eye"></i></a>
                         <a class="btn btn-warning text-white" href="/admin/buku/<?= $item['slug'] ?>/edit"><i class="fa-regular fa-pen-to-square"></i></a>

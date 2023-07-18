@@ -13,8 +13,8 @@
     </div>
 </div>
 
-<div class="bg-white rounded p-3 px-4 table-responsive ">
-    <table class="table align-middle">
+<div class="bg-white rounded p-3 px-4 table-responsive">
+    <table class="table table-sm align-middle">
         <thead>
             <tr class="align-middle">
                 <th scope="col">#</th>

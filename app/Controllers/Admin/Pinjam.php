@@ -106,6 +106,10 @@ class Pinjam extends BaseController
 
     public function edit($id)
     {
+        // cek buku
+        if (!$this->pinjamModel->find($id)) {
+            return redirect()->to(base_url('/admin/pinjam'))->with('error', 'Peminjaman dengan ID "' . $id . '", Tidak ditemukan');
+        }
         if (!$this->validate([
             'peminjam' => [
                 'rules' => 'required|is_not_unique[anggota.id_anggota]',
@@ -132,24 +136,16 @@ class Pinjam extends BaseController
             'tanggal_kembali' => $this->request->getVar('tanggal_pengembalian')
         ]);
 
-        session()->setFlashdata('pesan', 'Data peminjaman berhasil diubah');
-
-        return redirect()->to('/admin/pinjam/' . $id);
+        return redirect()->to('/admin/pinjam/' . $id)->with('pesan', 'Data peminjaman berhasil diubah');
     }
 
     public function hapus($id)
     {
-        $detailPinjam = $this->detailPinjamModel->where('id_pinjam', $id)->findAll();
-        // mengembalikan semua stok buku dan kuota pinjam
-        foreach ($detailPinjam as $item) {
-            $this->bukuModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($item['id_buku']);
-        }
-
         if ($this->detailPinjamModel->delete($id) &&  $this->pinjamModel->delete($id)) {
-            return redirect()->to('/admin/pinjam/')->with('sukses_pinjam', 'Berhasil Meminjam Buku');
+            return redirect()->to('/admin/pinjam/')->with('pesan', 'Berhasil menghapus data');
         }
 
-        return redirect()->back()->with('error_pinjam', 'Errror tidak bisa membatalkan pinjaman. Harap hubungi pihak perpustakaan');
+        return redirect()->back()->with('error', 'Errror tidak bisa membatalkan pinjaman. Harap hubungi pihak perpustakaan');
     }
 
     public function tambahDetail($id)
@@ -183,12 +179,9 @@ class Pinjam extends BaseController
                 'kondisi' => $this->request->getVar("kondisi-$id_buku"),
             ]);
             $this->pinjamModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id);
-            $this->bukuModel->set('jumlah_buku', 'jumlah_buku - 1', false)->update($id_buku);
         }
 
-        session()->setFlashdata('pesan', 'Data buku pinjaman berhasil ditambahkan');
-
-        return redirect()->back();
+        return redirect()->back()->with('pesan', 'Data buku pinjaman berhasil ditambahkan');
     }
 
     public function hapusDetail($id_pinjam, $id_buku)
@@ -199,10 +192,7 @@ class Pinjam extends BaseController
 
         $this->detailPinjamModel->where('id_buku', $id_buku)->where('id_pinjam', $id_pinjam)->delete();
         $this->pinjamModel->set('jumlah_buku', 'jumlah_buku - 1', false)->update($id_pinjam);
-        $this->bukuModel->set('jumlah_buku', 'jumlah_buku + 1', false)->update($id_buku);
 
-        session()->setFlashdata('pesan', 'Data buku pinjaman berhasil dihapus');
-
-        return redirect()->back();
+        return redirect()->back()->with('pesan', 'Data buku pinjaman berhasil dihapus');
     }
 }

@@ -45,6 +45,10 @@ class detailPengembalian extends Migration
                 'type'       => 'DATETIME',
                 'NULL'       => true,
             ],
+            'deleted_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
         ]);
         $this->forge->createTable('detail_pengembalian');
     }

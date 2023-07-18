@@ -170,10 +170,6 @@ class Pengembalian extends BaseController
 
     public function hapus($id)
     {
-        $pengembalian = $this->pengembalianModel->getDataKembali($id);
-        if (!$pengembalian) {
-            return redirect()->back()->with('error', 'Data pengembalian dengan ID "' . $id . '",Tidak ditemukan');
-        }
         $this->detailPengembalianModel->where('id_pengembalian', $id)->delete();
         $this->pengembalianModel->delete($id);
 

@@ -51,6 +51,10 @@ class Pengembalian extends Migration
                 'type'       => 'DATETIME',
                 'NULL'       => true,
             ],
+            'deleted_at' => [
+                'type'       => 'DATETIME',
+                'NULL'       => true,
+            ],
         ]);
         $this->forge->addKey('id_pengembalian', true);
         $this->forge->createTable('pengembalian');

@@ -40,12 +40,20 @@ class BukuModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function ambilBuku($slug = '')
+    public function ambilBuku($slug = null)
     {
+        $builder = $this->db->table('buku')->select("
+            buku.*,
+            (SELECT COUNT(*) FROM detail_pinjam WHERE detail_pinjam.id_buku = buku.id_buku) as jumlah_terpinjam,
+            (SELECT COUNT(*) FROM detail_pengembalian WHERE detail_pengembalian.id_buku = buku.id_buku AND kondisi_akhir = 'rusak') as jumlah_rusak,
+            (SELECT COUNT(*) FROM detail_pengembalian WHERE detail_pengembalian.id_buku = buku.id_buku AND kondisi_akhir = 'hilang') as jumlah_hilang
+        ", false);
+
+
         if ($slug) {
-            return $this->where('slug', $slug)->first();
+            return $builder->where('slug', $slug)->get()->getRowArray();
         }
-        return $this->findAll();
+        return $builder->get()->getResultArray();
     }
 
     public function ambilBukuKecuali($id_pinjam)
