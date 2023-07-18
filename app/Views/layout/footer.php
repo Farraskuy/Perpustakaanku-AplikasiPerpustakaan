@@ -167,10 +167,17 @@
         editMasterBukuModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
             const id = button.getAttribute('data-id');
-            const nilai = button.getAttribute('data-nilai');
-
+            
             const input = editMasterBukuModal.querySelector('#inputEditMasterBuku');
-            input.value = nilai;
+            input.value = button.getAttribute('data-nilai');
+            const input1 = editMasterBukuModal.querySelector('#inputEditMasterBuku1');
+            if (input1) {
+                input1.value = button.getAttribute('data-nilai1');
+            }
+            const input2 = editMasterBukuModal.querySelector('#inputEditMasterBuku2');
+            if (input2) {
+                input2.value = button.getAttribute('data-nilai2');
+            }
             const modalContent = editMasterBukuModal.querySelector('.modal-content');
             const action = modalContent.getAttribute('action');
             modalContent.setAttribute('action', action + id);

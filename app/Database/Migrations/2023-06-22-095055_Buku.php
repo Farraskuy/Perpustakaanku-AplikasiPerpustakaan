@@ -64,6 +64,10 @@ class Buku extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
+            'kode_rak' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
             'lokasi' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',

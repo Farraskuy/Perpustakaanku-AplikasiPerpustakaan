@@ -78,6 +78,36 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
         $routes->get('(:any)', 'Anggota::detail/$1');
     });
 
+    // menu pinjam
+    $routes->group('pinjam', function ($routes) {
+        $routes->get('/', 'Pinjam::index');
+        $routes->post('/', 'Pinjam::simpan');
+        $routes->post('(:any)', 'Pinjam::tambahDetail/$1');
+
+        $routes->put('perpanjang/(:any)', 'Pinjam::perpanjangWaktu/$1');
+        $routes->put('(:any)', 'Pinjam::edit/$1');
+
+        $routes->delete('(:any)/(:any)', 'Pinjam::hapusDetail/$1/$2');
+        $routes->delete('(:any)', 'Pinjam::hapus/$1');
+
+        $routes->get('(:any)/tambah', 'Pinjam::detailTambah/$1');
+        $routes->get('(:any)/edit', 'Pinjam::detailEdit/$1');
+        $routes->get('(:any)', 'Pinjam::detail/$1');
+    });
+
+    // menu pengembalian
+    $routes->group('pengembalian', function ($routes) {
+        $routes->get('/', 'Pengembalian::index');
+
+        $routes->get('kembali/(:any)', 'Pengembalian::kembali/$1');
+        $routes->post('kembali/(:any)', 'Pengembalian::aksiKembali/$1');
+
+        $routes->delete('(:any)', 'Pengembalian::hapus/$1');
+
+        $routes->get('(:any)/edit', 'Pengembalian::detailEdit/$1');
+        $routes->get('(:any)', 'Pengembalian::detail/$1');
+    });
+
     // menu buku
     $routes->group('buku', ['namespace' => 'App\Controllers\Admin\MasterBuku'], function ($routes) {
 
@@ -111,42 +141,12 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
         });
 
         // menu data buku
-        // $routes->get('/', 'Buku::index');
-        // $routes->post('/', 'Buku::simpan');
-        // $routes->put('(:any)', 'Buku::edit/$1');
-        // $routes->delete('(:any)', 'Buku::hapus/$1');
-        // $routes->get('(:any)/edit', 'Buku::detailEdit/$1');
-        // $routes->get('(:any)', 'Buku::detail/$1');
-    });
-
-    // menu pinjam
-    $routes->group('pinjam', function ($routes) {
-        $routes->get('/', 'Pinjam::index');
-        $routes->post('/', 'Pinjam::simpan');
-        $routes->post('(:any)', 'Pinjam::tambahDetail/$1');
-
-        $routes->put('perpanjang/(:any)', 'Pinjam::perpanjangWaktu/$1');
-        $routes->put('(:any)', 'Pinjam::edit/$1');
-
-        $routes->delete('(:any)/(:any)', 'Pinjam::hapusDetail/$1/$2');
-        $routes->delete('(:any)', 'Pinjam::hapus/$1');
-
-        $routes->get('(:any)/tambah', 'Pinjam::detailTambah/$1');
-        $routes->get('(:any)/edit', 'Pinjam::detailEdit/$1');
-        $routes->get('(:any)', 'Pinjam::detail/$1');
-    });
-
-    // menu pengembalian
-    $routes->group('pengembalian', function ($routes) {
-        $routes->get('/', 'Pengembalian::index');
-
-        $routes->get('kembali/(:any)', 'Pengembalian::kembali/$1');
-        $routes->post('kembali/(:any)', 'Pengembalian::aksiKembali/$1');
-
-        $routes->delete('(:any)', 'Pengembalian::hapus/$1');
-
-        $routes->get('(:any)/edit', 'Pengembalian::detailEdit/$1');
-        $routes->get('(:any)', 'Pengembalian::detail/$1');
+        $routes->get('/', 'Buku::index');
+        $routes->post('/', 'Buku::simpan');
+        $routes->put('(:any)', 'Buku::edit/$1');
+        $routes->delete('(:any)', 'Buku::hapus/$1');
+        $routes->get('(:any)/edit', 'Buku::detailEdit/$1');
+        $routes->get('(:any)', 'Buku::detail/$1');
     });
 });
 

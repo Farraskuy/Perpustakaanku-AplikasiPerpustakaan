@@ -9,12 +9,12 @@ class RakModel extends Model
     protected $table      = 'rak';
     protected $primaryKey = 'id_rak';
 
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_rak', 'nama'];
+    protected $allowedFields = ['id_rak', 'kode_rak',  'nama', 'lokasi'];
 
     // Dates
     protected $useTimestamps = true;
