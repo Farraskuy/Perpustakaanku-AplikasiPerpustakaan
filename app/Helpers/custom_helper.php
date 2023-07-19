@@ -41,3 +41,31 @@ if (!function_exists('uniqueID')) {
         return $key . $tanggal . $nourut;
     }
 }
+
+if (!function_exists('uniqueIDNoUrut')) {
+    function uniqueIDNoUrut($key, $table, $field)
+    {
+        $db = \Config\Database::connect();
+        $nourut = $db->table($table)
+            ->select('RIGHT(' . $field . ', 5) AS nourut')
+            ->orderBy($field, 'DESC')
+            ->get()->getRowArray();
+        if ($nourut) {
+            $nourut = ((int) $nourut['nourut']) + 1;
+            if ($nourut < 10) {
+                $nourut = '0000' . $nourut;
+            } elseif ($nourut < 100) {
+                $nourut = '000' . $nourut;
+            } elseif ($nourut < 1000) {
+                $nourut = '00' . $nourut;
+            } elseif ($nourut < 10000) {
+                $nourut = '0' . $nourut;
+            } elseif ($nourut < 100000) {
+                $nourut = '' . $nourut;
+            }
+        } else {
+            $nourut = '00001';
+        }
+        return $key . $nourut;
+    }
+}

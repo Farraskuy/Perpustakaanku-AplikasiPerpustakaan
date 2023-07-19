@@ -2,20 +2,19 @@
 
 <?= $this->section('content'); ?>
 
-
 <div class="bg-white rounded-3 p-3 px-4 mb-3">
     <div class="row align-items-center">
         <div class="col-md-6">
             <h5 class="m-0">Data | <?= $subtitle ?></h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center">
-            <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
+            <button class="btn btn-success fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#tambah">Tambah Data <?= $subtitle ?></button>
         </div>
     </div>
 </div>
 
 <div class="bg-white rounded p-3 px-4 table-responsive ">
-    <table class="table table-sm align-middle">
+    <table class="table align-middle">
         <thead>
             <tr class="align-middle">
                 <th scope="col">#</th>
@@ -24,6 +23,8 @@
                 <th scope="col">Judul</th>
                 <th scope="col">Penerbit</th>
                 <th scope="col">Penulis</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Rak</th>
                 <th scope="col" class="px-3">Jumlah Buku</th>
                 <th scope="col">Aksi</th>
             </tr>
@@ -39,17 +40,16 @@
                     <td><?= $item['judul'] ?></td>
                     <td><?= $item['penerbit'] ?></td>
                     <td><?= $item['penulis'] ?></td>
+                    <td><?= $item['kategori'] ?></td>
+                    <td><?= $item['kode_rak'] . ' - ' . $item['lokasi'] ?></td>
                     <td class="fit">
                         <div class="d-flex flex-column align-items-center gap-2 fs-6 border rounded-3 position-relative p-2  mt-2 pt-3">
                             <span class="badge rounded-pill text-bg-secondary position-absolute w-100" style="top: -10px;">Total : <?= $item['jumlah_buku'] ?></span>
-                            <div class="d-flex w-100 gap-2">
-                                <span class="flex-grow-1 badge rounded-pill text-bg-primary">Tersedia : <?= $item['jumlah_buku'] - $item['jumlah_terpinjam'] - $item['jumlah_rusak'] - $item['jumlah_hilang'] ?></span>
-                                <span class="flex-grow-1 badge rounded-pill text-bg-success">Terpinjam : <?= $item['jumlah_terpinjam'] ?></span>
-                            </div>
-                            <div class="d-flex w-100 gap-2">
-                                <span class="flex-grow-1 badge rounded-pill text-bg-warning text-white">Rusak : <?= $item['jumlah_rusak'] ?></span>
-                                <span class="flex-grow-1 badge rounded-pill text-bg-danger">Hilang : <?= $item['jumlah_hilang'] ?></span>
-                            </div>
+                            <span class="flex-grow-1 badge rounded-pill w-100 text-bg-primary">Tersedia : <?= $item['jumlah_buku'] - $item['jumlah_terpinjam'] - $item['jumlah_rusak'] - $item['jumlah_hilang'] ?></span>
+                            <span class="flex-grow-1 badge rounded-pill w-100 text-bg-success">Terpinjam : <?= $item['jumlah_terpinjam'] ?></span>
+                            <span class="flex-grow-1 badge rounded-pill w-100 text-bg-warning text-white">Rusak : <?= $item['jumlah_rusak'] ?></span>
+                            <span class="flex-grow-1 badge rounded-pill w-100 text-bg-danger">Hilang : <?= $item['jumlah_hilang'] ?></span>
+
                         </div>
                     </td>
                     <td class="fit aksi">
@@ -77,8 +77,8 @@
                 <p>Apakah anda yakin ingin menghapus buku ini?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
+                <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger text-white fw-semibold"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
             </div>
         </form>
     </div>
@@ -97,68 +97,105 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3 row">
-                    <label for="judul" class="col-sm-3 form-label">Judul</label>
+                    <label for="judul" class="col-sm-3 form-label label-input-required">Judul</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['judul']) ? 'is-invalid' : '' ?>" value="<?= old('judul') ?>" name="judul" id="judul">
+                        <input type="text" class="form-control form-control-sm <?= isset($validation['judul']) ? 'is-invalid' : '' ?>" value="<?= old('judul') ?>" name="judul" id="judul">
                         <div class="invalid-feedback"><?= isset($validation['judul']) ? $validation['judul'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="penulis" class="col-sm-3 col-sm-3 form-label">Penulis</label>
+                    <label for="kategori" class="col-sm-3 form-label label-input-required">Kategori</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['penulis']) ? 'is-invalid' : '' ?>" value="<?= old('penulis') ?>" name="penulis" id="penulis">
+                        <select class="form-select form-select-sm <?= isset($validation['kategori']) ? 'is-invalid' : '' ?>" id="kategori" name="kategori">
+                            <option value="" <?= old('kategori') == '' ? 'selected' : '' ?>>Pilih kategori</option>
+
+                            <?php foreach ($dataKategori as $item) : ?>
+                                <option value="<?= $item['id_kategori'] ?>" <?= old('kategori') == $item['id_kategori'] ? 'selected' : '' ?>><?= $item['nama'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <div class="invalid-feedback"><?= isset($validation['kategori']) ? $validation['kategori'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="rak" class="col-sm-3 form-label label-input-required">Rak</label>
+                    <div class="col-sm-9">
+                        <select class="form-select form-select-sm <?= isset($validation['rak']) ? 'is-invalid' : '' ?>" id="rak" name="rak">
+                            <option value="" <?= old('rak') == '' ? 'selected' : '' ?>>Pilih Rak</option>
+
+                            <?php foreach ($dataRak as $item) : ?>
+                                <option value="<?= $item['id_rak'] ?>" <?= old('rak') == $item['id_rak'] ? 'selected' : '' ?>><?= $item['kode_rak'] . ' - ' . $item['nama'] . ' - ' . $item['lokasi'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <div class="invalid-feedback"><?= isset($validation['rak']) ? $validation['rak'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="penulis" class="col-sm-3 form-label label-input-required">Penulis</label>
+                    <div class="col-sm-9">
+                        <select class="form-select form-select-sm <?= isset($validation['penulis']) ? 'is-invalid' : '' ?>" id="penulis" name="penulis">
+                            <option value="" <?= old('penulis') == '' ? 'selected' : '' ?>>Pilih Penerbit</option>
+
+                            <?php foreach ($dataPenulis as $item) : ?>
+                                <option value="<?= $item['id_penulis'] ?>" <?= old('penulis') == $item['id_penulis'] ? 'selected' : '' ?>><?= $item['nama'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
                         <div class="invalid-feedback"><?= isset($validation['penulis']) ? $validation['penulis'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="penerbit" class="col-sm-3 form-label">Penerbit</label>
+                    <label for="penerbit" class="col-sm-3 form-label label-input-required">Penerbit</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['penerbit']) ? 'is-invalid' : '' ?>" value="<?= old('penerbit') ?>" name="penerbit" id="penerbit">
+                        <select class="form-select form-select-sm <?= isset($validation['penerbit']) ? 'is-invalid' : '' ?>" id="penerbit" name="penerbit">
+                            <option value="" <?= old('penerbit') == '' ? 'selected' : '' ?>>Pilih Penulis</option>
+
+                            <?php foreach ($dataPenerbit as $item) : ?>
+                                <option value="<?= $item['id_penerbit'] ?>" <?= old('penerbit') == $item['id_penerbit'] ? 'selected' : '' ?>><?= $item['nama'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
                         <div class="invalid-feedback"><?= isset($validation['penerbit']) ? $validation['penerbit'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="tanggalTerbit" class="col-sm-3 form-label">Tanggal Terbit</label>
+                    <label for="tanggalTerbit" class="col-sm-3 form-label label-input-required">Tanggal Terbit</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['tanggal_terbit']) ? 'is-invalid' : '' ?>" id="tanggalTerbit" value="<?= old('tanggal_terbit') ?>" name="tanggal_terbit" type="date" />
+                        <input class="form-control form-control-sm <?= isset($validation['tanggal_terbit']) ? 'is-invalid' : '' ?>" id="tanggalTerbit" value="<?= old('tanggal_terbit') ?>" name="tanggal_terbit" type="date" />
                         <div class="invalid-feedback"><?= isset($validation['tanggal_terbit']) ? $validation['tanggal_terbit'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="jumlah_buku" class="col-sm-3 form-label">Jumlah Buku</label>
+                    <label for="jumlah_buku" class="col-sm-3 form-label label-input-required">Jumlah Buku</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['jumlah_buku']) ? 'is-invalid' : '' ?>" id="jumlah_buku" value="<?= old('jumlah_buku') ?>" name="jumlah_buku" type="number" />
+                        <input class="form-control form-control-sm <?= isset($validation['jumlah_buku']) ? 'is-invalid' : '' ?>" id="jumlah_buku" value="<?= old('jumlah_buku') ?>" name="jumlah_buku" type="number" />
                         <div class="invalid-feedback"><?= isset($validation['jumlah_buku']) ? $validation['jumlah_buku'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="sampul" class="col-sm-3 form-label">Sampul</label>
+                    <label class="col-sm-3">Sampul</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['sampul']) ? 'is-invalid' : '' ?>" name="sampul" type="file" id="sampul" onchange="ubahPreview(this)">
-                        <div class="invalid-feedback"><?= isset($validation['sampul']) ? $validation['sampul'] : '' ?></div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-9">
-                        <p>Preview</p>
-                        <div style="height: 150px;" class="w-100 border rounded-3 text-center p-3">
-                            <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/buku/default.png" alt="default sampul">
+                        <div class="border rounded-3 text-center">
+                            <div style="height: 150px;" class="w-100 p-3">
+                                <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/buku/default.png" alt="default sampul">
+                            </div>
+                            <input class="form-control form-control-sm <?= isset($validation['sampul']) ? 'is-invalid' : '' ?>" name="sampul" type="file" id="sampul" onchange="ubahPreview(this)">
+                            <div class="invalid-feedback"><?= isset($validation['sampul']) ? $validation['sampul'] : '' ?></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="mb-3 row">
                     <label for="sinopsis" class="col-sm-3 form-label">Sinopsis</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control <?= isset($validation['sinopsis']) ? 'is-invalid' : '' ?>" name="sinopsis" id="sinopsis" rows="3"><?= old('sinopsis') ?></textarea>
+                        <textarea class="form-control form-control-sm <?= isset($validation['sinopsis']) ? 'is-invalid' : '' ?>" name="sinopsis" id="sinopsis" rows="3"><?= old('sinopsis') ?></textarea>
                         <div class="invalid-feedback"><?= isset($validation['sinopsis']) ? $validation['sinopsis'] : '' ?></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success text-white">Tambah</button>
+                <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-success text-white fw-semibold">Tambah</button>
             </div>
         </form>
     </div>

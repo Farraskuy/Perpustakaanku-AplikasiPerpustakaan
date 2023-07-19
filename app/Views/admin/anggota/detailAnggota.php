@@ -118,7 +118,7 @@
 <!-- reset password -->
 <div class="modal fade" id="reset" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <form class="modal-content" action="/admin/anggota/reset/<?= $data['id'] ?>" method="post">
+        <form class="modal-content" action="/admin/anggota/reset/<?= $data['id_anggota'] ?>" method="post">
 
             <?= csrf_field() ?>
 

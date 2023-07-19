@@ -27,6 +27,7 @@ class Pengembalian extends BaseController
         $this->detailPinjamModel = new DetailPinjamModel();
         $this->pengembalianModel = new PengembalianModel();
         $this->detailPengembalianModel = new DetailPengembalianModel();
+        $this->data += ["inNavTransaksi" => true];
     }
 
     public function index()
