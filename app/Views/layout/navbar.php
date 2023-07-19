@@ -4,7 +4,7 @@
             <?php if (in_groups(['admin', 'petugas'])) : ?>
                 <button class="btn text-purple" type="button" onclick="toggleSidebar()"><i class="fa-solid fa-bars fa-lg"></i></button>
             <?php endif ?>
-            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+            <a class="navbar-brand d-none d-sm-flex align-items-center gap-2" href="/">
                 <img src="/assets/img/logo.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
                 <span class="h5 fs-5 m-0">Perpustakaanku</span>
             </a>

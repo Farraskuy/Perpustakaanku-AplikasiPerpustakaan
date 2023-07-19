@@ -29,14 +29,10 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', function () {
-    return redirect()->to(base_url('/admin'));
-},  ['filter' => 'role:admin,petugas']);
-
-$routes->get('/', 'User\Home::index');
+$routes->get('/', 'Index::index');
 
 // routes buku
-$routes->get('/buku/(:any)', 'User\Buku::detail/$1');
+$routes->get('buku/(:any)', 'User\Buku::detail/$1');
 
 // fitur pinjam
 $routes->group('pinjam', ['filter' => 'role:anggota'], function ($routes) {
@@ -47,15 +43,14 @@ $routes->group('pinjam', ['filter' => 'role:anggota'], function ($routes) {
     $routes->get('(:any)', 'User\Pinjam::detail/$1');
 });
 
-
 // routes admin
 $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\Controllers\Admin'], function ($routes) {
     // dashboard
     $routes->get('/', 'Admin::index');
 
     // konfigurasi
-    $routes->get('informasi', 'Admin\Admin::appConfig', ['filter' => 'permission:management-config-app']);
-    $routes->post('informasi', 'Admin\Admin::appConfigSave', ['filter' => 'permission:management-config-app']);
+    $routes->get('informasi', 'Admin::appConfig', ['filter' => 'permission:management-config-app']);
+    $routes->post('informasi', 'Admin::appConfigSave', ['filter' => 'permission:management-config-app']);
 
     // menu petugas
     $routes->get('petugas', 'Petugas::index');

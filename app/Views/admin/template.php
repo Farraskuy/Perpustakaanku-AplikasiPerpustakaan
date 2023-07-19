@@ -41,7 +41,7 @@
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button <?= !isset($inNavBuku) ? 'collapsed' : '' ?> accordion-button-custom" type="button" data-bs-toggle="collapse" data-bs-target="#data" aria-controls="data" aria-expanded="false">
-                            <small class="text-secondary fw-semibold" style="font-size: 12.5px;"><i class="fa-regular fa-book fs-6 me-2"></i>Data Master Buku</small>
+                            <small class="text-secondary fw-semibold" style="font-size: 12.5px;"><i class="fa-regular fa-book fs-6 me-3"></i>Data Master Buku</small>
                         </button>
                         <div id="data" class="accordion-collapse collapse <?= isset($inNavBuku) ? 'show' : '' ?>">
                             <div class="accordion-body pb-2">
