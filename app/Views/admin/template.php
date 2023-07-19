@@ -56,7 +56,7 @@
                                         <a class="nav-link side-item <?= $navactive == 'penerbit' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/penerbit"><i class="fa-regular fa-file-arrow-up fs-6"></i>Penerbit</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link side-item <?= $navactive == 'kategori' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/kategori"><i class="fa-regular fa-bookmark"></i>Kategori</a>
+                                        <a class="nav-link side-item <?= $navactive == 'kategori' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/kategori"><i class="fa-regular fa-hashtag"></i>Kategori</a>
                                     </li>
                                     <li class="nav-item ">
                                         <a class="nav-link side-item <?= $navactive == 'rak' ? 'active' : '' ?> gap-2 p-3 fw-semibold" href="/admin/buku/rak"><i class="fa-regular fa-shelves-empty fs-6"></i>Rak Buku</a>
@@ -95,9 +95,9 @@
             </div>
         </div>
 
-        <div class="col-10 w-100 bg-light min-vh-100 konten" style="padding-left: 15rem; padding-top: 61px;">
+        <div class="col-10 w-100 bg-light min-vh-100 konten" style="padding-top: 61px;">
             <div class="position-absolute h-25 bg-purple" style="right: 0; left: 0;"></div>
-            <section class="p-5 position-relative">
+            <section class="p-sm-5 position-relative">
                 <div class="position-absolute px-5 d-flex justify-content-center" style="right: 0; left: 0; top: 0px; z-index: 2;" id="notifContainer"></div>
                 <?= $this->renderSection('content'); ?>
             </section>

@@ -8,7 +8,7 @@ class BukuModel extends Model
 {
     protected $table      = 'buku';
     protected $useTimestamps = true;
-    protected $allowedFields = ['id_buku', 'judul', 'slug', 'penulis', 'penerbit', 'tanggal_terbit', 'jumlah_buku', 'sampul', 'sinopsis'];
+    protected $allowedFields = ['id_buku', 'judul', 'slug', 'id_penulis', 'id_penerbit', 'id_kategori', 'id_rak',  'tanggal_terbit', 'jumlah_buku', 'sampul', 'sinopsis'];
 
     protected $primaryKey = 'id_buku';
 
@@ -40,15 +40,18 @@ class BukuModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function ambilBuku($slug = null)
+    public function getDataBySlug($slug = null)
     {
         $builder = $this->db->table('buku')->select("
-            buku.*,
+            buku.*, penulis.nama as penulis, penerbit.nama as penerbit, kategori.nama as kategori, rak.kode_rak, rak.lokasi,
             (SELECT COUNT(*) FROM detail_pinjam WHERE detail_pinjam.id_buku = buku.id_buku) as jumlah_terpinjam,
             (SELECT COUNT(*) FROM detail_pengembalian WHERE detail_pengembalian.id_buku = buku.id_buku AND kondisi_akhir = 'rusak') as jumlah_rusak,
             (SELECT COUNT(*) FROM detail_pengembalian WHERE detail_pengembalian.id_buku = buku.id_buku AND kondisi_akhir = 'hilang') as jumlah_hilang
-        ", false);
-
+        ", false)
+            ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'LEFT')
+            ->join('penerbit', 'penerbit.id_penerbit = buku.id_penerbit', 'LEFT')
+            ->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'LEFT')
+            ->join('rak', 'rak.id_rak = buku.id_rak', 'LEFT');
 
         if ($slug) {
             return $builder->where('slug', $slug)->get()->getRowArray();

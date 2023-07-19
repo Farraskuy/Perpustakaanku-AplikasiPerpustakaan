@@ -59,8 +59,8 @@
                 <p>Apakah anda yakin ingin menghapus <?= $subtitle ?> ini?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
+                <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger text-white fw-semibold"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
             </div>
         </form>
     </div>
@@ -87,8 +87,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success text-white">Tambah</button>
+                <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-success text-white fw-semibold">Tambah</button>
             </div>
         </form>
     </div>

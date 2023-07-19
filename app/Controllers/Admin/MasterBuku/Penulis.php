@@ -42,7 +42,7 @@ class Penulis extends BaseController
         }
 
         if ($this->penulis->save([
-            'id_penulis' => uniqueIDNoUrut('PNG', 'penulis', 'id_penulis'),
+            'id_penulis' => uniqueIDNoUrut('PNS', 'penulis', 'id_penulis'),
             'nama' => $this->request->getVar('penulis')
         ])) {
             return redirect()->to(base_url('/admin/buku/penulis'))->with('pesan', 'Data penulis berhasil ditambahkan');

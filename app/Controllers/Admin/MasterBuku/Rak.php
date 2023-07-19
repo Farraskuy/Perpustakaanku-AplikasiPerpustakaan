@@ -54,7 +54,7 @@ class Rak extends BaseController
         }
 
         if ($this->rak->save([
-            'id_rak' => uniqueIDNoUrut('PNG', 'rak', 'id_rak'),
+            'id_rak' => uniqueIDNoUrut('RAK', 'rak', 'id_rak'),
             'kode_rak' => $this->request->getVar('kode_rak'),
             'nama' => $this->request->getVar('rak'),
             'lokasi' => $this->request->getVar('lokasi'),

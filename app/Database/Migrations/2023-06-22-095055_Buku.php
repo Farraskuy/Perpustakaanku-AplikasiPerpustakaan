@@ -22,11 +22,19 @@ class Buku extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'penulis' => [
+            'id_penulis' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'penerbit' => [
+            'id_penerbit' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'id_kategori' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'id_rak' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],

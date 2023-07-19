@@ -42,7 +42,7 @@ class Penerbit extends BaseController
         }
 
         if ($this->penerbit->save([
-            'id_penerbit' => uniqueIDNoUrut('PNG', 'penerbit', 'id_penerbit'),
+            'id_penerbit' => uniqueIDNoUrut('PNB', 'penerbit', 'id_penerbit'),
             'nama' => $this->request->getVar('penerbit')
         ])) {
             return redirect()->to(base_url('/admin/buku/penerbit'))->with('pesan', 'Data penerbit berhasil ditambahkan');

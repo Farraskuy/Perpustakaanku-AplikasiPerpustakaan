@@ -21,71 +21,63 @@
 </div>
 <div class="bg-white rounded p-3 px-4">
     <div class="row g-0">
-        <div class="col-md-4 col-xl-3 row flex-column align-items-center">
-            <div class="p-3 w-100 col-4" style="height: 400px;">
-                <img src="/upload/buku/<?= $data['sampul'] ?>" class="w-100 h-100" style="object-fit: contain;">
-            </div>
+        <div class="col-md-4 col-xl-3 p-3 text-center" style="height: 400px;">
+            <img src="/upload/buku/<?= $data['sampul'] ?>" class="rounded-3" style="max-height: 100%; max-width: 100%; object-fit: contain;">
         </div>
         <div class="col-md-8 col-xl-9 d-flex justify-content-center">
             <div class="container-fluid py-4 ">
                 <div class="row">
-                    <div class="col-12">
-                        <h5 class="m-0"><?= $data['judul'] ?></h5>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm">
-                        <table class=" table-borderless">
-                            <tbody>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">ID Buku</th>
-                                    <td>: <?= $data['id_buku'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Judul</th>
-                                    <td>: <?= $data['judul'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Penulis</th>
-                                    <td>: <?= $data['penulis'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Penerbir</th>
-                                    <td>: <?= $data['penerbit'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Tanggal Terbit</th>
-                                    <td>: <?= formatTanggal($data['tanggal_terbit']) ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1 ">Jumlah Buku</th>
-                                    <td>: <?= $data['jumlah_buku'] ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-auto">
-                        <table class=" table-borderless">
-                            <tbody class="text-secondary">
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1">Ditambahkan Pada</th>
-                                    <td>: <?= formatTanggal($data['created_at']) . ' ' . date('H:i', strtotime($data['created_at'])) ?></td>
-                                </tr>
-                                <tr>
-                                    <th class="ps-2 pe-3 py-1">Diperbarui Pada</th>
-                                    <td>: <?= formatTanggal($data['updated_at']) . ' ' . date('H:i', strtotime($data['updated_at'])) ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <hr>
-                <div class="row flex-column">
                     <div class="col">
-                        <h6 class="fw-bold">Sinopsis</h6>
-                        <p><?= $data['sinopsis'] ?></p>
+                        <span class="badge rounded-pill bg-secondary fw-semibold mb-2" style="font-size: 14px;">Rak <?= $data['kode_rak'] . ' - ' . $data['lokasi'] ?></span>
+                        <h5 class="m-0 text-truncate"><?= $data['judul'] ?></h5>
                     </div>
+                </div>
+                <hr class="mb-0">
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">ID Buku</p>
+                    <p class="col-12 col-md m-0"><?= $data['id_buku'] ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Judul</p>
+                    <p class="col-12 col-md m-0"><?= $data['judul'] ?>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam ipsa cupiditate saepe optio voluptatem obcaecati nisi harum velit possimus sit. Illum at sint quae a? Facilis veniam ea id maxime aperiam odit error eaque beatae minima in. Perspiciatis, aspernatur. Neque officiis mollitia molestiae aliquid magni odio assumenda perferendis quod ducimus, quo voluptatum eligendi velit sit ex error, quam similique ratione. Ullam odit qui molestias minima! Eum amet facere quae fuga sit natus iure, incidunt cumque quidem tenetur ipsum suscipit molestias consectetur non veritatis ab laudantium quo sapiente doloremque commodi exercitationem quam velit rerum enim. Molestias esse ex exercitationem. Itaque, temporibus?</p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Penulis</p>
+                    <p class="col-12 col-md m-0"><?= $data['penulis'] ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Penerbit</p>
+                    <p class="col-12 col-md m-0"><?= $data['penerbit'] ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Kategori</p>
+                    <p class="col-12 col-md m-0"><?= $data['kategori'] ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Tanggal Terbit</p>
+                    <p class="col-12 col-md m-0"><?= formatTanggal($data['tanggal_terbit']) ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Jumlah Buku</p>
+                    <p class="col-12 col-md m-0 fs-6">
+                        <span class="badge rounded-pill text-bg-secondary">Total : <?= $data['jumlah_buku'] ?></span> =
+                        <span class="flex-grow-1 badge rounded-pill text-bg-primary">Tersedia : <?= $data['jumlah_buku'] - $data['jumlah_terpinjam'] - $data['jumlah_rusak'] - $data['jumlah_hilang'] ?></span>
+                        <span class="flex-grow-1 badge rounded-pill text-bg-success">Terpinjam : <?= $data['jumlah_terpinjam'] ?></span>
+                        <span class="flex-grow-1 badge rounded-pill text-bg-warning text-white">Rusak : <?= $data['jumlah_rusak'] ?></span>
+                        <span class="flex-grow-1 badge rounded-pill text-bg-danger">Hilang : <?= $data['jumlah_hilang'] ?></span>
+                    </p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0" style="max-width: 175px;">Sinopsis</p>
+                    <p class="col-12 col-md m-0"><?= $data['sinopsis'] ? $data['sinopsis'] : '-' ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0 text-secondary" style="max-width: 175px;">Ditambahkan Pada</p>
+                    <p class="col-12 col-md m-0"><?= formatTanggal($data['created_at']) . ' ' . date('H:i', strtotime($data['created_at']))  ?></p>
+                </div>
+                <div class="row g-0 border-bottom py-2">
+                    <p class="col-12 col-md-3 fw-semibold m-0 text-secondary" style="max-width: 175px;">Diubah Pada</p>
+                    <p class="col-12 col-md m-0"><?= formatTanggal($data['updated_at']) . ' ' . date('H:i', strtotime($data['updated_at']))   ?></p>
                 </div>
             </div>
         </div>
@@ -107,8 +99,8 @@
                 <p>Apakah anda yakin ingin menghapus buku ini?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
+                <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger text-white fw-semibold"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
             </div>
         </form>
     </div>
@@ -132,67 +124,105 @@
             <div class="modal-body">
 
                 <div class="mb-3 row">
-                    <label for="judul" class="col-sm-3 form-label">Judul buku</label>
+                    <label for="judul" class="col-sm-3 form-label label-input-required">Judul buku</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['judul']) ? 'is-invalid' : '' ?>" value="<?= old('judul', $data['judul']) ?>" name="judul" id="judul" autofocus>
+                        <input type="text" class="form-control form-control-sm <?= isset($validation['judul']) ? 'is-invalid' : '' ?>" value="<?= old('judul', $data['judul']) ?>" name="judul" id="judul" autofocus>
                         <div class="invalid-feedback"><?= isset($validation['judul']) ? $validation['judul'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="penulis" class="col-sm-3 col-sm-3 form-label">Penulis</label>
+                    <label for="kategori" class="col-sm-3 form-label label-input-required">Kategori</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['penulis']) ? 'is-invalid' : '' ?>" value="<?= old('penulis', $data['penulis']) ?>" name="penulis" id="penulis">
+                        <select class="form-select form-select-sm <?= isset($validation['kategori']) ? 'is-invalid' : '' ?>" id="kategori" name="kategori">
+                            <option value="" <?= old('kategori') == '' ? 'selected' : '' ?>>Pilih kategori</option>
+
+                            <?php foreach ($dataKategori as $item) : ?>
+                                <option value="<?= $item['id_kategori'] ?>" <?= old('kategori', $data['id_kategori']) == $item['id_kategori'] ? 'selected' : '' ?>><?= $item['nama'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <div class="invalid-feedback"><?= isset($validation['kategori']) ? $validation['kategori'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="rak" class="col-sm-3 form-label label-input-required">Rak</label>
+                    <div class="col-sm-9">
+                        <select class="form-select form-select-sm <?= isset($validation['rak']) ? 'is-invalid' : '' ?>" id="rak" name="rak">
+                            <option value="" <?= old('rak') == '' ? 'selected' : '' ?>>Pilih Rak</option>
+
+                            <?php foreach ($dataRak as $item) : ?>
+                                <option value="<?= $item['id_rak'] ?>" <?= old('rak', $data['id_rak']) == $item['id_rak'] ? 'selected' : '' ?>><?= $item['kode_rak'] . ' - ' . $item['nama'] . ' - ' . $item['lokasi'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <div class="invalid-feedback"><?= isset($validation['rak']) ? $validation['rak'] : '' ?></div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="penulis" class="col-sm-3 form-label label-input-required">Penulis</label>
+                    <div class="col-sm-9">
+                        <select class="form-select form-select-sm <?= isset($validation['penulis']) ? 'is-invalid' : '' ?>" id="penulis" name="penulis">
+                            <option value="" <?= old('penulis') == '' ? 'selected' : '' ?>>Pilih Penerbit</option>
+
+                            <?php foreach ($dataPenulis as $item) : ?>
+                                <option value="<?= $item['id_penulis'] ?>" <?= old('penulis', $data['id_penulis']) == $item['id_penulis'] ? 'selected' : '' ?>><?= $item['nama'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
                         <div class="invalid-feedback"><?= isset($validation['penulis']) ? $validation['penulis'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="penerbit" class="col-sm-3 form-label">Penerbit</label>
+                    <label for="penerbit" class="col-sm-3 form-label label-input-required">Penerbit</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['penerbit']) ? 'is-invalid' : '' ?>" value="<?= old('penerbit', $data['penerbit']) ?>" name="penerbit" id="penerbit">
+                        <select class="form-select form-select-sm <?= isset($validation['penerbit']) ? 'is-invalid' : '' ?>" id="penerbit" name="penerbit">
+                            <option value="" <?= old('penerbit') == '' ? 'selected' : '' ?>>Pilih Penulis</option>
+
+                            <?php foreach ($dataPenerbit as $item) : ?>
+                                <option value="<?= $item['id_penerbit'] ?>" <?= old('penerbit', $data['id_penerbit']) == $item['id_penerbit'] ? 'selected' : '' ?>><?= $item['nama'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
                         <div class="invalid-feedback"><?= isset($validation['penerbit']) ? $validation['penerbit'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="tanggalTerbit" class="col-sm-3 form-label">Tanggal Terbit</label>
+                    <label for="tanggalTerbit" class="col-sm-3 form-label label-input-required">Tanggal Terbit</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['tanggal_terbit']) ? 'is-invalid' : '' ?>" id="tanggalTerbit" value="<?= old('tanggal_terbit', date('Y-m-d', strtotime($data['tanggal_terbit']))) ?>" name="tanggal_terbit" type="date" />
+                        <input class="form-control form-control-sm <?= isset($validation['tanggal_terbit']) ? 'is-invalid' : '' ?>" id="tanggalTerbit" value="<?= old('tanggal_terbit', date('Y-m-d', strtotime($data['tanggal_terbit']))) ?>" name="tanggal_terbit" type="date" />
                         <div class="invalid-feedback"><?= isset($validation['tanggal_terbit']) ? $validation['tanggal_terbit'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="jumlah_buku" class="col-sm-3 form-label">Jumlah Buku</label>
+                    <label for="jumlah_buku" class="col-sm-3 form-label label-input-required">Jumlah Buku</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['jumlah_buku']) ? 'is-invalid' : '' ?>" id="jumlah_buku" value="<?= old('jumlah_buku', $data['jumlah_buku']) ?>" name="jumlah_buku" type="number" />
+                        <input class="form-control form-control-sm <?= isset($validation['jumlah_buku']) ? 'is-invalid' : '' ?>" id="jumlah_buku" value="<?= old('jumlah_buku', $data['jumlah_buku']) ?>" name="jumlah_buku" type="number" />
                         <div class="invalid-feedback"><?= isset($validation['jumlah_buku']) ? $validation['jumlah_buku'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="sampul" class="col-sm-3 form-label">Sampul</label>
+                    <label class="col-sm-3">Sampul</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['sampul']) ? 'is-invalid' : '' ?>" name="sampul" type="file" id="sampul" onchange="ubahPreview(this)">
-                        <div class="invalid-feedback"><?= isset($validation['sampul']) ? $validation['sampul'] : '' ?></div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-9">
-                        <p>Preview</p>
-                        <div style="height: 150px;" class="w-100 border rounded-3 text-center p-3">
-                            <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/buku/<?= $data['sampul'] ?>" alt="default sampul">
+                        <div class="border rounded-3 text-center">
+                            <div style="height: 150px;" class="w-100 p-3">
+                                <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/buku/<?= $data['sampul'] ?>" alt="default sampul">
+                            </div>
+                            <input class="form-control form-control-sm <?= isset($validation['sampul']) ? 'is-invalid' : '' ?>" name="sampul" type="file" id="sampul" onchange="ubahPreview(this)">
+                            <div class="invalid-feedback"><?= isset($validation['sampul']) ? $validation['sampul'] : '' ?></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <label for="sinopsis" class="col-sm-3 form-label">Sinopsis</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control <?= isset($validation['sinopsis']) ? 'is-invalid' : '' ?>" name="sinopsis" id="sinopsis" rows="3"><?= old('sinopsis', $data['sinopsis']) ?></textarea>
+                        <textarea class="form-control form-control-sm <?= isset($validation['sinopsis']) ? 'is-invalid' : '' ?>" name="sinopsis" id="sinopsis" rows="3"><?= old('sinopsis', $data['sinopsis']) ?></textarea>
                         <div class="invalid-feedback"><?= isset($validation['sinopsis']) ? $validation['sinopsis'] : '' ?></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-warning text-white"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
+                <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-warning text-white fw-semibold"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
             </div>
         </form>
     </div>

@@ -62,7 +62,7 @@
   --bs-accordion-active-bg: white;
   --bs-accordion-body-padding-y: 0px;
 }
-.accordion-button-custom{
+.accordion-button-custom {
   box-shadow: none !important;
 }
 
@@ -188,7 +188,7 @@
   background-color: var(--color-purple);
 }
 .main .konten {
-  padding-left: 15rem;
+  padding-left: 0;
   transition: 0.5s ease;
 }
 .main.active .konten {
@@ -202,8 +202,8 @@
   left: -15rem;
 }
 .sampul {
-  width: 70px;
-  height: 100px;
+  width: 80px;
+  height: 126px;
   object-fit: cover;
   border-radius: 5px;
 }
@@ -277,4 +277,21 @@
   background-color: rgba(0, 0, 0, 0.1) !important;
   box-shadow: none !important;
   border-color: transparent !important;
+}
+
+.label-input-required {
+  position: relative;
+}
+.label-input-required::after {
+  content: "*";
+  position: absolute;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  color: red;
+}
+
+@media (min-width: 768px) {
+  .main .konten {
+    padding-left: 15rem;
+  }
 }
