@@ -89,6 +89,23 @@ php spark migrate
 php spark db:seed DatabaseSeeder
 ```
 
+## 6. Persistensi File Upload (PENTING)
+
+Secara default, Azure Web App (Linux) bersifat _ephemeral_, artinya file yang diupload user ke folder `public/upload` bisa hilang saat deployment ulang. Untuk mengatasinya:
+
+1.  Buat **Azure Storage Account** dan **File Share** (misal: `perpustakaan-uploads`).
+2.  Di Azure Web App, masuk ke **Configuration** -> **Path mappings** -> **+ New Azure Storage Mount**.
+3.  Isi konfigurasi:
+    - **Name**: `uploads`
+    - **Configuration options**: Basic
+    - **Storage account**: (pilih account anda)
+    - **Storage type**: Azure Files
+    - **Share name**: `perpustakaan-uploads`
+    - **Mount path**: `/home/site/wwwroot/public/upload`
+4.  Save.
+
+_Catatan: Tidak perlu menjalankan command "storage link" seperti di Laravel, karena di CodeIgniter 4 folder upload sudah berada di dalam `public`, kita hanya perlu me-mount storage eksternal ke path tersebut agar data persisten._
+
 ## Troubleshooting Umum
 
 - **Error 500 / Blank Page**:
