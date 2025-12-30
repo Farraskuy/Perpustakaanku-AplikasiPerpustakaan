@@ -1,7 +1,7 @@
 <?= $this->extend('template'); ?>
 
 <?= $this->section('content'); ?>
-<section id="header" class="header h-auto" style="padding-top: 65px; font-family: poppins;">
+<section id="header" class="header h-auto bg-light" style="padding-top: 65px; font-family: poppins;">
 
     <div class="container text-black px-5 h-100">
         <div class="row px-md-5 h-100">
