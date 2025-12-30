@@ -36,6 +36,11 @@ $routes->get('buku/(:any)', 'User\Buku::detail/$1');
 
 // fitur pinjam
 $routes->group('pinjam', ['filter' => 'role:anggota'], function ($routes) {
+    // Fitur Koleksi
+    $routes->get('koleksi', 'User\Koleksi::index');
+    $routes->post('koleksi/tambah/(:any)', 'User\Koleksi::tambah/$1');
+    $routes->delete('koleksi/hapus/(:any)', 'User\Koleksi::hapus/$1');
+
     $routes->get('', 'User\Pinjam::index');
     $routes->post('(:any)', 'User\Pinjam::simpan/$1');
     $routes->put('(:any)', 'User\Pinjam::edit/$1');
@@ -48,9 +53,9 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
     // dashboard
     $routes->get('/', 'Admin::index');
 
-    // konfigurasi
-    $routes->get('informasi', 'Admin::appConfig', ['filter' => 'permission:management-config-app']);
-    $routes->post('informasi', 'Admin::appConfigSave', ['filter' => 'permission:management-config-app']);
+    // konfigurasi (accessible by admin only - checked in view)
+    $routes->get('informasi', 'Admin::appConfig');
+    $routes->post('informasi', 'Admin::appConfigSave');
 
     // menu petugas
     $routes->get('petugas', 'Petugas::index');
@@ -63,6 +68,8 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
     // menu anggota
     $routes->get('anggota', 'Anggota::index');
     $routes->post('anggota', 'Anggota::simpan');
+    $routes->get('anggota/cetak-kartu', 'Anggota::cetakKartuBulk');
+    $routes->get('anggota/(:any)/cetak-kartu', 'Anggota::cetakKartu/$1');
     $routes->put('anggota/reset/(:any)', 'Anggota::reset/$1');
     $routes->put('anggota/(:any)', 'Anggota::edit/$1');
     $routes->delete('anggota/(:any)', 'Anggota::hapus/$1');
@@ -90,6 +97,9 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
     $routes->delete('pengembalian/(:any)', 'Pengembalian::hapus/$1');
     $routes->get('pengembalian/(:any)/edit', 'Pengembalian::detailEdit/$1');
     $routes->get('pengembalian/(:any)', 'Pengembalian::detail/$1');
+
+    // menu denda
+    $routes->get('denda', 'Denda::index');
 
 
     // menu buku
@@ -132,6 +142,9 @@ $routes->group('admin', ['filter' => 'role:admin,petugas', 'namespace' => 'App\C
 // AJAX
 $routes->get('/listbuku', 'User\Buku::listBuku');
 $routes->get('/listbuku/ambil/(:any)', 'User\Buku::ambilBuku/$1');
+
+// Profile Route
+$routes->get('/profile', 'User\Profile::index');
 
 
 

@@ -38,11 +38,48 @@ class Anggota extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Anggota dengan id "' . $id . '" tidak ditemukan');
         }
 
+        // Get member history
+        $db = \Config\Database::connect();
+
+        // Histori Peminjaman
+        $historyPinjam = $db->table('pinjam')
+            ->select('pinjam.*, petugas.nama as nama_petugas')
+            ->join('petugas', 'petugas.id_petugas = pinjam.id_petugas', 'left')
+            ->where('pinjam.id_anggota', $id)
+            ->orderBy('pinjam.created_at', 'DESC')
+            ->limit(10)
+            ->get()
+            ->getResultArray();
+
+        // Histori Pengembalian
+        $historyKembali = $db->table('pengembalian')
+            ->select('pengembalian.*, petugas.nama as nama_petugas')
+            ->join('petugas', 'petugas.id_petugas = pengembalian.id_petugas', 'left')
+            ->where('pengembalian.id_anggota', $id)
+            ->orderBy('pengembalian.created_at', 'DESC')
+            ->limit(10)
+            ->get()
+            ->getResultArray();
+
+        // Histori Denda (only returns with fines)
+        $historyDenda = $db->table('pengembalian')
+            ->select('pengembalian.*, petugas.nama as nama_petugas')
+            ->join('petugas', 'petugas.id_petugas = pengembalian.id_petugas', 'left')
+            ->where('pengembalian.id_anggota', $id)
+            ->where('total_denda >', 0)
+            ->orderBy('pengembalian.created_at', 'DESC')
+            ->limit(10)
+            ->get()
+            ->getResultArray();
+
         $this->data += [
             "title" => "Anggota | Administrator",
             "data" => $anggota,
             "navactive" => "anggota",
-            "validation" => validation_errors()
+            "validation" => validation_errors(),
+            "historyPinjam" => $historyPinjam,
+            "historyKembali" => $historyKembali,
+            "historyDenda" => $historyDenda,
         ];
 
         return view('admin/anggota/detailAnggota', $this->data);
@@ -56,78 +93,80 @@ class Anggota extends BaseController
     public function simpan()
     {
 
-        if (!$this->validate([
-            'username' => [
-                'rules' => 'required|is_unique[users.username]',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                    'is_unique' => '{field} {value} sudah digunakan'
-                ]
-            ],
-            'email' => [
-                'rules' => 'required|is_unique[users.email]|valid_email',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                    'is_unique' => '{field} {value} sudah terdaftar',
-                    'valid_email' => 'Harap isi kolom email dengan format yang benar'
-                ]
-            ],
-            'password' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                ]
-            ],
-            'password_confirm' => [
-                'rules' => 'required|matches[password]',
-                'errors' => [
-                    'required' => 'Kolom konfirmasi password tidak boleh kosong',
-                    'matches' => 'Password tidak sama',
+        if (
+            !$this->validate([
+                'username' => [
+                    'rules' => 'required|is_unique[users.username]',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                        'is_unique' => '{field} {value} sudah digunakan'
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required|is_unique[users.email]|valid_email',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                        'is_unique' => '{field} {value} sudah terdaftar',
+                        'valid_email' => 'Harap isi kolom email dengan format yang benar'
+                    ]
+                ],
+                'password' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                    ]
+                ],
+                'password_confirm' => [
+                    'rules' => 'required|matches[password]',
+                    'errors' => [
+                        'required' => 'Kolom konfirmasi password tidak boleh kosong',
+                        'matches' => 'Password tidak sama',
 
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                ]
-            ],
-            'nomor_telepon' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Harap masukan nomor telpon yang sesuai',
-                    'numeric' => 'Harap masukan nomor telpon yang sesuai',
-                ]
-            ],
-            'jenis_kelamin' => [
-                'rules' => 'required|in_list[Laki-laki,Perempuan]',
-                'errors' => [
-                    'required' => 'Harap pilih jenis kelamin yang sesuai',
-                    'in_list' => 'Harap pilih jenis kelamin yang sesuai',
-                ]
-            ],
-            'agama' => [
-                'rules' => 'required|in_list[Islam,Kristen,Protestan,Hindu,Buddha,Konghucu,Lainnya]',
-                'errors' => [
-                    'required' => 'Harap pilih agama tidak boleh kosong',
-                    'in_list' => 'Harap pilih agama yang sesuai',
-                ]
-            ],
-            'foto' => [
-                'rules' => 'is_image[foto]|mime_in[foto,image/png,image/jpg,image/jpeg]|max_size[foto,1024]',
-                'errors' => [
-                    'mime_in' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'is_image' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'max_size' => 'Ukuran foto terlalu besar, Maksimal 5MB',
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong'
-                ]
-            ],
-        ])) {
+                    ]
+                ],
+                'nama' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                    ]
+                ],
+                'nomor_telepon' => [
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => 'Harap masukan nomor telpon yang sesuai',
+                        'numeric' => 'Harap masukan nomor telpon yang sesuai',
+                    ]
+                ],
+                'jenis_kelamin' => [
+                    'rules' => 'required|in_list[Laki-laki,Perempuan]',
+                    'errors' => [
+                        'required' => 'Harap pilih jenis kelamin yang sesuai',
+                        'in_list' => 'Harap pilih jenis kelamin yang sesuai',
+                    ]
+                ],
+                'agama' => [
+                    'rules' => 'required|in_list[Islam,Kristen,Protestan,Hindu,Buddha,Konghucu,Lainnya]',
+                    'errors' => [
+                        'required' => 'Harap pilih agama tidak boleh kosong',
+                        'in_list' => 'Harap pilih agama yang sesuai',
+                    ]
+                ],
+                'foto' => [
+                    'rules' => 'is_image[foto]|mime_in[foto,image/png,image/jpg,image/jpeg]|max_size[foto,1024]',
+                    'errors' => [
+                        'mime_in' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
+                        'is_image' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
+                        'max_size' => 'Ukuran foto terlalu besar, Maksimal 5MB',
+                    ]
+                ],
+                'alamat' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong'
+                    ]
+                ],
+            ])
+        ) {
             return redirect()->back()->withInput()->with('error_tambah', true);
         }
 
@@ -156,8 +195,8 @@ class Anggota extends BaseController
             'nama' => $this->request->getVar('nama'),
             'nomor_telepon' => $this->request->getVar('nomor_telepon'),
             'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
-            'agama' =>  $this->request->getVar('agama'),
-            'alamat' =>  $this->request->getVar('alamat'),
+            'agama' => $this->request->getVar('agama'),
+            'alamat' => $this->request->getVar('alamat'),
             'foto' => $namaFoto,
         ];
         $this->anggotaModel->save($data);
@@ -196,65 +235,67 @@ class Anggota extends BaseController
             $emailRule .= '|is_unique[users.email]';
         }
 
-        if (!$this->validate([
-            'username' => [
-                'rules' => $usernameRule,
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                    'is_unique' => '{field} {value} sudah digunakan'
-                ]
-            ],
-            'email' => [
-                'rules' => $emailRule,
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                    'is_unique' => '{field} {value} sudah terdaftar',
-                    'valid_email' => 'Harap isi kolom email dengan format yang benar'
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                ]
-            ],
-            'nomor_telepon' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Harap masukan nomor telpon yang sesuai',
-                    'numeric' => 'Harap masukan nomor telpon yang sesuai',
-                ]
-            ],
-            'jenis_kelamin' => [
-                'rules' => 'required|in_list[Laki-laki,Perempuan]',
-                'errors' => [
-                    'required' => 'Harap pilih jenis kelamin yang sesuai',
-                    'in_list' => 'Harap pilih jenis kelamin yang sesuai',
-                ]
-            ],
-            'agama' => [
-                'rules' => 'required|in_list[Islam,Kristen,Protestan,Hindu,Buddha,Konghucu,Lainnya]',
-                'errors' => [
-                    'required' => 'Harap pilih agama tidak boleh kosong',
-                    'in_list' => 'Harap pilih agama yang sesuai',
-                ]
-            ],
-            'foto' => [
-                'rules' => 'is_image[foto]|mime_in[foto,image/png,image/jpg,image/jpeg]|max_size[foto,1024]',
-                'errors' => [
-                    'mime_in' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'is_image' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
-                    'max_size' => 'Ukuran foto terlalu besar, Maksimal 5MB',
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong'
-                ]
-            ],
+        if (
+            !$this->validate([
+                'username' => [
+                    'rules' => $usernameRule,
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                        'is_unique' => '{field} {value} sudah digunakan'
+                    ]
+                ],
+                'email' => [
+                    'rules' => $emailRule,
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                        'is_unique' => '{field} {value} sudah terdaftar',
+                        'valid_email' => 'Harap isi kolom email dengan format yang benar'
+                    ]
+                ],
+                'nama' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                    ]
+                ],
+                'nomor_telepon' => [
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => 'Harap masukan nomor telpon yang sesuai',
+                        'numeric' => 'Harap masukan nomor telpon yang sesuai',
+                    ]
+                ],
+                'jenis_kelamin' => [
+                    'rules' => 'required|in_list[Laki-laki,Perempuan]',
+                    'errors' => [
+                        'required' => 'Harap pilih jenis kelamin yang sesuai',
+                        'in_list' => 'Harap pilih jenis kelamin yang sesuai',
+                    ]
+                ],
+                'agama' => [
+                    'rules' => 'required|in_list[Islam,Kristen,Protestan,Hindu,Buddha,Konghucu,Lainnya]',
+                    'errors' => [
+                        'required' => 'Harap pilih agama tidak boleh kosong',
+                        'in_list' => 'Harap pilih agama yang sesuai',
+                    ]
+                ],
+                'foto' => [
+                    'rules' => 'is_image[foto]|mime_in[foto,image/png,image/jpg,image/jpeg]|max_size[foto,1024]',
+                    'errors' => [
+                        'mime_in' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
+                        'is_image' => 'Format file tidak didukung, Harap Masukan file berformat .png, .jpg, .jpeg',
+                        'max_size' => 'Ukuran foto terlalu besar, Maksimal 5MB',
+                    ]
+                ],
+                'alamat' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong'
+                    ]
+                ],
 
-        ])) {
+            ])
+        ) {
             return redirect()->back()->withInput()->with('error_edit', true);
         }
 
@@ -266,7 +307,7 @@ class Anggota extends BaseController
 
 
         $fileFoto = $this->request->getFile('foto');
-        $fotolama =  $this->request->getVar('fotolama');
+        $fotolama = $this->request->getVar('fotolama');
         if ($fileFoto->getError() == 4) {
             $namaFoto = $fotolama;
         } else {
@@ -283,8 +324,8 @@ class Anggota extends BaseController
             'nama' => $this->request->getVar('nama'),
             'nomor_telepon' => $this->request->getVar('nomor_telepon'),
             'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
-            'agama' =>  $this->request->getVar('agama'),
-            'alamat' =>  $this->request->getVar('alamat'),
+            'agama' => $this->request->getVar('agama'),
+            'alamat' => $this->request->getVar('alamat'),
             'foto' => $namaFoto,
         ]);
 
@@ -295,21 +336,23 @@ class Anggota extends BaseController
 
     public function reset($id_anggota)
     {
-        if (!$this->validate([
-            'password' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom {field} tidak boleh kosong',
-                ]
-            ],
-            'password_confirm' => [
-                'rules' => 'required|matches[password]',
-                'errors' => [
-                    'required' => 'Kolom konfirmasi password tidak boleh kosong',
-                    'matches' => 'Password tidak sama',
-                ]
-            ],
-        ])) {
+        if (
+            !$this->validate([
+                'password' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom {field} tidak boleh kosong',
+                    ]
+                ],
+                'password_confirm' => [
+                    'rules' => 'required|matches[password]',
+                    'errors' => [
+                        'required' => 'Kolom konfirmasi password tidak boleh kosong',
+                        'matches' => 'Password tidak sama',
+                    ]
+                ],
+            ])
+        ) {
             return redirect()->back()->withInput()->with('error_password', true);
         }
 
@@ -322,5 +365,53 @@ class Anggota extends BaseController
         session()->setFlashdata('pesan', "Password berhasil reset");
 
         return redirect()->to("admin/anggota/" . $id_anggota);
+    }
+
+    /**
+     * Print single member card
+     */
+    public function cetakKartu($id_anggota)
+    {
+        $anggota = $this->anggotaModel->ambilData($id_anggota);
+        if (empty($anggota)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Anggota tidak ditemukan');
+        }
+
+        return view('admin/anggota/cetakKartu', ['anggota' => $anggota]);
+    }
+
+    /**
+     * Print multiple member cards (bulk)
+     */
+    public function cetakKartuBulk()
+    {
+        // Check if print all requested
+        if ($this->request->getGet('all') == 'true') {
+            $data = $this->anggotaModel->findAll();
+            if (empty($data)) {
+                return redirect()->back()->with('error', 'Tidak ada data anggota');
+            }
+            return view('admin/anggota/cetakKartu', ['data' => $data]);
+        }
+
+        $ids = $this->request->getGet('ids');
+        if (empty($ids)) {
+            return redirect()->back()->with('error', 'Pilih anggota yang akan dicetak');
+        }
+
+        $idsArray = explode(',', $ids);
+        $data = [];
+        foreach ($idsArray as $id) {
+            $anggota = $this->anggotaModel->ambilData(trim($id));
+            if ($anggota) {
+                $data[] = $anggota;
+            }
+        }
+
+        if (empty($data)) {
+            return redirect()->back()->with('error', 'Tidak ada anggota yang valid');
+        }
+
+        return view('admin/anggota/cetakKartu', ['data' => $data]);
     }
 }

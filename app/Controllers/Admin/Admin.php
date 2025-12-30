@@ -27,9 +27,39 @@ class Admin extends BaseController
     }
     public function index()
     {
+        $db = \Config\Database::connect();
+
+        // Count statistics
+        $totalBuku = $db->table('buku')->countAllResults();
+        $totalAnggota = $db->table('anggota')->countAllResults();
+        $totalPetugas = $db->table('petugas')->countAllResults();
+        $totalPinjamAktif = $db->table('pinjam')->where('status', 'terpinjam')->countAllResults();
+        $totalPengembalian = $db->table('pengembalian')->countAllResults();
+
+        // Denda statistics
+        $totalDenda = $db->table('pengembalian')->selectSum('total_denda')->get()->getRowArray();
+        $dendaTelat = $db->table('detail_pengembalian')->selectSum('denda_telat')->get()->getRowArray();
+        $dendaKondisi = $db->table('detail_pengembalian')->selectSum('denda_kondisi')->get()->getRowArray();
+
+        // Buku kondisi
+        $bukuRusak = $db->table('detail_pengembalian')->where('kondisi_akhir', 'rusak')->countAllResults();
+        $bukuHilang = $db->table('detail_pengembalian')->where('kondisi_akhir', 'hilang')->countAllResults();
+
         $this->data += [
             "title" => "Home | Dashboard",
             "navactive" => "admin",
+            "stats" => [
+                'total_buku' => $totalBuku,
+                'total_anggota' => $totalAnggota,
+                'total_petugas' => $totalPetugas,
+                'pinjam_aktif' => $totalPinjamAktif,
+                'total_pengembalian' => $totalPengembalian,
+                'total_denda' => (int) ($totalDenda['total_denda'] ?? 0),
+                'denda_telat' => (int) ($dendaTelat['denda_telat'] ?? 0),
+                'denda_kondisi' => (int) ($dendaKondisi['denda_kondisi'] ?? 0),
+                'buku_rusak' => $bukuRusak,
+                'buku_hilang' => $bukuHilang,
+            ],
         ];
         return view('admin/home', $this->data);
     }
@@ -37,9 +67,10 @@ class Admin extends BaseController
     public function appConfig()
     {
         $this->data += [
-            "title" => "Admin | informasi",
+            "title" => "Admin | Informasi Perpustakaan",
             "navactive" => "informasi",
             "validation" => validation_errors(),
+            "config" => $this->appConfigModel->first(),
         ];
         return view('/admin/config', $this->data);
     }
@@ -56,49 +87,51 @@ class Admin extends BaseController
     public function appConfigSave()
     {
 
-        if (!$this->validate([
-            'nomor_telepon' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Kolom nomor telepon perpustakaan tidak boleh kosong',
-                    'numeric' => 'Harap isi dengan nomor telepon yang valid',
-                ]
-            ],
-            'email' => [
-                'rules' => 'required|valid_email',
-                'errors' => [
-                    'required' => 'Kolom email perpustakaan tidak boleh kosong',
-                    'valid_email' => 'Harap masukan email yang valid'
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kolom alamat perpustakaan tidak boleh kosong'
-                ]
-            ],
-            'denda_rusak' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Kolom denda rusak tidak boleh kosong',
-                    'numeric' => 'Harap isi kolom denda rusak menggunakan angka',
-                ]
-            ],
-            'denda_hilang' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Kolom denda hilang tidak boleh kosong',
-                    'numeric' => 'Harap isi kolom denda rusak menggunakan angka',
-                ]
-            ],
-            'denda_telat' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Kolom denda telat tidak boleh kosong',
-                    'numeric' => 'Harap isi kolom denda rusak menggunakan angka',
-                ]
-            ],
-        ])) {
+        if (
+            !$this->validate([
+                'nomor_telepon' => [
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => 'Kolom nomor telepon perpustakaan tidak boleh kosong',
+                        'numeric' => 'Harap isi dengan nomor telepon yang valid',
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required|valid_email',
+                    'errors' => [
+                        'required' => 'Kolom email perpustakaan tidak boleh kosong',
+                        'valid_email' => 'Harap masukan email yang valid'
+                    ]
+                ],
+                'alamat' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Kolom alamat perpustakaan tidak boleh kosong'
+                    ]
+                ],
+                'denda_rusak' => [
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => 'Kolom denda rusak tidak boleh kosong',
+                        'numeric' => 'Harap isi kolom denda rusak menggunakan angka',
+                    ]
+                ],
+                'denda_hilang' => [
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => 'Kolom denda hilang tidak boleh kosong',
+                        'numeric' => 'Harap isi kolom denda rusak menggunakan angka',
+                    ]
+                ],
+                'denda_telat' => [
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => 'Kolom denda telat tidak boleh kosong',
+                        'numeric' => 'Harap isi kolom denda rusak menggunakan angka',
+                    ]
+                ],
+            ])
+        ) {
             return redirect()->back()->withInput();
         }
 

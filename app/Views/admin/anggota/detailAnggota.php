@@ -6,15 +6,22 @@
 <div class="bg-white rounded p-3 px-4 mb-3">
     <div class="row align-items-center">
         <div class="col-md-6 d-flex align-items-center gap-3">
-            <a href="/admin/anggota" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i> </a>
+            <a href="/admin/anggota" class="btn bg-white border border-3"><i class="fa-regular fa-arrow-left fa-lg"></i>
+            </a>
             <h5 class="m-0">Detail Anggota</h5>
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center gap-3">
 
             <span class="fs-5 fw-semibold text-dark border-end pe-3">Aksi</span>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-                <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#hapusSatu"><i class="fa-regular fa-trash-xmark"></i> Hapus</button>
+                <a href="/admin/anggota/<?= $data['id_anggota'] ?>/cetak-kartu" target="_blank"
+                    class="btn btn-info text-white fw-semibold"><i class="fa-regular fa-id-card"></i> Cetak Kartu</a>
+                <button style="min-width: 80px;" class="btn btn-warning text-white fw-semibold" type="button"
+                    data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-regular fa-pen-to-square"></i>
+                    Edit</button>
+                <button style="min-width: 80px;" class="btn btn-danger text-white fw-semibold" type="button"
+                    data-bs-toggle="modal" data-bs-target="#hapusSatu"><i class="fa-regular fa-trash-xmark"></i>
+                    Hapus</button>
             </div>
 
         </div>
@@ -71,11 +78,15 @@
                             <tbody class="text-secondary">
                                 <tr>
                                     <th class="ps-2 pe-3 py-1">Ditambahkan Pada</th>
-                                    <td>: <?= formatTanggal($data['created_at']) . ' ' . date('H:i', strtotime($data['created_at'])) ?></td>
+                                    <td>:
+                                        <?= formatTanggal($data['created_at']) . ' ' . date('H:i', strtotime($data['created_at'])) ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="ps-2 pe-3 py-1">Diperbarui Pada</th>
-                                    <td>: <?= formatTanggal($data['updated_at']) . ' ' . date('H:i', strtotime($data['updated_at'])) ?></td>
+                                    <td>:
+                                        <?= formatTanggal($data['updated_at']) . ' ' . date('H:i', strtotime($data['updated_at'])) ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -89,6 +100,151 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Histori Anggota -->
+<div class="bg-white rounded p-3 px-4 mt-3">
+    <h5 class="mb-3"><i class="fa-regular fa-clock-rotate-left me-2"></i>Histori Anggota</h5>
+
+    <ul class="nav nav-tabs" id="historyTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pinjam-tab" data-bs-toggle="tab" data-bs-target="#pinjam-history"
+                type="button" role="tab">
+                <i class="fa-regular fa-book-circle-arrow-right me-1"></i> Peminjaman (<?= count($historyPinjam) ?>)
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="kembali-tab" data-bs-toggle="tab" data-bs-target="#kembali-history"
+                type="button" role="tab">
+                <i class="fa-regular fa-book-circle-arrow-up me-1"></i> Pengembalian (<?= count($historyKembali) ?>)
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="denda-tab" data-bs-toggle="tab" data-bs-target="#denda-history" type="button"
+                role="tab">
+                <i class="fa-regular fa-money-bill-wave me-1"></i> Denda (<?= count($historyDenda) ?>)
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content p-3" id="historyTabContent">
+        <!-- Tab Peminjaman -->
+        <div class="tab-pane fade show active" id="pinjam-history" role="tabpanel">
+            <?php if (empty($historyPinjam)): ?>
+                <p class="text-muted text-center py-3">Belum ada riwayat peminjaman</p>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID Pinjam</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah Buku</th>
+                                <th>Status</th>
+                                <th>Petugas</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($historyPinjam as $pinjam): ?>
+                                <tr>
+                                    <td><code><?= $pinjam['id_pinjam'] ?></code></td>
+                                    <td><?= formatTanggal($pinjam['created_at']) ?></td>
+                                    <td><?= $pinjam['jumlah_pinjam'] ?></td>
+                                    <td>
+                                        <?php
+                                        $statusClass = $pinjam['status'] == 'terpinjam' ? 'warning' : ($pinjam['status'] == 'selesai' ? 'success' : 'info');
+                                        ?>
+                                        <span class="badge bg-<?= $statusClass ?>"><?= ucfirst($pinjam['status']) ?></span>
+                                    </td>
+                                    <td><?= $pinjam['nama_petugas'] ?? '-' ?></td>
+                                    <td><a href="/admin/pinjam/<?= $pinjam['id_pinjam'] ?>"
+                                            class="btn btn-sm btn-outline-primary"><i class="fa-regular fa-eye"></i></a></td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif ?>
+        </div>
+
+        <!-- Tab Pengembalian -->
+        <div class="tab-pane fade" id="kembali-history" role="tabpanel">
+            <?php if (empty($historyKembali)): ?>
+                <p class="text-muted text-center py-3">Belum ada riwayat pengembalian</p>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID Kembali</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah Buku</th>
+                                <th>Keterangan</th>
+                                <th>Petugas</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($historyKembali as $kembali): ?>
+                                <tr>
+                                    <td><code><?= $kembali['id_pengembalian'] ?></code></td>
+                                    <td><?= formatTanggal($kembali['created_at']) ?></td>
+                                    <td><?= $kembali['jumlah_buku'] ?></td>
+                                    <td>
+                                        <?php $ketClass = $kembali['keterangan'] == 'tepatwaktu' ? 'success' : 'danger'; ?>
+                                        <span
+                                            class="badge bg-<?= $ketClass ?>"><?= $kembali['keterangan'] == 'tepatwaktu' ? 'Tepat Waktu' : 'Terlambat' ?></span>
+                                    </td>
+                                    <td><?= $kembali['nama_petugas'] ?? '-' ?></td>
+                                    <td><a href="/admin/pengembalian/<?= $kembali['id_pengembalian'] ?>"
+                                            class="btn btn-sm btn-outline-primary"><i class="fa-regular fa-eye"></i></a></td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif ?>
+        </div>
+
+        <!-- Tab Denda -->
+        <div class="tab-pane fade" id="denda-history" role="tabpanel">
+            <?php if (empty($historyDenda)): ?>
+                <p class="text-muted text-center py-3">Tidak ada riwayat denda</p>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID Kembali</th>
+                                <th>Tanggal</th>
+                                <th>Total Denda</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($historyDenda as $denda): ?>
+                                <tr>
+                                    <td><code><?= $denda['id_pengembalian'] ?></code></td>
+                                    <td><?= formatTanggal($denda['created_at']) ?></td>
+                                    <td class="text-danger fw-bold">Rp <?= number_format($denda['total_denda'], 0, ',', '.') ?>
+                                    </td>
+                                    <td>
+                                        <?php $ketClass = $denda['keterangan'] == 'tepatwaktu' ? 'warning' : 'danger'; ?>
+                                        <span
+                                            class="badge bg-<?= $ketClass ?>"><?= $denda['keterangan'] == 'tepatwaktu' ? 'Kondisi Buku' : 'Terlambat' ?></span>
+                                    </td>
+                                    <td><a href="/admin/pengembalian/<?= $denda['id_pengembalian'] ?>"
+                                            class="btn btn-sm btn-outline-primary"><i class="fa-regular fa-eye"></i></a></td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif ?>
         </div>
     </div>
 </div>
@@ -109,7 +265,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya, Hapus</button>
+                <button type="submit" class="btn btn-danger text-white"><i class="fa-regular fa-trash-xmark"></i> Ya,
+                    Hapus</button>
             </div>
         </form>
     </div>
@@ -132,20 +289,29 @@
                 <div class="mb-3 mt-1 row">
                     <label for="password" class="col-sm-3 form-label">Password</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control <?= isset($validation['password']) ? 'is-invalid' : '' ?>" value="<?= old('password') ?>" name="password" id="password" autofocus>
-                        <div class="invalid-feedback"><?= isset($validation['password']) ? $validation['password'] : '' ?></div>
+                        <input type="password"
+                            class="form-control <?= isset($validation['password']) ? 'is-invalid' : '' ?>"
+                            value="<?= old('password') ?>" name="password" id="password" autofocus>
+                        <div class="invalid-feedback">
+                            <?= isset($validation['password']) ? $validation['password'] : '' ?>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 mt-1 row">
                     <label for="password_confirm" class="col-sm-3 form-label">Konfirmasi Password</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control <?= isset($validation['password_confirm']) ? 'is-invalid' : '' ?>" value="<?= old('password_confirm') ?>" name="password_confirm" id="password_confirm">
-                        <div class="invalid-feedback"><?= isset($validation['password_confirm']) ? $validation['password_confirm'] : '' ?></div>
+                        <input type="password"
+                            class="form-control <?= isset($validation['password_confirm']) ? 'is-invalid' : '' ?>"
+                            value="<?= old('password_confirm') ?>" name="password_confirm" id="password_confirm">
+                        <div class="invalid-feedback">
+                            <?= isset($validation['password_confirm']) ? $validation['password_confirm'] : '' ?>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary text-white" data-bs-toggle="modal" data-bs-target="#edit">Batal</button>
+                <button type="button" class="btn btn-secondary text-white" data-bs-toggle="modal"
+                    data-bs-target="#edit">Batal</button>
                 <button type="submit" class="btn btn-warning text-white">Reset</button>
             </div>
         </form>
@@ -169,68 +335,96 @@
                 <div class="mb-3 mt-1 row">
                     <label for="username" class="col-sm-3 form-label">Username</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['username']) ? 'is-invalid' : '' ?>" value="<?= old('username', $data['username']) ?>" name="username" id="username" autofocus>
-                        <div class="invalid-feedback"><?= isset($validation['username']) ? $validation['username'] : '' ?></div>
+                        <input type="text"
+                            class="form-control <?= isset($validation['username']) ? 'is-invalid' : '' ?>"
+                            value="<?= old('username', $data['username']) ?>" name="username" id="username" autofocus>
+                        <div class="invalid-feedback">
+                            <?= isset($validation['username']) ? $validation['username'] : '' ?>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="email" class="col-sm-3 form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control <?= isset($validation['email']) ? 'is-invalid' : '' ?>" value="<?= old('email', $data['email']) ?>" name="email" id="email" autofocus>
-                        <div class="invalid-feedback"><?= isset($validation['email']) ? $validation['email'] : '' ?></div>
+                        <input type="email" class="form-control <?= isset($validation['email']) ? 'is-invalid' : '' ?>"
+                            value="<?= old('email', $data['email']) ?>" name="email" id="email" autofocus>
+                        <div class="invalid-feedback"><?= isset($validation['email']) ? $validation['email'] : '' ?>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <div class="col d-flex justify-content-end">
-                        <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#reset">Reset Password</button>
+                        <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal"
+                            data-bs-target="#reset">Reset Password</button>
                     </div>
                 </div>
                 <p class="modal-devider">Data Anggota</p>
                 <div class="mb-3 row">
                     <label for="nama" class="col-sm-3 form-label">Nama</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control <?= isset($validation['nama']) ? 'is-invalid' : '' ?>" value="<?= old('nama', $data['nama']) ?>" name="nama" id="nama" autofocus>
+                        <input type="text" class="form-control <?= isset($validation['nama']) ? 'is-invalid' : '' ?>"
+                            value="<?= old('nama', $data['nama']) ?>" name="nama" id="nama" autofocus>
                         <div class="invalid-feedback"><?= isset($validation['nama']) ? $validation['nama'] : '' ?></div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="nomor_telepon" class="col-sm-3 form-label">Nomor Telepon</label>
                     <div class="col-sm-9">
-                        <input type="tel" class="form-control <?= isset($validation['nomor_telepon']) ? 'is-invalid' : '' ?>" value="<?= old('nomor_telepon', $data['nomor_telepon']) ?>" name="nomor_telepon" id="nomor_telepon" autofocus>
-                        <div class="invalid-feedback"><?= isset($validation['nomor_telepon']) ? $validation['nomor_telepon'] : '' ?></div>
+                        <input type="tel"
+                            class="form-control <?= isset($validation['nomor_telepon']) ? 'is-invalid' : '' ?>"
+                            value="<?= old('nomor_telepon', $data['nomor_telepon']) ?>" name="nomor_telepon"
+                            id="nomor_telepon" autofocus>
+                        <div class="invalid-feedback">
+                            <?= isset($validation['nomor_telepon']) ? $validation['nomor_telepon'] : '' ?>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="agama" class="col-sm-3 form-label">Agama</label>
                     <div class="col-sm-9">
-                        <select class="form-select <?= isset($validation['agama']) ? 'is-invalid' : '' ?>" id="agama" name="agama" aria-label="Default select example">
-                            <option value="" <?= old('agama',  $data['agama']) == '' ? 'selected' : '' ?>>Pilih agama</option>
-                            <option value="Islam" <?= old('agama',  $data['agama']) == 'Islam' ? 'selected' : '' ?>>Islam</option>
-                            <option value="Kristen" <?= old('agama',  $data['agama']) == 'Kristen' ? 'selected' : '' ?>>Kristen</option>
-                            <option value="Protestan" <?= old('agama',  $data['agama']) == 'Protestan' ? 'selected' : '' ?>>Protestan</option>
-                            <option value="Hindu" <?= old('agama',  $data['agama']) == 'Hindu' ? 'selected' : '' ?>>Hindu</option>
-                            <option value="Buddha" <?= old('agama',  $data['agama']) == 'Buddha' ? 'selected' : '' ?>>Buddha</option>
-                            <option value="Konghucu" <?= old('agama',  $data['agama']) == 'Konghucu' ? 'selected' : '' ?>>Konghucu</option>
-                            <option value="Lainnya" <?= old('agama',  $data['agama']) == 'Lainnya' ? 'selected' : '' ?>>Lainnya</option>
+                        <select class="form-select <?= isset($validation['agama']) ? 'is-invalid' : '' ?>" id="agama"
+                            name="agama" aria-label="Default select example">
+                            <option value="" <?= old('agama', $data['agama']) == '' ? 'selected' : '' ?>>Pilih agama
+                            </option>
+                            <option value="Islam" <?= old('agama', $data['agama']) == 'Islam' ? 'selected' : '' ?>>Islam
+                            </option>
+                            <option value="Kristen" <?= old('agama', $data['agama']) == 'Kristen' ? 'selected' : '' ?>>
+                                Kristen</option>
+                            <option value="Protestan" <?= old('agama', $data['agama']) == 'Protestan' ? 'selected' : '' ?>>
+                                Protestan</option>
+                            <option value="Hindu" <?= old('agama', $data['agama']) == 'Hindu' ? 'selected' : '' ?>>Hindu
+                            </option>
+                            <option value="Buddha" <?= old('agama', $data['agama']) == 'Buddha' ? 'selected' : '' ?>>Buddha
+                            </option>
+                            <option value="Konghucu" <?= old('agama', $data['agama']) == 'Konghucu' ? 'selected' : '' ?>>
+                                Konghucu</option>
+                            <option value="Lainnya" <?= old('agama', $data['agama']) == 'Lainnya' ? 'selected' : '' ?>>
+                                Lainnya</option>
                         </select>
-                        <div class="invalid-feedback"><?= isset($validation['agama']) ? $validation['agama'] : '' ?></div>
+                        <div class="invalid-feedback"><?= isset($validation['agama']) ? $validation['agama'] : '' ?>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="jenis_kelamin" class="col-sm-3 form-label">Jenis Kelamin</label>
                     <div class="col-sm-9">
-                        <select class="form-select <?= isset($validation['jenis_kelamin']) ? 'is-invalid' : '' ?>" id="jenis_kelamin" name="jenis_kelamin" aria-label="Default select example">
-                            <option value="" <?= old('jenis_kelamin', $data['jenis_kelamin']) == '' ? 'selected' : '' ?>>Pilih Jenis Kelamin</option>
+                        <select class="form-select <?= isset($validation['jenis_kelamin']) ? 'is-invalid' : '' ?>"
+                            id="jenis_kelamin" name="jenis_kelamin" aria-label="Default select example">
+                            <option value="" <?= old('jenis_kelamin', $data['jenis_kelamin']) == '' ? 'selected' : '' ?>>
+                                Pilih Jenis Kelamin</option>
                             <option value="Laki-laki" <?= old('jenis_kelamin', $data['jenis_kelamin']) == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
                             <option value="Perempuan" <?= old('jenis_kelamin', $data['jenis_kelamin']) == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                         </select>
-                        <div class="invalid-feedback"><?= isset($validation['jenis_kelamin']) ? $validation['jenis_kelamin'] : '' ?></div>
+                        <div class="invalid-feedback">
+                            <?= isset($validation['jenis_kelamin']) ? $validation['jenis_kelamin'] : '' ?>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="foto" class="col-sm-3 form-label">Foto</label>
                     <div class="col-sm-9">
-                        <input class="form-control <?= isset($validation['foto']) ? 'is-invalid' : '' ?>" name="foto" type="file" id="foto" onchange="ubahPreview(this)">
+                        <input class="form-control <?= isset($validation['foto']) ? 'is-invalid' : '' ?>" name="foto"
+                            type="file" id="foto" onchange="ubahPreview(this)">
                         <div class="invalid-feedback"><?= isset($validation['foto']) ? $validation['foto'] : '' ?></div>
                     </div>
                 </div>
@@ -239,15 +433,18 @@
                     <div class="col-sm-9">
                         <p>Preview</p>
                         <div style="height: 150px;" class="w-100 border rounded-3 text-center p-3">
-                            <img class="w-100 h-100 sampulPreview" style="object-fit: contain;" src="/upload/anggota/<?= $data['foto'] ?>" alt="default sampul">
+                            <img class="w-100 h-100 sampulPreview" style="object-fit: contain;"
+                                src="/upload/anggota/<?= $data['foto'] ?>" alt="default sampul">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <label for="alamat" class="col-sm-3 form-label">Alamat</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control <?= isset($validation['alamat']) ? 'is-invalid' : '' ?>" name="alamat" id="alamat" rows="3"><?= old('alamat', $data['alamat']) ?></textarea>
-                        <div class="invalid-feedback"><?= isset($validation['alamat']) ? $validation['alamat'] : '' ?></div>
+                        <textarea class="form-control <?= isset($validation['alamat']) ? 'is-invalid' : '' ?>"
+                            name="alamat" id="alamat" rows="3"><?= old('alamat', $data['alamat']) ?></textarea>
+                        <div class="invalid-feedback"><?= isset($validation['alamat']) ? $validation['alamat'] : '' ?>
+                        </div>
                     </div>
                 </div>
 
@@ -255,7 +452,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-warning text-white"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
+                <button type="submit" class="btn btn-warning text-white"><i class="fa-regular fa-pen-to-square"></i>
+                    Edit</button>
             </div>
         </form>
     </div>

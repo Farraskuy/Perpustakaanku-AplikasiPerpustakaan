@@ -6,39 +6,39 @@ use CodeIgniter\Model;
 
 class BukuModel extends Model
 {
-    protected $table      = 'buku';
+    protected $table = 'buku';
     protected $useTimestamps = true;
-    protected $allowedFields = ['id_buku', 'judul', 'slug', 'id_penulis', 'id_penerbit', 'id_kategori', 'id_rak',  'tanggal_terbit', 'jumlah_buku', 'sampul', 'sinopsis'];
+    protected $allowedFields = ['id_buku', 'judul', 'slug', 'id_penulis', 'id_penerbit', 'id_kategori', 'id_rak', 'tanggal_terbit', 'jumlah_buku', 'sampul', 'sinopsis'];
 
     protected $primaryKey = 'id_buku';
 
     protected $useAutoIncrement = false;
 
-    protected $returnType     = 'array';
+    protected $returnType = 'array';
     // protected $useSoftDeletes = true;
 
     // Dates
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
+    protected $validationRules = [];
+    protected $validationMessages = [];
+    protected $skipValidation = false;
     protected $cleanValidationRules = true;
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $beforeInsert = [];
+    protected $afterInsert = [];
+    protected $beforeUpdate = [];
+    protected $afterUpdate = [];
+    protected $beforeFind = [];
+    protected $afterFind = [];
+    protected $beforeDelete = [];
+    protected $afterDelete = [];
 
     public function getDataBySlug($slug = null)
     {
@@ -62,7 +62,28 @@ class BukuModel extends Model
     public function ambilBukuKecuali($id_pinjam)
     {
         $detailPinjamBuilder = $this->db->table('detail_Pinjam')->select('id_buku')->where('id_pinjam', $id_pinjam);
-        return $this->db->table('buku')->whereNotIn('id_buku', $detailPinjamBuilder)->get()->getResultArray();
+        return $this->db->table('buku')
+            ->select('buku.*, penulis.nama as penulis, penerbit.nama as penerbit')
+            ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'LEFT')
+            ->join('penerbit', 'penerbit.id_penerbit = buku.id_penerbit', 'LEFT')
+            ->whereNotIn('id_buku', $detailPinjamBuilder)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function ambilBuku($slug = null)
+    {
+        $bukuBuilder = $this->db->table('buku')
+            ->select('buku.*, penulis.nama as penulis, penerbit.nama as penerbit, kategori.nama as kategori, rak.kode_rak, rak.lokasi')
+            ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'LEFT')
+            ->join('penerbit', 'penerbit.id_penerbit = buku.id_penerbit', 'LEFT')
+            ->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'LEFT')
+            ->join('rak', 'rak.id_rak = buku.id_rak', 'LEFT');
+
+        if ($slug) {
+            return $bukuBuilder->where('slug', $slug)->get()->getRowArray();
+        }
+        return $bukuBuilder->get()->getResultArray();
     }
 
     public function isTerpinjam($idBuku, $userId)

@@ -28,17 +28,20 @@
             <div class=" col-8 col-md-5 col-lg-4 col-xl-3  p-3 border border-2 rounded-3 item">
                 <img src="/assets/img/member.png" alt="member">
                 <p class="mt-3 fw-semibold">Cara Daftar Keanggotaan</p>
-                <p class="mt-3 fs-6 text-secondary">Daftar Keanggotaan untuk dapat menikmati fasilitas di <span class="fw-semibold">perpustakaanku</span></p>
+                <p class="mt-3 fs-6 text-secondary">Daftar Keanggotaan untuk dapat menikmati fasilitas di <span
+                        class="fw-semibold">perpustakaanku</span></p>
             </div>
             <div class=" col-8 col-md-5 col-lg-4 col-xl-3  p-3 border border-2 rounded-3 item">
                 <img src="/assets/img/pinjam.png" alt="member">
                 <p class="mt-3 fw-semibold">Cara Pinjam Buku</p>
-                <p class="mt-3 fs-6 text-secondary">Pinjam buku-buku baru untuk dibaca dalam batas waktu tertentu dirumah</p>
+                <p class="mt-3 fs-6 text-secondary">Pinjam buku-buku baru untuk dibaca dalam batas waktu tertentu
+                    dirumah</p>
             </div>
             <div class=" col-8 col-md-5 col-lg-4 col-xl-3 p-3  border border-2 rounded-3 item">
                 <img src="/assets/img/kembalikan.png" alt="member">
                 <p class="mt-3 fw-semibold">Cara Kembalikan Buku</p>
-                <p class="mt-3 fs-6 text-secondary">Kembalikan buku yang telah di pinjam tepat waktu untuk meminjam buku lainnya</p>
+                <p class="mt-3 fs-6 text-secondary">Kembalikan buku yang telah di pinjam tepat waktu untuk meminjam buku
+                    lainnya</p>
             </div>
         </div>
     </div>
@@ -51,21 +54,24 @@
         </div>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 px-2">
 
-            <?php foreach ($buku as $item) : ?>
+            <?php foreach ($buku as $item): ?>
                 <div class="col">
                     <div class="card h-100" style=" text-decoration: none; cursor: pointer;">
                         <a href="/buku/<?= $item['slug'] ?>" class="text-decoration-none w-100 h-100 d-flex flex-column">
-                            <img src="/upload/buku/<?= $item['sampul'] ?>" class="card-img-top p-2" style="height: 170px; object-fit: contain;">
+                            <img src="/upload/buku/<?= !empty($item['sampul']) ? $item['sampul'] : 'default.png' ?>"
+                                class="card-img-top p-2" style="height: 170px; object-fit: contain;">
                             <div class="card-body py-1 h-auto">
                                 <small class="text-secondary row g-0">
                                     <span class="wrap-text col-8"><?= $item['penerbit'] ?></span>
-                                    <span class="col-4 d-flex justify-content-end">| <?= date('Y', strtotime($item['tanggal_terbit'])) ?></span>
+                                    <span class="col-4 d-flex justify-content-end">|
+                                        <?= date('Y', strtotime($item['tanggal_terbit'])) ?></span>
                                 </small>
                                 <h1 class="text-dark card-title my-1 wrap-text judul fs-6"><?= $item['judul'] ?></h1>
                                 <small class="text-secondary fw-semibold wrap-text judul"><?= $item['penulis'] ?></small>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
-                               <i class="fa-regular fa-bookmark fa-sm py-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tandai Buku"></i>
+                                <i class="fa-regular fa-bookmark fa-sm py-2" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-title="Tandai Buku"></i>
                             </div>
                         </a>
                     </div>
@@ -76,7 +82,8 @@
     </div>
 </section>
 
-<footer id="kontak" class="container-fluid text-center text-lg-start bg-light text-muted" style="font-family: poppins; font-size: 14px;">
+<footer id="kontak" class="container-fluid text-center text-lg-start bg-light text-muted"
+    style="font-family: poppins; font-size: 14px;">
     <div class="container">
 
         <!-- head footer -->
@@ -105,7 +112,8 @@
                 <!-- kolom about -->
                 <div class="col-md-12 col-lg-4 col-xl-3 mx-auto mb-4">
                     <a class="text-secondary text-decoration-none mb-2 d-flex align-items-center gap-2" href="/home">
-                        <img src="/assets/img/logo.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
+                        <img src="/assets/img/logo.png" alt="Logo" width="35" height="35"
+                            class="d-inline-block align-text-top">
                         <span class="h4 m-0">Perpustakaanku</span>
                     </a>
                     <p>

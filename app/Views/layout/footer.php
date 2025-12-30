@@ -1,7 +1,11 @@
 <!-- Jquery -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
 <!-- Boostrap script-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
 
 <script>
     // side bar toggler
@@ -10,11 +14,66 @@
         main.classList.toggle('active');
     }
 
+    function toggleKoleksi(slug, element) {
+        // Handle both icon click and button click
+        const icon = element.tagName === 'I' ? element : element.querySelector('i');
+        const isAdded = icon.classList.contains('fa-solid'); // Solid means it's in collection
+
+        // Define URL based on state
+        const url = isAdded ? '/pinjam/koleksi/hapus/' + slug : '/pinjam/koleksi/tambah/' + slug;
+
+        // Use DELETE method for removal if supported, otherwise POST might be safer if route allows. 
+        // My route definition: delete for hapus, post for tambah.
+        const method = isAdded ? 'DELETE' : 'POST';
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    if (isAdded) {
+                        // Was added, now removed -> switch to regular
+                        icon.classList.remove('fa-solid');
+                        icon.classList.add('fa-regular');
+                    } else {
+                        // Was removed/empty, now added -> switch to solid
+                        icon.classList.remove('fa-regular');
+                        icon.classList.add('fa-solid');
+                    }
+
+                    // Update tooltip
+                    const newTitle = isAdded ? 'Tambahkan Ke Koleksi' : 'Hapus dari Koleksi';
+
+                    // If element is the tooltip trigger
+                    if (element.hasAttribute('data-bs-toggle')) {
+                        element.setAttribute('data-bs-title', newTitle);
+                        const tooltip = bootstrap.Tooltip.getInstance(element);
+                        if (tooltip) {
+                            tooltip.setContent({ '.tooltip-inner': newTitle });
+                        }
+                    }
+
+                    peringatan(data.message, 'success');
+                } else {
+                    peringatan(data.message || 'Gagal memproses permintaan', 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                peringatan('Terjadi kesalahan sistem', 'danger');
+            });
+    }
+
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan')  . '", "success")' : '' ?>
-    <?= session()->getFlashdata('error') ? 'peringatan("' . session()->getFlashdata('error')  . '", "danger")' : '' ?>
+    <?= session()->getFlashdata('pesan') ? 'peringatan("' . session()->getFlashdata('pesan') . '", "success")' : '' ?>
+    <?= session()->getFlashdata('error') ? 'peringatan("' . session()->getFlashdata('error') . '", "danger")' : '' ?>
 
     function peringatan(isi, type) {
         const notifContainer = document.getElementById('notifContainer');
@@ -113,7 +172,7 @@
         const filesampul = new FileReader();
         filesampul.readAsDataURL(input.files[0]);
 
-        filesampul.onload = function(e) {
+        filesampul.onload = function (e) {
             preview.src = e.target.result;
         }
     }
@@ -167,7 +226,7 @@
         editMasterBukuModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
             const id = button.getAttribute('data-id');
-            
+
             const input = editMasterBukuModal.querySelector('#inputEditMasterBuku');
             input.value = button.getAttribute('data-nilai');
             const input1 = editMasterBukuModal.querySelector('#inputEditMasterBuku1');
@@ -197,7 +256,7 @@
         const modalTambah = new bootstrap.Modal('#tambah', {
             keyboard: false
         });
-        <?php if (session()->getFlashdata('error_tambah')) : ?>
+        <?php if (session()->getFlashdata('error_tambah')): ?>
             modalTambah.show();
         <?php endif ?>
     }
@@ -205,7 +264,7 @@
         const modalEdit = new bootstrap.Modal('#edit', {
             keyboard: false
         });
-        <?php if (session()->getFlashdata('error_edit')) : ?>
+        <?php if (session()->getFlashdata('error_edit')): ?>
             modalEdit.show();
         <?php endif ?>
     }
@@ -213,7 +272,7 @@
         const modalReset = new bootstrap.Modal('#reset', {
             keyboard: false
         });
-        <?php if (session()->getFlashdata('error_password')) : ?>
+        <?php if (session()->getFlashdata('error_password')): ?>
             modalReset.show();
         <?php endif ?>
     }
@@ -221,7 +280,7 @@
         const modalPinjamBuku = new bootstrap.Modal('#pinjamBuku', {
             keyboard: false
         });
-        <?php if (session()->getFlashdata('error_pinjam_buku')) : ?>
+        <?php if (session()->getFlashdata('error_pinjam_buku')): ?>
             modalPinjamBuku.show();
         <?php endif ?>
     }
@@ -229,7 +288,7 @@
         const modalPerpanjang = new bootstrap.Modal('#perpanjang', {
             keyboard: false
         });
-        <?php if (session()->getFlashdata('error_perpanjang')) : ?>
+        <?php if (session()->getFlashdata('error_perpanjang')): ?>
             modalPerpanjang.show();
         <?php endif ?>
     }
