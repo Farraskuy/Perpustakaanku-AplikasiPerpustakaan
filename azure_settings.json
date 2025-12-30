@@ -1,0 +1,52 @@
+[
+  {
+    "name": "CI_ENVIRONMENT",
+    "value": "production",
+    "slotSetting": false
+  },
+  {
+    "name": "app.baseURL",
+    "value": "https://perpustakaanku.azurewebsites.net/",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.hostname",
+    "value": "perpustakaanku-server.mysql.database.azure.com",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.database",
+    "value": "perpustakaanku",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.username",
+    "value": "pedqnrgmyc",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.password",
+    "value": "uet83ihBT5FQxLS",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.DBDriver",
+    "value": "MySQLi",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.port",
+    "value": "3306",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.encrypt",
+    "value": "true",
+    "slotSetting": false
+  },
+  {
+    "name": "database.default.strictOn",
+    "value": "false",
+    "slotSetting": false
+  }
+]

@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: "perpustakaanku" 
-  PHP_VERSION: "8.1" 
+  AZURE_WEBAPP_NAME: "perpustakaanku"
+  PHP_VERSION: "8.1"
 
 jobs:
   build-and-deploy:
@@ -26,14 +26,15 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
-          extensions: mbstring, intl, gd, xml, dom, json, mysql
+          # Pastikan ekstensi ini ada (CI4 butuh intl & mbstring)
+          extensions: mbstring, intl, gd, xml, dom, json, mysql, pgsql 
           coverage: none
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-suggest --no-dev --optimize-autoloader
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
