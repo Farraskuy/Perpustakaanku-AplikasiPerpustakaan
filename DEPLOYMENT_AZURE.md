@@ -49,16 +49,13 @@ _(Note: Anda perlu menyesuaikan `app/Config/Database.php` Anda agar mengambil ni
 
 ### B. Konfigurasi Document Root
 
-CodeIgniter 4 menggunakan folder `public` sebagai root.
+CodeIgniter 4 menggunakan folder `public` sebagai root. Untuk mengatur agar Azure mengarah ke folder tersebut:
 
-1.  Masuk ke **Settings** -> **Configuration** -> **General Settings**.
-2.  Cari **Startup Command**. Masukkan:
-    ```bash
-    cp /home/site/wwwroot/public/.htaccess /home/site/wwwroot/public/index.php /home/site/wwwroot/ && apache2-foreground
-    ```
-    _Atau cara yang lebih bersih:_
-    Masuk ke **Settings** -> **Environment variables**. Edit `AZURE_WEB_APP_FLAG_USE_APACHE_REWRITE_MODULE` = `true`.
-    Kemudian set `APACHE_DOCUMENT_ROOT` = `/home/site/wwwroot/public`.
+1.  Masuk ke **Settings** -> **Environment variables**.
+2.  Tambahkan variable berikut:
+    - `AZURE_WEB_APP_FLAG_USE_APACHE_REWRITE_MODULE` = `true`
+    - `APACHE_DOCUMENT_ROOT` = `/home/site/wwwroot/public`
+3.  Pastikan **Startup Command** di **General Settings** dikosongkan (atau cukup `apache2-foreground`).
 
 ## 4. Proses Deployment (Via GitHub)
 
