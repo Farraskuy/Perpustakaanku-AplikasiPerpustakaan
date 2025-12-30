@@ -35,29 +35,35 @@ class Buku extends BaseController
         }
 
         if (in_groups('admin')) {
-            $this->data += [
-                "title" => "Buku | " .  $buku['judul'],
-                "data" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
-                "navactive" => "buku",
-                "validation" => validation_errors()
-            ];
-
-            return view('admin/detailBuku', $this->data);
+            // Redirect admin ke halaman admin detail buku
+            return redirect()->to('/admin/buku/' . $slug);
         }
 
         $this->data += [
-            "title" => "Buku | " .  $buku['judul'],
+            "title" => "Buku | " . $buku['judul'],
             "buku" => array_merge($buku, ['format_tanggal' => $this->formatTanggal($buku['tanggal_terbit'])]),
         ];
 
         if (logged_in()) {
-            if ($this->bukuModel->isTerpinjam($buku['id'], user_id())) {
+            if ($this->bukuModel->isTerpinjam($buku['id_buku'], user_id())) {
                 $this->data += ['terpinjam' => true];
             }
+            $koleksiModel = new \App\Models\KoleksiModel();
+            $anggotaModel = new \App\Models\AnggotaModel();
+            $anggota = $anggotaModel->where('id_login', user_id())->first();
+            if ($anggota && $koleksiModel->isKoleksi($buku['id_buku'], $anggota['id_anggota'])) {
+                $this->data += ['in_koleksi' => true];
+            } else {
+                $this->data += ['in_koleksi' => false];
+            }
+            // Pass batas_pinjam to view for the borrow modal
+            if ($anggota) {
+                $this->data += ['batas_pinjam' => isset($anggota['batas_pinjam']) ? $anggota['batas_pinjam'] : 0];
+            }
         }
-        return view('buku/detailBuku', $this->data);
+        return view('buku/detailbuku', $this->data);
     }
-    
+
     // AJAX
     public function listBuku()
     {

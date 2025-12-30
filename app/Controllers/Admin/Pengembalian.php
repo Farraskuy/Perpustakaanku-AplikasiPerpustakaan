@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\AnggotaModel;
 use App\Models\AppConfigModel;
 use App\Models\BukuModel;
 use App\Models\DetailPengembalianModel;
@@ -18,11 +19,13 @@ class Pengembalian extends BaseController
     protected $config;
     protected $pengembalianModel;
     protected $detailPengembalianModel;
+    protected $anggotaModel;
 
     public function __construct()
     {
         $this->config = new AppConfigModel();
         $this->bukuModel = new BukuModel();
+        $this->anggotaModel = new AnggotaModel();
         $this->pinjamModel = new PinjamModel();
         $this->detailPinjamModel = new DetailPinjamModel();
         $this->pengembalianModel = new PengembalianModel();
@@ -102,13 +105,15 @@ class Pengembalian extends BaseController
         $kondisiBukuArray = [];
 
         foreach ($pinjam['buku'] as $buku) {
-            $kondisiBukuArray += ["kondisi-" . $buku['id_buku'] => [
-                'rules' => 'required|in_list[baik,rusak,hilang]',
-                'errors' => [
-                    'required' => 'Harap pilih kondisi buku saat ini dengan kondisi yang tersedia',
-                    'in_list' => 'Harap pilih kondisi yang tersedia'
+            $kondisiBukuArray += [
+                "kondisi-" . $buku['id_buku'] => [
+                    'rules' => 'required|in_list[baik,rusak,hilang]',
+                    'errors' => [
+                        'required' => 'Harap pilih kondisi buku saat ini dengan kondisi yang tersedia',
+                        'in_list' => 'Harap pilih kondisi yang tersedia'
+                    ]
                 ]
-            ]];
+            ];
         }
 
         if (!$this->validate(array_merge($rules, $kondisiBukuArray))) {
@@ -127,7 +132,7 @@ class Pengembalian extends BaseController
         }
 
         $totalDenda = $dendaKondisi + $dendaTelat;
-        $bayar = (int)$this->request->getVar('bayar');
+        $bayar = (int) $this->request->getVar('bayar');
         if ($bayar < $totalDenda) {
             return redirect()->back()->withInput()->with('error', 'Harap masukan nominal pembayaran yang setara atau lebih');
         }
@@ -143,7 +148,7 @@ class Pengembalian extends BaseController
             'tanggal_pinjam' => $pinjam['pinjam']['created_at'],
         ]);
 
-        $insertID =  $this->pengembalianModel->getInsertID();
+        $insertID = $this->pengembalianModel->getInsertID();
         foreach ($pinjam['buku'] as $buku) {
             $dendaKondisi = 0;
             $kondisiBuku = $this->request->getVar('kondisi-' . $buku['id_buku']);
@@ -161,6 +166,11 @@ class Pengembalian extends BaseController
                 'denda_kondisi' => $dendaKondisi,
                 'total_denda' => $totalDenda
             ]);
+
+            // Reset batas_pinjam anggota (increment by 1 for each book returned)
+            $this->anggotaModel->set('batas_pinjam', 'batas_pinjam + 1', false)
+                ->where('id_anggota', $pinjam['pinjam']['id_anggota'])
+                ->update();
         }
 
         $this->detailPinjamModel->delete($id_pinjam);
