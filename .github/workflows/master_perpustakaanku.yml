@@ -7,14 +7,19 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: "perpustakaanku-app" # GANTI DENGAN NAMA WEB APP ANDA DI AZURE
-  PHP_VERSION: "8.1" # SESUAIKAN DENGAN VERSI PHP DI AZURE
+  AZURE_WEBAPP_NAME: "perpustakaanku-app" 
+  PHP_VERSION: "8.1" 
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - uses: actions/checkout@v4
 
       - name: Setup PHP
@@ -29,10 +34,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
-
-      # Optional: Run Tests
-      # - name: Run Test Suite
-      #   run: vendor/bin/phpunit
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
