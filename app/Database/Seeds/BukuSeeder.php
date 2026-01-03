@@ -26,7 +26,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-001',
                 'sinopsis' => 'Novel tentang perjuangan 10 anak dari keluarga miskin di Belitung yang berjuang mendapatkan pendidikan. Kisah ini menginspirasi jutaan pembaca dengan semangat pantang menyerah dan persahabatan yang tulus.',
                 'tanggal_terbit' => '2005-09-01',
-                'sampul' => 'laskar-pelangi.jpg',
+                'sampul' => 'laskar-pelangi.png',
                 'jumlah_buku' => 10,
             ],
             [
@@ -39,7 +39,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-001',
                 'sinopsis' => 'Bagian pertama dari Tetralogi Buru yang mengisahkan Minke, seorang pribumi yang berpendidikan Eropa, dan cintanya kepada Annelies Mellema di era kolonial Belanda.',
                 'tanggal_terbit' => '1980-08-25',
-                'sampul' => 'bumi-manusia.jpg',
+                'sampul' => 'bumi-manusia.png',
                 'jumlah_buku' => 8,
             ],
             [
@@ -52,7 +52,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-002',
                 'sinopsis' => 'Novel tentang Bujang, seorang pemuda yang harus meninggalkan kampung halamannya dan menjalani kehidupan penuh liku sebagai bagian dari keluarga penguasa dunia hitam di Jakarta.',
                 'tanggal_terbit' => '2015-06-15',
-                'sampul' => 'pulang.jpg',
+                'sampul' => 'pulang.png',
                 'jumlah_buku' => 12,
             ],
             [
@@ -65,7 +65,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-001',
                 'sinopsis' => 'Novel fiksi ilmiah yang memadukan sains, spiritualitas, dan cinta. Mengisahkan Dimas dan Ruben yang menciptakan cerita dalam cerita tentang Ksatria, Puteri, dan Bintang Jatuh.',
                 'tanggal_terbit' => '2001-02-14',
-                'sampul' => 'supernova.jpg',
+                'sampul' => 'supernova.png',
                 'jumlah_buku' => 7,
             ],
             [
@@ -78,7 +78,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-002',
                 'sinopsis' => 'Novel realisme magis tentang Dewi Ayu, seorang perempuan indo yang dikutuk dengan kecantikan. Berlatar di kota pesisir selatan Jawa dari era kolonial hingga pasca kemerdekaan.',
                 'tanggal_terbit' => '2002-05-20',
-                'sampul' => 'cantik-itu-luka.jpg',
+                'sampul' => 'cantik-itu-luka.png',
                 'jumlah_buku' => 6,
             ],
             [
@@ -91,7 +91,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-001',
                 'sinopsis' => 'Kisah Kugy dan Keenan yang dipertemukan takdir di Bandung. Kugy dengan impiannya menjadi penulis dongeng dan Keenan dengan bakat melukisnya.',
                 'tanggal_terbit' => '2009-06-28',
-                'sampul' => 'perahu-kertas.jpg',
+                'sampul' => 'perahu-kertas.png',
                 'jumlah_buku' => 9,
             ],
             [
@@ -104,7 +104,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-002',
                 'sinopsis' => 'Novel romantis berlatar tahun 1990 di Bandung. Mengisahkan kisah cinta Milea dengan Dilan, anak motor yang unik dan penuh kejutan.',
                 'tanggal_terbit' => '2014-06-01',
-                'sampul' => 'dilan.jpg',
+                'sampul' => 'dilan.png',
                 'jumlah_buku' => 15,
             ],
 
@@ -119,7 +119,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-003',
                 'sinopsis' => 'Kisah Fahri, mahasiswa Indonesia di Universitas Al-Azhar Mesir, yang menghadapi dilema cinta dan spiritual. Novel best-seller yang diangkat ke layar lebar.',
                 'tanggal_terbit' => '2004-12-01',
-                'sampul' => 'ayat-ayat-cinta.jpg',
+                'sampul' => 'ayat-ayat-cinta.png',
                 'jumlah_buku' => 15,
             ],
             [
@@ -132,7 +132,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-003',
                 'sinopsis' => 'Kisah Khairul Azzam, mahasiswa Indonesia di Mesir yang berjuang antara cinta, tanggungjawab keluarga, dan menuntut ilmu agama.',
                 'tanggal_terbit' => '2007-03-01',
-                'sampul' => 'ketika-cinta-bertasbih.jpg',
+                'sampul' => 'ketika-cinta-bertasbih.png',
                 'jumlah_buku' => 10,
             ],
 
@@ -147,7 +147,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-005',
                 'sinopsis' => 'Kisah inspiratif 6 sahabat di Pondok Madani yang bermimpi menggapai bintang. Man jadda wajada - siapa yang bersungguh-sungguh pasti berhasil.',
                 'tanggal_terbit' => '2009-07-08',
-                'sampul' => 'negeri-5-menara.jpg',
+                'sampul' => 'negeri-5-menara.png',
                 'jumlah_buku' => 11,
             ],
             [
@@ -160,7 +160,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-005',
                 'sinopsis' => 'Sekuel Negeri 5 Menara yang mengisahkan perjalanan Alif melanjutkan pendidikan ke universitas dan menghadapi tantangan baru.',
                 'tanggal_terbit' => '2011-06-01',
-                'sampul' => 'ranah-3-warna.jpg',
+                'sampul' => 'ranah-3-warna.png',
                 'jumlah_buku' => 8,
             ],
 
@@ -175,7 +175,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-007',
                 'sinopsis' => 'Novel tentang aktivis yang diculik dan "dihilangkan" pada era Orde Baru. Biru Laut dan kawan-kawannya berjuang melawan ketidakadilan.',
                 'tanggal_terbit' => '2017-10-01',
-                'sampul' => 'laut-bercerita.jpg',
+                'sampul' => 'laut-bercerita.png',
                 'jumlah_buku' => 5,
             ],
             [
@@ -188,7 +188,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-007',
                 'sinopsis' => 'Bagian kedua Tetralogi Buru. Minke mulai menyadari identitasnya sebagai pribumi dan mulai melawan ketidakadilan kolonialisme.',
                 'tanggal_terbit' => '1981-01-01',
-                'sampul' => 'anak-semua-bangsa.jpg',
+                'sampul' => 'anak-semua-bangsa.png',
                 'jumlah_buku' => 6,
             ],
 
@@ -203,7 +203,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-005',
                 'sinopsis' => 'Buku fenomenal karya Yuval Noah Harari yang menelusuri perjalanan manusia dari zaman prasejarah hingga era modern. Edisi terjemahan Indonesia.',
                 'tanggal_terbit' => '2017-05-01',
-                'sampul' => 'sapiens.jpg',
+                'sampul' => 'sapiens.png',
                 'jumlah_buku' => 7,
             ],
 
@@ -218,7 +218,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-007',
                 'sinopsis' => 'Autobiografi Bung Karno yang ditulis oleh Cindy Adams. Mengisahkan perjalanan hidup Proklamator Indonesia dari kecil hingga menjadi presiden.',
                 'tanggal_terbit' => '1965-01-01',
-                'sampul' => 'soekarno.jpg',
+                'sampul' => 'soekarno.png',
                 'jumlah_buku' => 4,
             ],
 
@@ -233,7 +233,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-001',
                 'sinopsis' => 'Sekuel Laskar Pelangi yang mengisahkan perjuangan Ikal dan sahabatnya melanjutkan pendidikan ke SMA dan bermimpi ke Paris.',
                 'tanggal_terbit' => '2006-07-01',
-                'sampul' => 'sang-pemimpi.jpg',
+                'sampul' => 'sang-pemimpi.png',
                 'jumlah_buku' => 8,
             ],
             [
@@ -246,7 +246,7 @@ class BukuSeeder extends Seeder
                 'id_rak' => 'RAK-001',
                 'sinopsis' => 'Bagian ketiga Tetralogi Laskar Pelangi. Ikal berhasil kuliah di Eropa dan berkelana mencari cintanya.',
                 'tanggal_terbit' => '2007-05-01',
-                'sampul' => 'edensor.jpg',
+                'sampul' => 'edensor.png',
                 'jumlah_buku' => 6,
             ],
             [
