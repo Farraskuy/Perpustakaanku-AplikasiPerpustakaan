@@ -26,10 +26,22 @@ class App extends BaseConfig
         parent::__construct();
 
         // Read baseURL from environment variable if available (Azure App Service)
-        $envBaseURL = getenv('app.baseURL') ?: getenv('APP_BASEURL');
+        $envBaseURL = getenv('app.baseURL')
+            ?: getenv('APP_BASEURL')
+            ?: ($_ENV['app.baseURL'] ?? null)
+            ?: ($_SERVER['app.baseURL'] ?? null);
+
         if ($envBaseURL) {
             $this->baseURL = $envBaseURL;
+        } elseif (isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])) {
+            // Auto-detect from request (for production without env var)
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+                || ($_SERVER['SERVER_PORT'] ?? 80) == 443
+                || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+                ? 'https' : 'http';
+            $this->baseURL = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/';
         } else {
+            // Fallback for CLI or when HTTP_HOST is not available
             $this->baseURL = 'http://localhost:8080/';
         }
     }
