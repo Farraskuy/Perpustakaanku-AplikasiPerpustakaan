@@ -49,10 +49,28 @@ class Database extends Config
         parent::__construct();
 
         // Enable SSL for Azure MySQL (requires secure transport)
-        $sslEnabled = getenv('database.default.encrypt') ?: getenv('DB_ENCRYPT');
-        if ($sslEnabled === 'true' || $sslEnabled === '1') {
+        // Check multiple environment variable formats
+        $sslEnabled = getenv('database.default.encrypt')
+            ?: getenv('DB_ENCRYPT')
+            ?: ($_ENV['database.default.encrypt'] ?? null)
+            ?: ($_SERVER['database.default.encrypt'] ?? null)
+            ?: ($_ENV['DB_ENCRYPT'] ?? null);
+
+        // Also enable SSL if running in production environment
+        $environment = getenv('CI_ENVIRONMENT')
+            ?: ($_ENV['CI_ENVIRONMENT'] ?? null)
+            ?: ($_SERVER['CI_ENVIRONMENT'] ?? null)
+            ?: 'development';
+
+        // Enable SSL if explicitly set OR if in production
+        if ($sslEnabled === 'true' || $sslEnabled === '1' || $environment === 'production') {
             $this->default['encrypt'] = [
-                'ssl_verify' => false, // Set to true in production with proper CA cert
+                'ssl_verify' => false,
+                'ssl_ca' => null,
+                'ssl_capath' => null,
+                'ssl_cert' => null,
+                'ssl_cipher' => null,
+                'ssl_key' => null,
             ];
         }
     }
