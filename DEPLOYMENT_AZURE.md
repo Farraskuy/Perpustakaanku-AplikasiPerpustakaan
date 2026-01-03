@@ -37,12 +37,12 @@ Aplikasi ini sudah dikonfigurasi untuk Azure dengan file berikut:
 
 ### 2. Konfigurasi DocumentRoot
 
-#### Untuk Linux (Apache):
+#### Untuk Linux (nginx + PHP-FPM):
 
 1. Buka App Service → **Configuration** → **General settings**
 2. Di bagian **Startup Command**, masukkan:
    ```bash
-   bash /home/site/wwwroot/startup.sh
+   cp /home/site/wwwroot/.azure/default /etc/nginx/sites-available/default && service nginx reload
    ```
 
 #### Untuk Windows (IIS):
@@ -107,7 +107,7 @@ cd /home/site/wwwroot
 composer install --no-dev --optimize-autoloader
 ```
 
-### 6. Jalankan Migration
+### 6. Jalankan Migration dan Seeder
 
 ```bash
 # SSH ke App Service
@@ -116,6 +116,9 @@ az webapp ssh --resource-group [RG] --name [APP]
 # Jalankan migration
 cd /home/site/wwwroot
 php spark migrate
+
+# Jalankan seeder demo (optional - untuk data demo)
+php spark db:seed DemoProductionSeeder
 ```
 
 ---
