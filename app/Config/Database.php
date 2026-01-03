@@ -44,6 +44,19 @@ class Database extends Config
         'port' => 3306,
     ];
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Enable SSL for Azure MySQL (requires secure transport)
+        $sslEnabled = getenv('database.default.encrypt') ?: getenv('DB_ENCRYPT');
+        if ($sslEnabled === 'true' || $sslEnabled === '1') {
+            $this->default['encrypt'] = [
+                'ssl_verify' => false, // Set to true in production with proper CA cert
+            ];
+        }
+    }
+
     /**
      * This database connection is used when
      * running PHPUnit database tests.
@@ -69,16 +82,4 @@ class Database extends Config
         'foreignKeys' => true,
         'busyTimeout' => 1000,
     ];
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        // Ensure that we always set the database group to 'tests' if
-        // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
-        // if (ENVIRONMENT === 'testing') {
-        //     $this->defaultGroup = 'tests';
-        // }
-    }
 }
