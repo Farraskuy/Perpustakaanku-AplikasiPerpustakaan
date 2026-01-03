@@ -48,5 +48,15 @@
     "name": "database.default.strictOn",
     "value": "false",
     "slotSetting": false
+  },
+  {
+    "name": "APACHE_DOCUMENT_ROOT",
+    "value": "/home/site/wwwroot/public",
+    "slotSetting": false
+  },
+  {
+    "name": "AZURE_WEB_APP_FLAG_USE_APACHE_REWRITE_MODULE",
+    "value": "true",
+    "slotSetting": false
   }
 ]
