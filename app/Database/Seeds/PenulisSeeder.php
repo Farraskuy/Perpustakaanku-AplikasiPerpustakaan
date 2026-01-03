@@ -18,8 +18,8 @@ class PenulisSeeder extends Seeder
             ['id_penulis' => 'PNL-006', 'nama' => 'Ahmad Fuadi'],
             ['id_penulis' => 'PNL-007', 'nama' => 'Eka Kurniawan'],
             ['id_penulis' => 'PNL-008', 'nama' => 'Leila S. Chudori'],
-            ['id_penulis' => 'PNL-009', 'nama' => 'Ayu Utami'],
-            ['id_penulis' => 'PNL-010', 'nama' => 'NH. Dini'],
+            ['id_penulis' => 'PNL-009', 'nama' => 'Pidi Baiq'],
+            ['id_penulis' => 'PNL-010', 'nama' => 'Yuval Noah Harari'],
         ];
 
         $now = Time::now()->toDateTimeString();
