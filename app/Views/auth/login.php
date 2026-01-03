@@ -99,21 +99,162 @@
                                             <!-- <a class="small" href="<?= url_to('forgot') ?>">Lupa Password?</a> -->
                                         <?php endif; ?>
 
-                                        <div class="alert alert-info mt-3 shadow-sm border-0"
-                                            style="font-size: 0.85rem; background-color: #f8f9fa;">
-                                            <p class="mb-1 fw-bold text-primary"><i
-                                                    class="bi bi-info-circle-fill me-2"></i>Akun Demo (Seeder):</p>
-                                            <hr class="my-1">
-                                            <div class="d-flex justify-content-between">
-                                                <span>Admin:</span> <span class="fw-bold">admin / admin123</span>
+                                        <div class="demo-credentials mt-4">
+                                            <div class="demo-header d-flex align-items-center mb-3">
+                                                <i class="bi bi-shield-check text-primary me-2 fs-5"></i>
+                                                <span class="fw-semibold text-dark">Akun Demo</span>
+                                                <span class="badge bg-primary bg-opacity-10 text-primary ms-2"
+                                                    style="font-size: 0.7rem;">PRODUCTION</span>
                                             </div>
-                                            <div class="d-flex justify-content-between">
-                                                <span>Petugas:</span> <span class="fw-bold">petugas / petugas123</span>
+
+                                            <div class="demo-cards">
+                                                <!-- Admin -->
+                                                <div class="demo-card" onclick="fillCredentials('admin', 'admin123')"
+                                                    style="cursor: pointer;">
+                                                    <div class="demo-card-icon admin">
+                                                        <i class="bi bi-person-gear"></i>
+                                                    </div>
+                                                    <div class="demo-card-content">
+                                                        <div class="demo-role">Administrator</div>
+                                                        <div class="demo-cred">admin / admin123</div>
+                                                    </div>
+                                                    <i class="bi bi-arrow-right-circle demo-arrow"></i>
+                                                </div>
+
+                                                <!-- Petugas -->
+                                                <div class="demo-card"
+                                                    onclick="fillCredentials('petugas', 'petugas123')"
+                                                    style="cursor: pointer;">
+                                                    <div class="demo-card-icon petugas">
+                                                        <i class="bi bi-person-badge"></i>
+                                                    </div>
+                                                    <div class="demo-card-content">
+                                                        <div class="demo-role">Petugas</div>
+                                                        <div class="demo-cred">petugas / petugas123</div>
+                                                    </div>
+                                                    <i class="bi bi-arrow-right-circle demo-arrow"></i>
+                                                </div>
+
+                                                <!-- Anggota -->
+                                                <div class="demo-card"
+                                                    onclick="fillCredentials('anggota1', 'anggota123')"
+                                                    style="cursor: pointer;">
+                                                    <div class="demo-card-icon anggota">
+                                                        <i class="bi bi-person"></i>
+                                                    </div>
+                                                    <div class="demo-card-content">
+                                                        <div class="demo-role">Anggota</div>
+                                                        <div class="demo-cred">anggota1 / anggota123</div>
+                                                    </div>
+                                                    <i class="bi bi-arrow-right-circle demo-arrow"></i>
+                                                </div>
                                             </div>
-                                            <div class="d-flex justify-content-between">
-                                                <span>Anggota:</span> <span class="fw-bold">anggota1 / anggota123</span>
-                                            </div>
+
+                                            <p class="text-muted text-center mt-2" style="font-size: 0.75rem;">
+                                                <i class="bi bi-hand-index-thumb me-1"></i>Klik untuk mengisi otomatis
+                                            </p>
                                         </div>
+
+                                        <style>
+                                            .demo-credentials {
+                                                background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+                                                border-radius: 12px;
+                                                padding: 16px;
+                                                border: 1px solid rgba(99, 102, 241, 0.1);
+                                            }
+
+                                            .demo-cards {
+                                                display: flex;
+                                                flex-direction: column;
+                                                gap: 8px;
+                                            }
+
+                                            .demo-card {
+                                                display: flex;
+                                                align-items: center;
+                                                padding: 10px 12px;
+                                                background: white;
+                                                border-radius: 10px;
+                                                border: 1px solid #e5e7eb;
+                                                transition: all 0.2s ease;
+                                            }
+
+                                            .demo-card:hover {
+                                                border-color: #6366f1;
+                                                box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+                                                transform: translateX(4px);
+                                            }
+
+                                            .demo-card-icon {
+                                                width: 36px;
+                                                height: 36px;
+                                                border-radius: 8px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                margin-right: 12px;
+                                                font-size: 1.1rem;
+                                            }
+
+                                            .demo-card-icon.admin {
+                                                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                                                color: white;
+                                            }
+
+                                            .demo-card-icon.petugas {
+                                                background: linear-gradient(135deg, #10b981, #059669);
+                                                color: white;
+                                            }
+
+                                            .demo-card-icon.anggota {
+                                                background: linear-gradient(135deg, #f59e0b, #d97706);
+                                                color: white;
+                                            }
+
+                                            .demo-card-content {
+                                                flex: 1;
+                                            }
+
+                                            .demo-role {
+                                                font-weight: 600;
+                                                font-size: 0.85rem;
+                                                color: #1f2937;
+                                            }
+
+                                            .demo-cred {
+                                                font-size: 0.75rem;
+                                                color: #6b7280;
+                                                font-family: 'Courier New', monospace;
+                                            }
+
+                                            .demo-arrow {
+                                                color: #9ca3af;
+                                                font-size: 1.1rem;
+                                                transition: all 0.2s ease;
+                                            }
+
+                                            .demo-card:hover .demo-arrow {
+                                                color: #6366f1;
+                                                transform: translateX(3px);
+                                            }
+                                        </style>
+
+                                        <script>
+                                            function fillCredentials(username, password) {
+                                                document.querySelector('input[name="login"]').value = username;
+                                                document.querySelector('input[name="password"]').value = password;
+
+                                                // Visual feedback
+                                                const btn = document.querySelector('button[type="submit"]');
+                                                btn.classList.add('btn-success');
+                                                btn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Siap Login!';
+
+                                                setTimeout(() => {
+                                                    btn.classList.remove('btn-success');
+                                                    btn.innerHTML = '<?= lang("Auth.loginAction") ?>';
+                                                }, 1500);
+                                            }
+                                        </script>
 
 
 
